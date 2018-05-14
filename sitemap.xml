@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://embark.status.im/tutorials/token_factory_2.html</loc>
+    <loc>https://embark.status.im/news/2018/05/03/embark-3-0-released/</loc>
     
-    <lastmod>2018-05-08T15:01:40.588Z</lastmod>
+    <lastmod>2018-05-14T19:42:31.136Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/tutorials/token_factory_1.html</loc>
     
-    <lastmod>2018-05-08T15:01:40.510Z</lastmod>
+    <lastmod>2018-05-13T12:32:07.151Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/tutorials/token_factory_2.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.588Z</lastmod>
     
   </url>
   
@@ -30,6 +37,13 @@
   </url>
   
   <url>
+    <loc>https://embark.status.im/index.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.508Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/what_dapp.html</loc>
     
     <lastmod>2018-05-08T15:01:40.508Z</lastmod>
@@ -38,13 +52,6 @@
   
   <url>
     <loc>https://embark.status.im/docs/webpack.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.508Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.508Z</lastmod>
     
@@ -86,14 +93,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/solidity.html</loc>
+    <loc>https://embark.status.im/docs/setup.html</loc>
     
     <lastmod>2018-05-08T15:01:40.506Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/setup.html</loc>
+    <loc>https://embark.status.im/docs/solidity.html</loc>
     
     <lastmod>2018-05-08T15:01:40.506Z</lastmod>
     
@@ -114,6 +121,13 @@
   </url>
   
   <url>
+    <loc>https://embark.status.im/docs/installing_plugins.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.504Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/messages.html</loc>
     
     <lastmod>2018-05-08T15:01:40.504Z</lastmod>
@@ -124,20 +138,6 @@
     <loc>https://embark.status.im/docs/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/installing_plugins.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/embark_commands.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.503Z</lastmod>
     
   </url>
   
@@ -156,14 +156,21 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/contributing.html</loc>
+    <loc>https://embark.status.im/docs/embark_commands.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/contracts.html</loc>
     
     <lastmod>2018-05-08T15:01:40.502Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/contracts.html</loc>
+    <loc>https://embark.status.im/docs/contributing.html</loc>
     
     <lastmod>2018-05-08T15:01:40.502Z</lastmod>
     
