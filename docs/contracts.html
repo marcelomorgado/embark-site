@@ -38,7 +38,7 @@
   <!-- Google Analytics -->
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118882552-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -48,7 +48,7 @@
 
       gtag('js', new Date());
 
-      gtag('config', 'UA-118882552-1');
+      gtag('config', 'UA-79146816-4');
     </script>
 
 
@@ -105,7 +105,7 @@
                 <h1 class="article-title" itemprop="name">Contracts</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h3 id="Basic-Contract-Configuration" class="article-heading"><a href="#Basic-Contract-Configuration" class="headerlink" title="Basic Contract Configuration"></a>Basic Contract Configuration<a class="article-anchor" href="#Basic-Contract-Configuration" aria-hidden="true"></a></h3><p>You can specify for each contract and environment its gas costs and<br>arguments:</p>
+                <h3 id="Basic-Contract-Configuration" class="article-heading"><a href="#Basic-Contract-Configuration" class="headerlink" title="Basic Contract Configuration"></a>Basic Contract Configuration<a class="article-anchor" href="#Basic-Contract-Configuration" aria-hidden="true"></a></h3><p>You can specify for each contract and environment its gas costs (in wei) and<br>arguments:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># config/contracts.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"development"</span>: &#123;</span><br><span class="line">    <span class="attr">"gas"</span>: <span class="string">"auto"</span>,</span><br><span class="line">    <span class="attr">"contracts"</span>: &#123;</span><br><span class="line">      <span class="attr">"SimpleStorage"</span>: &#123;</span><br><span class="line">        <span class="attr">"args"</span>: [</span><br><span class="line">          <span class="number">100</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"gas"</span>: <span class="number">800000</span>,</span><br><span class="line">        <span class="attr">"gasPrice"</span>: <span class="number">5</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>If you prefer it’s also possible to specify the contract arguments by their variable name instead of a list:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"># config/contracts.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"development"</span>: &#123;</span><br><span class="line">    <span class="attr">"contracts"</span>: &#123;</span><br><span class="line">      <span class="attr">"SimpleStorage"</span>: &#123;</span><br><span class="line">        <span class="attr">"args"</span>: &#123;</span><br><span class="line">          <span class="attr">"initial_value"</span>: <span class="number">100</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -140,7 +140,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.502Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-06-13T18:31:33.449Z" itemprop="dateModified">Last updated: 2018-06-13</time>
                 <a href="quick_start.html" class="article-footer-prev" title="Quick Start"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="storage.html" class="article-footer-next" title="Storage"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
