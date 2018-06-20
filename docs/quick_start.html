@@ -106,11 +106,12 @@
               </header>
               <div class="article-content" itemprop="articleBody">
                 <h3 id="Create-demo-app" class="article-heading"><a href="#Create-demo-app" class="headerlink" title="Create demo app"></a>Create demo app<a class="article-anchor" href="#Create-demo-app" aria-hidden="true"></a></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark demo</span><br><span class="line">$ <span class="built_in">cd</span> embark_demo</span><br></pre></td></tr></table></figure>
-<h3 id="Start-a-blockchain-node" class="article-heading"><a href="#Start-a-blockchain-node" class="headerlink" title="Start a blockchain node"></a>Start a blockchain node<a class="article-anchor" href="#Start-a-blockchain-node" aria-hidden="true"></a></h3><p>You can run a REAL ethereum node for development purposes:</p>
+<h3 id="Start-a-blockchain-node-or-let-Embark-start-it-for-you" class="article-heading"><a href="#Start-a-blockchain-node-or-let-Embark-start-it-for-you" class="headerlink" title="Start a blockchain node or let Embark start it for you"></a>Start a blockchain node or let Embark start it for you<a class="article-anchor" href="#Start-a-blockchain-node-or-let-Embark-start-it-for-you" aria-hidden="true"></a></h3><p>You can run a REAL ethereum node for development purposes:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark blockchain</span><br></pre></td></tr></table></figure>
 <p>Alternatively, to use an ethereum rpc simulator simply run:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark simulator</span><br></pre></td></tr></table></figure>
 <p>By default Embark blockchain will mine a minimum amount of ether and will only mine when new transactions come in.</p>
+<p>If you want, you can skip this step, as <code>embark run</code>, <code>build</code> and <code>upload</code> now all start a blockchain node in a separate process if there is not one already started using the same configurations. </p>
 <h3 id="Start-Embark" class="article-heading"><a href="#Start-Embark" class="headerlink" title="Start Embark"></a>Start Embark<a class="article-anchor" href="#Start-Embark" aria-hidden="true"></a></h3><p>Then, in another command line:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark run</span><br></pre></td></tr></table></figure>
 <p>This will open up the embark Dashboard</p>
@@ -131,7 +132,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.505Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-06-20T01:04:33.745Z" itemprop="dateModified">Last updated: 2018-06-20</time>
                 <a href="what_dapp.html" class="article-footer-prev" title="What is a DApp"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="contracts.html" class="article-footer-next" title="Smart Contracts"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -139,7 +140,7 @@
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-demo-app"><span class="toc-text">Create demo app</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-a-blockchain-node"><span class="toc-text">Start a blockchain node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-Embark"><span class="toc-text">Start Embark</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interacting-with-contracts-in-Javascript"><span class="toc-text">Interacting with contracts in Javascript</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-demo-app"><span class="toc-text">Create demo app</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-a-blockchain-node-or-let-Embark-start-it-for-you"><span class="toc-text">Start a blockchain node or let Embark start it for you</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-Embark"><span class="toc-text">Start Embark</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Interacting-with-contracts-in-Javascript"><span class="toc-text">Interacting with contracts in Javascript</span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>

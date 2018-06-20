@@ -2,44 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://embark.status.im/docs/setup.html</loc>
+    <loc>https://embark.status.im/docs/testing.html</loc>
     
-    <lastmod>2018-06-13T18:31:49.302Z</lastmod>
+    <lastmod>2018-06-20T01:04:33.747Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/tutorials/token_factory_2.html</loc>
+    <loc>https://embark.status.im/docs/storage.html</loc>
     
-    <lastmod>2018-06-13T18:31:33.453Z</lastmod>
+    <lastmod>2018-06-20T01:04:33.746Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/quick_start.html</loc>
+    
+    <lastmod>2018-06-20T01:04:33.745Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/plugin_reference.html</loc>
     
-    <lastmod>2018-06-13T18:31:33.452Z</lastmod>
+    <lastmod>2018-06-20T01:04:33.744Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/messages.html</loc>
+    
+    <lastmod>2018-06-20T01:04:33.743Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/embark_commands.html</loc>
     
-    <lastmod>2018-06-13T18:31:33.450Z</lastmod>
+    <lastmod>2018-06-20T01:04:33.742Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/deploying.html</loc>
+    
+    <lastmod>2018-06-20T01:04:33.741Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/contracts.html</loc>
     
-    <lastmod>2018-06-13T18:31:33.449Z</lastmod>
+    <lastmod>2018-06-20T01:04:33.741Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/tutorials/token_factory_2.html</loc>
+    
+    <lastmod>2018-06-20T01:02:11.970Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/news/2018/05/03/embark-3-0-released/</loc>
     
-    <lastmod>2018-06-13T18:31:33.448Z</lastmod>
+    <lastmod>2018-06-14T18:44:22.895Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/setup.html</loc>
+    
+    <lastmod>2018-06-13T18:31:49.302Z</lastmod>
     
   </url>
   
@@ -65,13 +100,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/what_dapp.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.508Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.508Z</lastmod>
@@ -86,7 +114,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/testing.html</loc>
+    <loc>https://embark.status.im/docs/what_dapp.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.508Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/troubleshooting.html</loc>
     
     <lastmod>2018-05-08T15:01:40.507Z</lastmod>
     
@@ -94,13 +129,6 @@
   
   <url>
     <loc>https://embark.status.im/docs/vyper.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.507Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/troubleshooting.html</loc>
     
     <lastmod>2018-05-08T15:01:40.507Z</lastmod>
     
@@ -121,20 +149,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/storage.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.506Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/quick_start.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.505Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.504Z</lastmod>
@@ -149,23 +163,16 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/messages.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.504Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/deploying.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.503Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/creating_plugins.html</loc>
     
     <lastmod>2018-05-08T15:01:40.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/configuration.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.502Z</lastmod>
     
   </url>
   
@@ -184,21 +191,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/configuration.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.502Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/bamboo.html</loc>
+    <loc>https://embark.status.im/chat/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.501Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/chat/index.html</loc>
+    <loc>https://embark.status.im/docs/bamboo.html</loc>
     
     <lastmod>2018-05-08T15:01:40.501Z</lastmod>
     

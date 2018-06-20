@@ -105,12 +105,49 @@
                 <h1 class="article-title" itemprop="name">Deploying DApps to IPFS and Swarm</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h1 id="Deploying-to-IPFS" class="article-heading"><a href="#Deploying-to-IPFS" class="headerlink" title="Deploying to IPFS"></a>Deploying to IPFS<a class="article-anchor" href="#Deploying-to-IPFS" aria-hidden="true"></a></h1><p>To deploy a dapp to IPFS, all you need to do is run a local IPFS node and then run <code>embark upload ipfs</code>. If you want to deploy to the livenet then after configuring you account on <code>config/blockchain.json</code> on the <code>livenet</code> environment then you can deploy to that chain by specifying the environment <code>embark upload ipfs livenet</code>.</p>
-<h1 id="Deploying-to-SWARM" class="article-heading"><a href="#Deploying-to-SWARM" class="headerlink" title="Deploying to SWARM"></a>Deploying to SWARM<a class="article-anchor" href="#Deploying-to-SWARM" aria-hidden="true"></a></h1><p>To deploy a dapp to SWARM, all you need to do is run a local SWARM node and then run <code>embark upload swarm</code>.</p>
+                <p>To upload your Dapp to IPFS or Swarm, first ensure you have correctly set up your dApp’s <code>storage.json</code> config to specify the preferred <a href="./storage.html">storage configuration settings</a>, namely <code>provider</code>, <code>host</code>, <code>port</code>, and <code>getUrl</code>.</p>
+<p>Once the config is set, run<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">embark upload</span><br></pre></td></tr></table></figure></p>
+<p>If you want to deploy to the livenet, just configure your account in <code>config/blockchain.json</code> under the <code>livenet</code> environment. Then, you can deploy to that chain with the following command:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">embark upload livenet</span><br></pre></td></tr></table></figure></p>
+<h1 id="Deploying-to-IPFS" class="article-heading"><a href="#Deploying-to-IPFS" class="headerlink" title="Deploying to IPFS"></a>Deploying to IPFS<a class="article-anchor" href="#Deploying-to-IPFS" aria-hidden="true"></a></h1><p>To deploy a dapp to a local IPFS node:</p>
+<ol>
+<li>First <a href="https://ipfs.io/docs/getting-started/" target="_blank" rel="noopener">run a local IPFS node</a>.</li>
+<li><p>Configure your <code>storage.json</code> config with the correct settings, ie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;development&quot;: &#123;</span><br><span class="line">  &quot;enabled&quot;: true,</span><br><span class="line">  &quot;provider&quot;: &quot;ipfs&quot;,</span><br><span class="line">  &quot;host&quot;: &quot;localhost&quot;,</span><br><span class="line">  &quot;port&quot;: 5001,</span><br><span class="line">  &quot;getUrl&quot;: &quot;http://localhost:8080/ipfs/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>embark upload</code></p>
+</li>
+</ol>
+<p>To deploy a dapp to the public IPFS gateway:</p>
+<ol>
+<li><p>Configure your <code>storage.json</code> config with the correct settings, ie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;development&quot;: &#123;</span><br><span class="line">  &quot;enabled&quot;: true,</span><br><span class="line">  &quot;provider&quot;: &quot;ipfs&quot;,</span><br><span class="line">  &quot;host&quot;: &quot;ipfs.infura.io&quot;,</span><br><span class="line">  &quot;port&quot;: 80,</span><br><span class="line">  &quot;protocol&quot;: &quot;https&quot;</span><br><span class="line">  &quot;getUrl&quot;: &quot;https://ipfs.infura.io/ipfs/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>embark upload</code> </p>
+</li>
+</ol>
+<p>Please see the <a href="./storage#troubleshooting">Storage troubleshooting</a> to resolve CORS issues.</p>
+<h1 id="Deploying-to-SWARM" class="article-heading"><a href="#Deploying-to-SWARM" class="headerlink" title="Deploying to SWARM"></a>Deploying to SWARM<a class="article-anchor" href="#Deploying-to-SWARM" aria-hidden="true"></a></h1><p>To deploy a dapp to a local Swarm node:</p>
+<ol>
+<li>First <a href="http://swarm-guide.readthedocs.io/en/latest/runninganode.html" target="_blank" rel="noopener">run a local Swarm node</a>.</li>
+<li><p>Configure your <code>storage.json</code> config with the correct settings, ie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;development&quot;: &#123;</span><br><span class="line">  &quot;enabled&quot;: true,</span><br><span class="line">  &quot;provider&quot;: &quot;swarm&quot;,</span><br><span class="line">  &quot;host&quot;: &quot;localhost&quot;,</span><br><span class="line">  &quot;port&quot;: 8500,</span><br><span class="line">  &quot;getUrl&quot;: &quot;http://localhost:8500/bzzr:/&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>embark upload</code> </p>
+</li>
+</ol>
+<p>To deploy a dapp to the public IPFS gateway:</p>
+<ol>
+<li><p>Configure your <code>storage.json</code> config with the correct settings, ie</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;development&quot;: &#123;</span><br><span class="line">  &quot;enabled&quot;: true,</span><br><span class="line">  &quot;provider&quot;: &quot;swarm&quot;,</span><br><span class="line">  &quot;host&quot;: &quot;swarm-gateways.net&quot;,</span><br><span class="line">  &quot;port&quot;: 80</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Run <code>embark upload</code> </p>
+</li>
+</ol>
+<p>Please see the <a href="./storage#troubleshooting">Storage troubleshooting</a> to resolve CORS issues.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.503Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-06-20T01:04:33.741Z" itemprop="dateModified">Last updated: 2018-06-20</time>
                 <a href="configuration.html" class="article-footer-prev" title="Configuration"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="installing_plugins.html" class="article-footer-next" title="Installing a plugin"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

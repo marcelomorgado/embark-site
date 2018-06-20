@@ -108,47 +108,27 @@
                 <h3 id="Setup" class="article-heading"><a href="#Setup" class="headerlink" title="Setup"></a>Setup<a class="article-anchor" href="#Setup" aria-hidden="true"></a></h3><p>By default Embark will automatically initialize EmbarkJS with the provider configured at <code>config/storage.json</code>. However if you are using EmbarkJS directly or wish to change the provider configuration on the fly you can do:</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'swarm'</span>, options);</span><br></pre></td></tr></table></figure>
 <p>Options are optional and if provided, will override the values in <code>storage.json</code>. </p>
-<p>For example,<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'ipfs'</span>, &#123;<span class="attr">server</span>: <span class="string">'localhost'</span>, <span class="attr">port</span>: <span class="string">'5001'</span>&#125;);</span><br><span class="line"><span class="comment">// OR</span></span><br><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'ipfs'</span>, &#123;<span class="attr">server</span>: <span class="string">'swarm-gateways.net'</span>, <span class="attr">port</span>: <span class="string">'80'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>For example,<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'ipfs'</span>, &#123;<span class="attr">server</span>: <span class="string">'localhost'</span>, <span class="attr">port</span>: <span class="string">'5001'</span>&#125;);</span><br><span class="line"><span class="comment">// OR</span></span><br><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'swarm'</span>, &#123;<span class="attr">server</span>: <span class="string">'swarm-gateways.net'</span>, <span class="attr">port</span>: <span class="string">'80'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
 <h3 id="Save-Text-Data" class="article-heading"><a href="#Save-Text-Data" class="headerlink" title="Save Text/Data"></a>Save Text/Data<a class="article-anchor" href="#Save-Text-Data" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.saveText(<span class="string">"hello world"</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">hash</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS saveText Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="Retrieve-Text-Data" class="article-heading"><a href="#Retrieve-Text-Data" class="headerlink" title="Retrieve Text/Data"></a>Retrieve Text/Data<a class="article-anchor" href="#Retrieve-Text-Data" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.get(hash)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS get Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="Upload-a-file" class="article-heading"><a href="#Upload-a-file" class="headerlink" title="Upload a file"></a>Upload a file<a class="article-anchor" href="#Upload-a-file" aria-hidden="true"></a></h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> input = $(<span class="string">"input[type=file"</span>]);</span><br><span class="line">EmbarkJS.Storage.uploadFile(input)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">hash</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS uploadFile Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="Display-a-file" class="article-heading"><a href="#Display-a-file" class="headerlink" title="Display a file"></a>Display a file<a class="article-anchor" href="#Display-a-file" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.getUrl(hash);</span><br></pre></td></tr></table></figure>
-<h3 id="Check-for-storage-provdier-availability" class="article-heading"><a href="#Check-for-storage-provdier-availability" class="headerlink" title="Check for storage provdier availability"></a>Check for storage provdier availability<a class="article-anchor" href="#Check-for-storage-provdier-availability" aria-hidden="true"></a></h3><p>This will return true if the storage provider (IPFS or Swarm) is avaiable and running. </p>
+<h3 id="Check-for-storage-provider-availability" class="article-heading"><a href="#Check-for-storage-provider-availability" class="headerlink" title="Check for storage provider availability"></a>Check for storage provider availability<a class="article-anchor" href="#Check-for-storage-provider-availability" aria-hidden="true"></a></h3><p>This will return true if the storage provider (IPFS or Swarm) is avaiable and running. </p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.isAvailable()</span><br><span class="line">  .then(<span class="function"><span class="params">isAvailable</span> =&gt;</span> &#123; alert(<span class="string">`The storage provider is: <span class="subst">$&#123;isAvailable ? <span class="string">'available'</span> : <span class="string">'not available'</span>&#125;</span>`</span>) &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Error getting storage provider availability =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered storage configuration in the file <code>config/storage.json</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
 <p>e.g :</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"ipfs_bin"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"ipfs"</span>, <span class="string">"swarm"</span>],</span><br><span class="line">    <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    <span class="string">"port"</span>: <span class="number">5001</span>,</span><br><span class="line">    <span class="string">"versions"</span>: &#123;</span><br><span class="line">      <span class="string">"ipfs-api"</span>: <span class="string">"17.2.4"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"development"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    <span class="string">"port"</span>: <span class="number">5001</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"ipfs_bin"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"ipfs"</span>, <span class="string">"swarm"</span>],</span><br><span class="line">    <span class="string">"upload"</span>:&#123;</span><br><span class="line">      <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">      <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">      <span class="string">"port"</span>: <span class="number">5001</span>,</span><br><span class="line">      <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8080/ipfs"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"dappConnection"</span>:[</span><br><span class="line">      &#123;<span class="string">"provider"</span>: <span class="string">"swarm"</span>, <span class="string">"host"</span>: <span class="string">"localhost"</span>, <span class="string">"port"</span>: <span class="number">8500</span>, <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8500/bzz:/"</span>&#125;,</span><br><span class="line">      &#123;<span class="string">"provider"</span>: <span class="string">"ipfs"</span>, <span class="string">"host"</span>: <span class="string">"localhost"</span>, <span class="string">"port"</span>: <span class="number">5001</span>, <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8080/ipfs/"</span>&#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"versions"</span>: &#123;</span><br><span class="line">      <span class="string">"ipfs-api"</span>: <span class="string">"17.2.4"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"development"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    <span class="string">"port"</span>: <span class="number">5001</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Available options are:</p>
 <table>
 <thead>
 <tr>
 <th>Option</th>
-<th>Type (default)</th>
+<th>Type: <code>default</code></th>
 <th>Value         </th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><code>protocol</code></td>
-<td>string (<code>http</code>)</td>
-<td>Storage provider protocol, ie <code>http</code> or <code>https</code></td>
-</tr>
-<tr>
-<td><code>host</code></td>
-<td>string (<code>localhost</code>)</td>
-<td>Host value used to interact with the storage provider, ie <code>localhost</code> or <code>swarm-gateways.net</code></td>
-</tr>
-<tr>
-<td><code>port</code></td>
-<td>integer (<code>5001</code>)</td>
-<td>Port value used to interact with the storage provider, ie <code>5001</code> (IPFS local node) or <code>8500</code> (Swarm local node) or <code>80</code></td>
-</tr>
-<tr>
-<td><code>getUrl</code></td>
-<td>string (<code>http://localhost:8080/ipfs/</code></td>
-<td>Only for IPFS. This sets the file/document retrieval URL, which is different than the host/port combination used to interact with the IPFS api.</td>
-</tr>
 <tr>
 <td><code>enabled</code></td>
 <td>boolean: <code>true</code></td>
@@ -156,18 +136,73 @@
 </tr>
 <tr>
 <td><code>ipfs_bin</code></td>
-<td>string (<code>ipfs</code>)</td>
+<td>string: <code>ipfs</code></td>
 <td>Name or desired path to the ipfs binary</td>
 </tr>
 <tr>
-<td><code>provider</code></td>
-<td>string (<code>ipfs</code>)</td>
-<td>desired provider to automatically connect to on the dapp. e.g in the example above, setting this to <code>&quot;ipfs&quot;</code> will automaticaly add <code>EmbarkJS.setProvider(&#39;ipfs&#39;, {server: &#39;localhost&#39;, 5001})</code> to the generated code (assuming <code>host</code> is set to <code>localhost</code> and <code>port</code> is set to <code>5001</code>).</td>
+<td><code>available_providers</code></td>
+<td>array: <code>[&quot;ipfs&quot;, &quot;swarm&quot;]</code></td>
+<td>list of storages to be supported on the dapp. This will affect what’s available with the EmbarkJS library on the dapp.</td>
 </tr>
 <tr>
-<td><code>available_providers</code></td>
-<td>array (<code>[&quot;ipfs&quot;, &quot;swarm&quot;]</code>)</td>
-<td>list of storages to be supported on the dapp. This will affect what’s available with the EmbarkJS library on the dapp.</td>
+<td><code>upload</code></td>
+<td></td>
+<td>The upload element specifies storage provider settings used for uploading your dapp. A swarm node will be automatically launched in a child process using these settings.</td>
+</tr>
+<tr>
+<td><code>upload.provider</code></td>
+<td>string: <code>ipfs</code></td>
+<td>desired provider to use when uploading dapp.</td>
+</tr>
+<tr>
+<td><code>upload.protocol</code></td>
+<td>string: <code>http</code></td>
+<td>Storage provider protocol for upload, ie <code>http</code> or <code>https</code></td>
+</tr>
+<tr>
+<td><code>upload.host</code></td>
+<td>string: <code>localhost</code></td>
+<td>Host value used to interact with the storage provider for upload, ie <code>localhost</code> or <code>swarm-gateways.net</code></td>
+</tr>
+<tr>
+<td><code>upload.port</code></td>
+<td>integer: <code>5001</code></td>
+<td>Port value used to interact with the storage provider for upload, ie <code>5001</code> (IPFS local node) or <code>8500</code> (Swarm local node) or <code>80</code></td>
+</tr>
+<tr>
+<td><code>upload.getUrl</code></td>
+<td>string: <code>http://localhost:8080/ipfs/</code></td>
+<td>Only for IPFS. This sets the file/document retrieval URL, which is different than the host/port combination used to interact with the IPFS api.</td>
+</tr>
+<tr>
+<td><code>dappConnection</code></td>
+<td></td>
+<td>List of storage providers to attempt connection to in the dapp. Each provider process will be launched in a child process. Each connection listed will be tried in order on the dapp, until one is avaialable. Can also specify <code>$BZZ</code> to attempt to connect to an injected swarm object.</td>
+</tr>
+<tr>
+<td><code>dappConnection.provider</code></td>
+<td>string: <code>ipfs</code></td>
+<td>desired provider to use for dapp storage. </td>
+</tr>
+<tr>
+<td><code>dappConnection.protocol</code></td>
+<td>string: <code>http</code></td>
+<td>Storage provider protocol used in the dapp, ie <code>http</code> or <code>https</code></td>
+</tr>
+<tr>
+<td><code>dappConnection.host</code></td>
+<td>string</td>
+<td>Host value used to interact with the storage provider in the dapp, ie <code>localhost</code> or <code>swarm-gateways.net</code></td>
+</tr>
+<tr>
+<td><code>dappConnection.port</code></td>
+<td>integer</td>
+<td>Port value used to interact with the storage provider in the dapp, ie <code>5001</code> (IPFS local node) or <code>8500</code> (Swarm local node) or <code>80</code>. Can specify <code>false</code> if a port should not be included in the connection URL (ie for a public gateway like <code>http://swarm-gateways.net</code>).</td>
+</tr>
+<tr>
+<td><code>dappConnection.getUrl</code></td>
+<td>string</td>
+<td>Only for IPFS. This sets the file/document retrieval URL, which is different than the host/port combination used to interact with the IPFS api.</td>
 </tr>
 <tr>
 <td><code>versions</code></td>
@@ -176,18 +211,25 @@
 </tr>
 </tbody>
 </table>
+<h3 id="Using-a-local-node" class="article-heading"><a href="#Using-a-local-node" class="headerlink" title="Using a local node"></a>Using a local node<a class="article-anchor" href="#Using-a-local-node" aria-hidden="true"></a></h3><p>Either for IPFS or Swarm, Embark will default to use a local node for development purposes</p>
+<p>Please note that you still need to setup the right port according to the storage platform you use.</p>
+<p>By default, IPFS runs on port <code>5001</code> and Swarm runs of <code>8500</code>.</p>
+<p>You can start your local storage node yourself or now you can also let Embark start the node itself in another node.</p>
+<p>Letting Embark do it for you let’s you focus on developing faster while starting it yourself gives you more flexibility.</p>
+<p>You still need to have IPFS or Swarm installed locally for it to work, whatever the case.</p>
+<p><strong>Important configurations for swarm</strong>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"development"</span>: &#123;</span><br><span class="line">    <span class="attr">"provider"</span>: <span class="string">"swarm"</span>,</span><br><span class="line">    <span class="attr">"account"</span>: &#123;</span><br><span class="line">      <span class="attr">"address"</span>: <span class="string">"YOUR_ACCOUNT_ADDRESS"</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"PATH/TO/PASSWORD/FILE"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"swarmPath"</span>: <span class="string">"PATH/TO/SWARM/EXECUTABLE"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Using-a-public-gateway" class="article-heading"><a href="#Using-a-public-gateway" class="headerlink" title="Using a public gateway"></a>Using a public gateway<a class="article-anchor" href="#Using-a-public-gateway" aria-hidden="true"></a></h3><p>To use a public gateway (instead of running a local node) for IPFS or Swarm, use the following <code>config/storage.json</code> options:</p>
-<h4 id="IPFS" class="article-heading"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS<a class="article-anchor" href="#IPFS" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "provider": "ipfs",</span><br><span class="line">    "host": "ipfs.infura.io",</span><br><span class="line">    "port": 80,</span><br><span class="line">    "protocol": "https",</span><br><span class="line">    "getUrl": "https://ipfs.infura.io/ipfs/"</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Swarm" class="article-heading"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm<a class="article-anchor" href="#Swarm" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "provider": "ipfs",</span><br><span class="line">    "host": "swarm-gateways.net",</span><br><span class="line">    "port": 80</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Using-swarm" class="article-heading"><a href="#Using-swarm" class="headerlink" title="Using swarm"></a>Using swarm<a class="article-anchor" href="#Using-swarm" aria-hidden="true"></a></h3><p>Running a local swarm node (ie <code>localhost:8500</code>) is supported, however this has not proven to be stable yet. Instead, we recommend using swarm-gateways.net for now.<br>Please see the <a href="http://swarm-guide.readthedocs.io/en/latest/runninganode.html" target="_blank" rel="noopener">Swarm documentation</a> for more information on running a Swarm node.</p>
-<h3 id="Troubleshooting" class="article-heading"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting<a class="article-anchor" href="#Troubleshooting" aria-hidden="true"></a></h3><p>If you are not running your DApp on <code>localhost</code>, the CORS needs to be set:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &apos;[&quot;http://dapptastic.com&quot;]&apos;</span><br></pre></td></tr></table></figure>
-<p>If running a local Swarm node, the CORS needs to be set to be used with your DApp domain using the –corsdomain <a href="http://dapptastic.com" target="_blank" rel="noopener">http://dapptastic.com</a> option. An example swarm command would be:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">swarm --bzzaccount fedda09fd9218d1ea4fd41ad44694fa4ccba1878 --datadir ~/.bzz-data/ --password config/development/password --corsdomain http://localhost:8000 --ens-api &apos;&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="IPFS" class="article-heading"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS<a class="article-anchor" href="#IPFS" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "upload":&#123;</span><br><span class="line">      "provider": "ipfs",</span><br><span class="line">      "host": "ipfs.infura.io",</span><br><span class="line">      "port": 80,</span><br><span class="line">      "protocol": "https",</span><br><span class="line">      "getUrl": "https://ipfs.infura.io/ipfs/"</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Swarm" class="article-heading"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm<a class="article-anchor" href="#Swarm" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "upload": &#123;</span><br><span class="line">      "provider": "swarm",</span><br><span class="line">      "host": "localhost",</span><br><span class="line">      "port": 8500</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Troubleshooting" class="article-heading"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting "></a>Troubleshooting <a name="troubleshooting"></a><a class="article-anchor" href="#Troubleshooting" aria-hidden="true"></a></h3><p>If you are running your own processes for IPFS or Swarm, the CORS needs to be set to the domain of your DApp, to the geth domain, and to the domain of the storage used inside the DApp. If you are using the built in webserver, the CORS would need to be set to <code>http://localhost:8000</code>, however if you are using <code>embark upload</code>, the domain of the decentralised storage host should be included in CORS. Depending on your <code>upload</code> settings in <code>storage.json</code>, this could be <code>http://localhost:8080</code> or <code>http://ipfs.infura.io</code> for IPFS or it could be <code>http://localhost:8500</code> or <code>http://swarm-gateways.net</code> for Swarm. Of course, if you are hosting your DApp on a different domain (ie not <code>localhost</code>, then that would need to be included in CORS as well. Examples of how to include multiple domains for each are below:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Configure local IPFS node that has the local swarm node whitelisted for CORS</span><br><span class="line"># Works in the case where IPFS hosts the DApp, but you are running your storage inside the DApp on Swarm (or IPFS, since it doesn&apos;t need to whitelist itself)</span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &quot;[\&quot;http://localhost:8000\&quot;, \&quot;http://localhost:8500\&quot;, \&quot;http://localhost:8545\&quot;, \&quot;ws://localhost:8546\&quot;]&quot;</span><br></pre></td></tr></table></figure>
+<p>NOTE: <code>http://localhost:8545</code> and <code>ws://localhost:8546</code> are for geth.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Run local Swarm node that has the local IPFS node whitelisted for CORS</span><br><span class="line"># Works in the case where Swarm hosts the DApp, but you are running your storage inside the DApp on IPFS (or Swarm, since it doesn&apos;t need to whitelist itself)</span><br><span class="line">swarm --bzzaccount=fedda09fd9218d1ea4fd41ad44694fa4ccba1878 --datadir=~/.bzz-data/ --password=config/development/password --corsdomain=http://localhost:8000,http://localhost:8080,http://localhost:8545,ws://localhost:8546 --ens-api=&apos;&apos;</span><br></pre></td></tr></table></figure>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.506Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-06-20T01:04:33.746Z" itemprop="dateModified">Last updated: 2018-06-20</time>
                 <a href="contracts.html" class="article-footer-prev" title="Smart Contracts"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="messages.html" class="article-footer-next" title="Messages"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -195,7 +237,7 @@
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setup"><span class="toc-text">Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Save-Text-Data"><span class="toc-text">Save Text/Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrieve-Text-Data"><span class="toc-text">Retrieve Text/Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-a-file"><span class="toc-text">Upload a file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Display-a-file"><span class="toc-text">Display a file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-storage-provdier-availability"><span class="toc-text">Check for storage provdier availability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration-basics"><span class="toc-text">Configuration basics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-a-public-gateway"><span class="toc-text">Using a public gateway</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IPFS"><span class="toc-text">IPFS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swarm"><span class="toc-text">Swarm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-swarm"><span class="toc-text">Using swarm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Troubleshooting"><span class="toc-text">Troubleshooting</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setup"><span class="toc-text">Setup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Save-Text-Data"><span class="toc-text">Save Text/Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrieve-Text-Data"><span class="toc-text">Retrieve Text/Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-a-file"><span class="toc-text">Upload a file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Display-a-file"><span class="toc-text">Display a file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-storage-provider-availability"><span class="toc-text">Check for storage provider availability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration-basics"><span class="toc-text">Configuration basics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-a-local-node"><span class="toc-text">Using a local node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-a-public-gateway"><span class="toc-text">Using a public gateway</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#IPFS"><span class="toc-text">IPFS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Swarm"><span class="toc-text">Swarm</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Troubleshooting"><span class="toc-text">Troubleshooting </span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
