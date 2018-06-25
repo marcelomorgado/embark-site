@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://embark.status.im/"/>
-  <updated>2018-06-14T18:44:22.895Z</updated>
+  <updated>2018-06-25T20:55:30.308Z</updated>
   <id>https://embark.status.im/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Embark by Status 3.1</title>
+    <link href="https://embark.status.im/news/2018/06/19/embark-3-1-released/"/>
+    <id>https://embark.status.im/news/2018/06/19/embark-3-1-released/</id>
+    <published>2018-06-20T00:00:00.000Z</published>
+    <updated>2018-06-25T20:55:30.308Z</updated>
+    
+    <content type="html"><![CDATA[<p>More info can be found in the <a href="https://blog.status.im/embark-3-1-planet-express-60493ca0ad79" target="_blank" rel="noopener">medium post</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;More info can be found in the &lt;a href=&quot;https://blog.status.im/embark-3-1-planet-express-60493ca0ad79&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;medi
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Embark by Status 3.0</title>
