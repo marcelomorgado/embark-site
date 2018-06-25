@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://embark.status.im/docs/quick_start.html</loc>
+    
+    <lastmod>2018-06-25T21:03:50.415Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/tutorials/token_factory_1.html</loc>
+    
+    <lastmod>2018-06-25T21:00:58.415Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/news/2018/06/19/embark-3-1-released/</loc>
     
     <lastmod>2018-06-25T20:55:30.308Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>https://embark.status.im/docs/storage.html</loc>
     
     <lastmod>2018-06-20T01:04:33.746Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/quick_start.html</loc>
-    
-    <lastmod>2018-06-20T01:04:33.745Z</lastmod>
     
   </url>
   
@@ -51,14 +58,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/deploying.html</loc>
+    <loc>https://embark.status.im/docs/contracts.html</loc>
     
     <lastmod>2018-06-20T01:04:33.741Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/contracts.html</loc>
+    <loc>https://embark.status.im/docs/deploying.html</loc>
     
     <lastmod>2018-06-20T01:04:33.741Z</lastmod>
     
@@ -82,13 +89,6 @@
     <loc>https://embark.status.im/docs/setup.html</loc>
     
     <lastmod>2018-06-13T18:31:49.302Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/tutorials/token_factory_1.html</loc>
-    
-    <lastmod>2018-05-13T12:32:07.151Z</lastmod>
     
   </url>
   
@@ -177,6 +177,13 @@
   </url>
   
   <url>
+    <loc>https://embark.status.im/docs/console_commands.html</loc>
+    
+    <lastmod>2018-05-08T15:01:40.502Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/configuration.html</loc>
     
     <lastmod>2018-05-08T15:01:40.502Z</lastmod>
@@ -191,21 +198,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/console_commands.html</loc>
-    
-    <lastmod>2018-05-08T15:01:40.502Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/chat/index.html</loc>
+    <loc>https://embark.status.im/docs/bamboo.html</loc>
     
     <lastmod>2018-05-08T15:01:40.501Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/bamboo.html</loc>
+    <loc>https://embark.status.im/chat/index.html</loc>
     
     <lastmod>2018-05-08T15:01:40.501Z</lastmod>
     
