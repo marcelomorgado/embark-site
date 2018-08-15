@@ -107,7 +107,26 @@
                 <h1 class="article-title" itemprop="name">Configuring Embark</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"contracts"</span>: [<span class="string">"contracts/**"</span>],</span><br><span class="line">  <span class="string">"app"</span>: &#123;</span><br><span class="line">    <span class="string">"js/dapp.js"</span>: [<span class="string">"app/dapp.js"</span>],</span><br><span class="line">    <span class="string">"index.html"</span>: <span class="string">"app/index.html"</span>,</span><br><span class="line">    <span class="string">"images/"</span>: [<span class="string">"app/images/**"</span>]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"buildDir"</span>: <span class="string">"dist/"</span>,</span><br><span class="line">  <span class="string">"config"</span>: <span class="string">"config/"</span>,</span><br><span class="line">  <span class="string">"versions"</span>: &#123;</span><br><span class="line">    <span class="string">"web3"</span>: <span class="string">"1.0.0-beta"</span>,</span><br><span class="line">    <span class="string">"solc"</span>: <span class="string">"0.4.17"</span>,</span><br><span class="line">    <span class="string">"ipfs-api"</span>: <span class="string">"17.2.4"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"plugins"</span>: &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <p><code>embark.json</code></p>
+<pre><code class="json">{
+  "contracts": ["contracts/**"],
+  "app": {
+    "js/dapp.js": ["app/dapp.js"],
+    "index.html": "app/index.html",
+    "images/": ["app/images/**"]
+  },
+  "buildDir": "dist/",
+  "config": "config/",
+  "versions": {
+    "web3": "1.0.0-beta",
+    "solc": "0.4.17",
+    "ipfs-api": "17.2.4"
+  },
+  "plugins": {
+  }
+}
+</code></pre>
+
 <h3 id="contracts" class="article-heading"><a href="#contracts" class="headerlink" title="contracts"></a>contracts<a class="article-anchor" href="#contracts" aria-hidden="true"></a></h3><p>List of directories in which embark should look for contracts. These typically are GLOB expressions (e.g [“contracts/*<em>/</em>.sol”] will match all sol files inside any folders inside contracts/)</p>
 <h3 id="pipeline" class="article-heading"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline<a class="article-anchor" href="#pipeline" aria-hidden="true"></a></h3><p>The mapping between the output files and the source. e.g “js/dapp.js”: [“app/dapp.js”] will run app/dapp.js though the embark pipeline, and output the result into dist/js/dapp.js</p>
 <h3 id="build-directory" class="article-heading"><a href="#build-directory" class="headerlink" title="build directory"></a>build directory<a class="article-anchor" href="#build-directory" aria-hidden="true"></a></h3><p>The directory to which embark should output the dapp. (default is dist/)</p>
@@ -117,7 +136,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.691Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.680Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="testing.html" class="article-footer-prev" title="Testing"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="deploying.html" class="article-footer-next" title="Deploying to IPFS/Swarm"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

@@ -107,17 +107,36 @@
                 <h1 class="article-title" itemprop="name">Messages</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h3 id="Setup" class="article-heading"><a href="#Setup" class="headerlink" title="Setup"></a>Setup<a class="article-anchor" href="#Setup" aria-hidden="true"></a></h3><p>By default Embark will automatically initialize EmbarkJS with the provider configured at <code>config/communication.json</code>. However if you are using EmbarkJS directly or wish to change the provider configuration on the fly you can do:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Messages.setProvider(<span class="string">'whisper'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="listening-to-messages" class="article-heading"><a href="#listening-to-messages" class="headerlink" title="listening to messages"></a>listening to messages<a class="article-anchor" href="#listening-to-messages" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Messages.listenTo(&#123;<span class="attr">topic</span>: [<span class="string">"topic1"</span>, <span class="string">"topic2"</span>]&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"received: "</span> + message);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+                <h3 id="Setup" class="article-heading"><a href="#Setup" class="headerlink" title="Setup"></a>Setup<a class="article-anchor" href="#Setup" aria-hidden="true"></a></h3><p>By default Embark will automatically initialize EmbarkJS with the provider configured at <code>config/communication.js</code>. However if you are using EmbarkJS directly or wish to change the provider configuration on the fly you can do:</p>
+<pre><code class="javascript">EmbarkJS.Messages.setProvider('whisper')
+</code></pre>
+
+<h3 id="listening-to-messages" class="article-heading"><a href="#listening-to-messages" class="headerlink" title="listening to messages"></a>listening to messages<a class="article-anchor" href="#listening-to-messages" aria-hidden="true"></a></h3><pre><code class="javascript">EmbarkJS.Messages.listenTo({topic: ["topic1", "topic2"]}).then(function(message) {
+  console.log("received: " + message);
+})
+</code></pre>
+
 <h3 id="sending-messages" class="article-heading"><a href="#sending-messages" class="headerlink" title="sending messages"></a>sending messages<a class="article-anchor" href="#sending-messages" aria-hidden="true"></a></h3><p>you can send plain text</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Messages.sendMessage(&#123;<span class="attr">topic</span>: <span class="string">"sometopic"</span>, <span class="attr">data</span>: <span class="string">'hello world'</span>&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">EmbarkJS.Messages.sendMessage({topic: "sometopic", data: 'hello world'})
+</code></pre>
+
 <p>or an object</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Messages.sendMessage(&#123;<span class="attr">topic</span>: <span class="string">"sometopic"</span>, <span class="attr">data</span>: &#123;<span class="attr">msg</span>: <span class="string">'hello world'</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">EmbarkJS.Messages.sendMessage({topic: "sometopic", data: {msg: 'hello world'}})
+</code></pre>
+
 <p>note: array of topics are considered an AND. In Whisper you can use another array for OR combinations of several topics e.g <code>[&quot;topic1&quot;, [&quot;topic2&quot;, &quot;topic3&quot;]]</code> =&gt; <code>topic1 AND (topic2 OR topic 3)</code></p>
-<h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered communication configuration in the file <code>config/communication.json</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
+<h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered communication configuration in the file <code>config/communication.js</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
 <p>e.g :</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"whisper"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"whisper"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">// config/communication.js
+module.exports = {
+  "default": {
+    "enabled": true,
+    "provider": "whisper",
+    "available_providers": ["whisper"]
+  }
+}
+</code></pre>
+
 <p>options available:</p>
 <ul>
 <li><code>enabled</code> (boolean: true/false) to enable or completly disable communication support</li>
@@ -127,7 +146,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.696Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.683Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="storage.html" class="article-footer-prev" title="Storage"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="testing.html" class="article-footer-next" title="Testing"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

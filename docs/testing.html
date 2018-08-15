@@ -107,9 +107,40 @@
                 <h1 class="article-title" itemprop="name">Testing</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h1 id="Testing-Ethereum-Contracts" class="article-heading"><a href="#Testing-Ethereum-Contracts" class="headerlink" title="Testing Ethereum Contracts"></a>Testing Ethereum Contracts<a class="article-anchor" href="#Testing-Ethereum-Contracts" aria-hidden="true"></a></h1><h2 id="How-to" class="article-heading"><a href="#How-to" class="headerlink" title="How to"></a>How to<a class="article-anchor" href="#How-to" aria-hidden="true"></a></h2><p>You can run specs with <code>embark test</code>, it will run all the test files under<br><code>test/</code>. You can run a specific test file with <code>embark test &lt;path/test_filename.js&gt;</code></p>
-<p>Embark includes a testing lib to fastly run &amp; test your contracts in a<br>EVM.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/simple_storage_spec.js</span></span><br><span class="line"><span class="comment">/*global contract, config, it, embark, assert, web3*/</span></span><br><span class="line"><span class="keyword">const</span> SimpleStorage = embark.require(<span class="string">'Embark/contracts/SimpleStorage'</span>);</span><br><span class="line"><span class="keyword">let</span> accounts;</span><br><span class="line"></span><br><span class="line">config(&#123;</span><br><span class="line">  contracts: &#123;</span><br><span class="line">    <span class="string">"SimpleStorage"</span>: &#123;</span><br><span class="line">      args: [<span class="number">100</span>],</span><br><span class="line">      onDeploy: [<span class="string">"SimpleStorage.methods.setRegistar(web3.eth.defaultAccount).send()"</span>] <span class="comment">// example</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, (err, theAccounts) =&gt; &#123;</span><br><span class="line">  accounts = theAccounts;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">contract(<span class="string">"SimpleStorage"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.timeout(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">"should set constructor value"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> SimpleStorage.methods.storedData().call();</span><br><span class="line">    assert.strictEqual(<span class="built_in">parseInt</span>(result, <span class="number">10</span>), <span class="number">100</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">"set storage value"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> SimpleStorage.methods.set(<span class="number">150</span>).send();</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> SimpleStorage.methods.get().call();</span><br><span class="line">    assert.strictEqual(<span class="built_in">parseInt</span>(result, <span class="number">10</span>), <span class="number">499650</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+                <h1 id="Testing-Ethereum-Contracts" class="article-heading"><a href="#Testing-Ethereum-Contracts" class="headerlink" title="Testing Ethereum Contracts"></a>Testing Ethereum Contracts<a class="article-anchor" href="#Testing-Ethereum-Contracts" aria-hidden="true"></a></h1><h2 id="How-to" class="article-heading"><a href="#How-to" class="headerlink" title="How to"></a>How to<a class="article-anchor" href="#How-to" aria-hidden="true"></a></h2><p>You can run specs with <code>embark test</code>, it will run all the test files under <code>test/</code>. You can run a specific test file with <code>embark test &lt;path/test_filename.js&gt;</code></p>
+<p>Embark includes a testing lib to fastly run &amp; test your contracts in a EVM.</p>
+<pre><code class="javascript">// test/simple_storage_spec.js
+/*global contract, config, it, embark, assert, web3*/
+const SimpleStorage = embark.require('Embark/contracts/SimpleStorage');
+let accounts;
+
+config({
+  contracts: {
+    "SimpleStorage": {
+      args: [100],
+      onDeploy: ["SimpleStorage.methods.setRegistar(web3.eth.defaultAccount).send()"] // example
+    }
+  }
+}, (err, theAccounts) => {
+  accounts = theAccounts;
+});
+
+contract("SimpleStorage", function () {
+  this.timeout(0);
+
+  it("should set constructor value", async function () {
+    let result = await SimpleStorage.methods.storedData().call();
+    assert.strictEqual(parseInt(result, 10), 100);
+  });
+
+  it("set storage value", async function () {
+    await SimpleStorage.methods.set(150).send();
+    let result = await SimpleStorage.methods.get().call();
+    assert.strictEqual(parseInt(result, 10), 499650);
+  });
+});
+</code></pre>
+
 <h2 id="Global-variables" class="article-heading"><a href="#Global-variables" class="headerlink" title="Global variables"></a>Global variables<a class="article-anchor" href="#Global-variables" aria-hidden="true"></a></h2><p>Embark makes a couple variables available for you globally:</p>
 <ul>
 <li><code>contract</code>: Same as Mocha’s <code>describe</code></li>
@@ -119,20 +150,88 @@
 <li>Mocha functions: <code>describe</code>, <code>it</code>, <code>before</code>, etc.</li>
 </ul>
 <p>You can require your contracts using <code>require(&#39;Embark/contracts/YOUR_CONTRACT_NAME&#39;);</code></p>
-<h2 id="Configuring-accounts" class="article-heading"><a href="#Configuring-accounts" class="headerlink" title="Configuring accounts"></a>Configuring accounts<a class="article-anchor" href="#Configuring-accounts" aria-hidden="true"></a></h2><p>You can use the same account settings that you would use in <a href="https://embark.status.im/docs/contracts.html#Using-accounts-in-a-wallet">contracts.json</a></p>
+<h2 id="Configuring-accounts" class="article-heading"><a href="#Configuring-accounts" class="headerlink" title="Configuring accounts"></a>Configuring accounts<a class="article-anchor" href="#Configuring-accounts" aria-hidden="true"></a></h2><p>You can use the same account settings that you would use in <a href="https://embark.status.im/docs/contracts.html#Using-accounts-in-a-wallet">contracts.js</a></p>
 <p>That way, you can use a specific account for your test. </p>
 <p>You can even optionally set the balance of each account using real units eg: “5eth”, “125gwei”, “500 szabo”.<br>If the unit is not specified, Embark will assume weis.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/simple_storage_spec.js</span></span><br><span class="line"></span><br><span class="line">config(&#123;</span><br><span class="line">  <span class="string">"deployment"</span>: &#123;</span><br><span class="line">    <span class="string">"accounts"</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"privateKey"</span>: <span class="string">"your_private_key"</span>,</span><br><span class="line">        balance: <span class="string">"600000Kwei"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"privateKeyFile"</span>: <span class="string">"path/to/file"</span>, <span class="comment">// You can put more than one key, separated by , or ;</span></span><br><span class="line">        balance: <span class="string">"42 shannon"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"mnemonic"</span>: <span class="string">"12 word mnemonic"</span>,</span><br><span class="line">        <span class="string">"addressIndex"</span>: <span class="string">"0"</span>, <span class="comment">// Optionnal. The index to start getting the address</span></span><br><span class="line">        <span class="string">"numAddresses"</span>: <span class="string">"1"</span>, <span class="comment">// Optionnal. The number of addresses to get</span></span><br><span class="line">        <span class="string">"hdpath"</span>: <span class="string">"m/44'/60'/0'/0/"</span> <span class="comment">// Optionnal. HD derivation path</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">"SimpleStorage"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="Configuring-node" class="article-heading"><a href="#Configuring-node" class="headerlink" title="Configuring node"></a>Configuring node<a class="article-anchor" href="#Configuring-node" aria-hidden="true"></a></h2><p>By default Embark will use an internal VM to run the tests, however you can also<br>specify a node to connect to and run the tests there, just like in contracts.json.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/simple_storage_spec.js</span></span><br><span class="line"></span><br><span class="line">  config(&#123;</span><br><span class="line">    deployment: &#123;</span><br><span class="line">      <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">      <span class="string">"port"</span>: <span class="number">8545</span>,</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"rpc"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">"SimpleStorage"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">// test/simple_storage_spec.js
+
+config({
+  "deployment": {
+    "accounts": [
+      {
+        "privateKey": "your_private_key",
+        balance: "600000Kwei"
+      },
+      {
+        "privateKeyFile": "path/to/file", // You can put more than one key, separated by , or ;
+        balance: "42 shannon"
+      },
+      {
+        "mnemonic": "12 word mnemonic",
+        "addressIndex": "0", // Optionnal. The index to start getting the address
+        "numAddresses": "1", // Optionnal. The number of addresses to get
+        "hdpath": "m/44'/60'/0'/0/" // Optionnal. HD derivation path
+      }
+    ]
+  }
+});
+
+describe("SimpleStorage", function() {
+
+});
+</code></pre>
+
+<h2 id="Configuring-node" class="article-heading"><a href="#Configuring-node" class="headerlink" title="Configuring node"></a>Configuring node<a class="article-anchor" href="#Configuring-node" aria-hidden="true"></a></h2><p>By default Embark will use an internal VM to run the tests, however you can also specify a node to connect to and run the tests there, just like in contracts.js.</p>
+<pre><code class="javascript">// test/simple_storage_spec.js
+
+config({
+  deployment: {
+    "host": "localhost",
+    "port": 8545,
+    "type": "rpc"
+  }
+});
+
+describe("SimpleStorage", function() {
+});
+</code></pre>
+
 <h2 id="Accessing-accounts" class="article-heading"><a href="#Accessing-accounts" class="headerlink" title="Accessing accounts"></a>Accessing accounts<a class="article-anchor" href="#Accessing-accounts" aria-hidden="true"></a></h2><p>The callback used in the function <code>config</code> will let you access the accounts configured in the EVM.<br>You can assign them to a variable and use them in your tests.<br>That callback is optional. If you do not need the accounts, you do not have to supply it.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> accounts;</span><br><span class="line">config(&#123;</span><br><span class="line">  contracts: &#123;</span><br><span class="line">    <span class="string">"SimpleStorage"</span>: &#123;</span><br><span class="line">      args: [<span class="number">100</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, (err, theAccounts) =&gt; &#123;</span><br><span class="line">  accounts = theAccounts;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">let accounts;
+
+config({
+  contracts: {
+    "SimpleStorage": {
+      args: [100]
+    }
+  }
+}, (err, theAccounts) => {
+  accounts = theAccounts;
+});
+</code></pre>
+
 <h2 id="Creating-contract-instances-in-your-tests" class="article-heading"><a href="#Creating-contract-instances-in-your-tests" class="headerlink" title="Creating contract instances in your tests"></a>Creating contract instances in your tests<a class="article-anchor" href="#Creating-contract-instances-in-your-tests" aria-hidden="true"></a></h2><p>Embark handles the deployment of your contracts through the function <code>config</code>.<br>However you can use the contract’s deploy function to deploy it manually.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*global contract, it, assert, before*/</span></span><br><span class="line"><span class="keyword">const</span> SimpleStorage = <span class="built_in">require</span>(<span class="string">'Embark/contracts/SimpleStorage'</span>);</span><br><span class="line"></span><br><span class="line">contract(<span class="string">"SimpleStorage Deploy"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> SimpleStorageInstance;</span><br><span class="line"></span><br><span class="line">  before(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    SimpleStorageInstance = <span class="keyword">await</span> SimpleStorage.deploy(&#123;<span class="attr">arguments</span>: [<span class="number">150</span>]&#125;).send();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">"should set constructor value"</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">await</span> SimpleStorageInstance.methods.storedData().call();</span><br><span class="line">    assert.strictEqual(<span class="built_in">parseInt</span>(result, <span class="number">10</span>), <span class="number">150</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">/*global contract, it, assert, before*/
+const SimpleStorage = require('Embark/contracts/SimpleStorage');
+
+contract("SimpleStorage Deploy", function () {
+  let SimpleStorageInstance;
+
+  before(async function() {
+    SimpleStorageInstance = await SimpleStorage.deploy({arguments: [150]}).send();
+  });
+
+  it("should set constructor value", async function () {
+    let result = await SimpleStorageInstance.methods.storedData().call();
+    assert.strictEqual(parseInt(result, 10), 150);
+  });
+});
+</code></pre>
+
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.699Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.685Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="messages.html" class="article-footer-prev" title="Messages"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="configuration.html" class="article-footer-next" title="Configuration"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

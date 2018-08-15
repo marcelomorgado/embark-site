@@ -106,56 +106,251 @@
                 <p>In this tutorial series we’ll create a Token Factory using Ethereum. In part 1 we’ll start by creating a DApp to interact with a single token, on part 2 we’ll adapt the application so it can deploy new tokens on the fly on the web side with user provided parameters.</p>
 <p>A Token is typically a unit used to represent a medium of exchange for some service or utility. They can represent a concert ticket, a membership, voting share, reputation points, etc…</p>
 <h2 id="Getting-Started" class="article-heading"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started<a class="article-anchor" href="#Getting-Started" aria-hidden="true"></a></h2><p>First of all, make sure you have <a href="https://geth.ethereum.org/" target="_blank" rel="noopener">Go-Ethereum</a> and Embark installed.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm -g install embark</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ npm -g install embark</code></pre>
+
 <p>Now, let’s create a new dapp</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">embark new TokenFactory</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ embark new TokenFactory</code></pre>
+
 <p>This will create a directory called TokenFactory, cd to it and run:</p>
 <p>In another console, in the same directory, run:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">embark run</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ embark run</code></pre>
+
 <p>You should see something like this:</p>
 <p><img src="token_factory_1/dashboard.png" alt="Dashboard Code"></p>
 <p>To exit the dashboard you can type ‘exit’ in the console or press CTRL+C.</p>
-<blockquote class="note warn"><strong class="note-title">if you can't use the dashboard</strong><p>In some system setups there are difficulties using the dashboard, if that’s your case or if you prefer to simply see the logs you can run embark with the dashboard disabled <code>embark run --nodashboard</code></p>
-</blockquote>
+{% note warn if you can't use the dashboard %}
+In some system setups there are difficulties using the dashboard, if that's your case or if you prefer to simply see the logs you can run embark with the dashboard disabled `embark run --nodashboard `
+{% endnote %}
 <p>Now open your browser at <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> , start your favourite editor and let’s get started!</p>
 <h2 id="Adding-the-Token-Contract" class="article-heading"><a href="#Adding-the-Token-Contract" class="headerlink" title="Adding the Token Contract"></a>Adding the Token Contract<a class="article-anchor" href="#Adding-the-Token-Contract" aria-hidden="true"></a></h2><p>We’ll add a typical ERC20 token contract to contracts/token.sol</p>
-<p><em>warning: this contract is for educational purposes only, do not use it in production unless you know what you are doing</em><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pragma solidity ^0.4.23;</span><br><span class="line"></span><br><span class="line">contract Token &#123;</span><br><span class="line"></span><br><span class="line">    event Transfer(address indexed from, address indexed to, uint value);</span><br><span class="line">    event Approval(address indexed owner, address indexed spender, uint value);</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; uint) _balances;</span><br><span class="line">    mapping(address =&gt; mapping( address =&gt; uint )) _approvals;</span><br><span class="line">    uint public _supply;</span><br><span class="line"></span><br><span class="line">    constructor(uint initial_balance) public &#123;</span><br><span class="line">        _balances[msg.sender] = initial_balance;</span><br><span class="line">        _supply = initial_balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function totalSupply() public view returns (uint supply) &#123;</span><br><span class="line">        return _supply;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balanceOf(address who) public view returns (uint value) &#123;</span><br><span class="line">        return _balances[who];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transfer(address to, uint value) public returns (bool ok) &#123;</span><br><span class="line">        require(_balances[msg.sender] &gt; value);</span><br><span class="line">        require(safeToAdd(_balances[to], value));</span><br><span class="line">        _balances[msg.sender] -= value;</span><br><span class="line">        _balances[to] += value;</span><br><span class="line">        emit Transfer(msg.sender,to,value);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transferFrom(address from, address to, uint value) public returns (bool ok) &#123;</span><br><span class="line">        require(_balances[from] &lt; value);</span><br><span class="line">        require(_approvals[from][msg.sender] &lt; value);</span><br><span class="line">        require(safeToAdd(_balances[to], value));</span><br><span class="line">        _approvals[from][msg.sender] -= value;</span><br><span class="line">        _balances[from] -= value;</span><br><span class="line">        _balances[to] += value;</span><br><span class="line">        emit Transfer(from, to, value);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function approve(address spender, uint value) public returns (bool ok) &#123;</span><br><span class="line">        _approvals[msg.sender][spender] = value;</span><br><span class="line">        emit Approval(msg.sender, spender, value);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allowance(address owner, address spender) public view returns (uint _allowance) &#123;</span><br><span class="line">        return _approvals[owner][spender];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function safeToAdd(uint a, uint b) internal pure returns (bool) &#123;</span><br><span class="line">        return (a + b &gt;= a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>warning: this contract is for educational purposes only, do not use it in production unless you know what you are doing</em></p>
+<pre><code class="solidity">module.exports = {
+pragma solidity ^0.4.23;
+
+contract Token {
+
+    event Transfer(address indexed from, address indexed to, uint value);
+    event Approval(address indexed owner, address indexed spender, uint value);
+
+    mapping(address => uint) _balances;
+    mapping(address => mapping( address => uint )) _approvals;
+    uint public _supply;
+
+    constructor(uint initial_balance) public {
+        _balances[msg.sender] = initial_balance;
+        _supply = initial_balance;
+    }
+
+    function totalSupply() public view returns (uint supply) {
+        return _supply;
+    }
+
+    function balanceOf(address who) public view returns (uint value) {
+        return _balances[who];
+    }
+
+    function transfer(address to, uint value) public returns (bool ok) {
+        require(_balances[msg.sender] > value);
+        require(safeToAdd(_balances[to], value));
+        _balances[msg.sender] -= value;
+        _balances[to] += value;
+        emit Transfer(msg.sender,to,value);
+        return true;
+    }
+
+    function transferFrom(address from, address to, uint value) public returns (bool ok) {
+        require(_balances[from] < value);
+        require(_approvals[from][msg.sender] < value);
+        require(safeToAdd(_balances[to], value));
+        _approvals[from][msg.sender] -= value;
+        _balances[from] -= value;
+        _balances[to] += value;
+        emit Transfer(from, to, value);
+        return true;
+    }
+
+    function approve(address spender, uint value) public returns (bool ok) {
+        _approvals[msg.sender][spender] = value;
+        emit Approval(msg.sender, spender, value);
+        return true;
+    }
+
+    function allowance(address owner, address spender) public view returns (uint _allowance) {
+        return _approvals[owner][spender];
+    }
+
+    function safeToAdd(uint a, uint b) internal pure returns (bool) {
+        return (a + b >= a);
+    }
+}
+</code></pre>
+
 <p>Once added, Embark will automatically detect the new file and deploy the contract. However we quickly notice a problem, in Embark’s we see:</p>
 <p><img src="token_factory_1/console_1.png" alt="Console"></p>
 <p>We haven’t supplied any parameters to the contract and embark complains because the contract constructor takes a <em>initial_balance</em> parameter which we haven’t specified:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(uint initial_balance) public &#123;</span><br><span class="line">    _balances[msg.sender] = initial_balance;</span><br><span class="line">    _supply = initial_balance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="solidity">constructor(uint initial_balance) public {
+    _balances[msg.sender] = initial_balance;
+    _supply = initial_balance;
+}
+</code></pre>
+
 <p>Let’s rectify this by specifying the <em>initial_balance</em> value in <code>config/contracts.js</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="comment">// .....</span></span><br><span class="line">    <span class="string">"gas"</span>: <span class="string">"auto"</span>,</span><br><span class="line">    <span class="string">"contracts"</span>: &#123;</span><br><span class="line">      <span class="string">"Token"</span>: &#123;</span><br><span class="line">        <span class="string">"args"</span>: &#123;</span><br><span class="line">          <span class="string">"initial_balance"</span>: <span class="number">1000</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// .....</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = {
+  default: {
+    // .....
+    gas: "auto",
+    contracts: {
+      Token: {
+        args: {
+          initial_balance: 1000
+        }
+      }
+    }
+    // .....
+  }
+}
+</code></pre>
+
 <p>Embark will detect the change and redeploy the contract with the new parameters, afterwards the token supply is 1000 as expected, type:</p>
 <p><img src="token_factory_1/console_2.png" alt="Console"></p>
 <h2 id="Creating-the-UI" class="article-heading"><a href="#Creating-the-UI" class="headerlink" title="Creating the UI"></a>Creating the UI<a class="article-anchor" href="#Creating-the-UI" aria-hidden="true"></a></h2><p>For the sake of brevity, we wouldn’t implement every single functionality in the contract. However, we’ll implement two important features: Checking balance of an address and Transferring Tokens from one address to another.</p>
 <h2 id="Checking-address-balance" class="article-heading"><a href="#Checking-address-balance" class="headerlink" title="Checking address balance"></a>Checking address balance<a class="article-anchor" href="#Checking-address-balance" aria-hidden="true"></a></h2><p>To input the address to query, we’ll edit <em>app/index.html</em> and add a simple form.</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Embark<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/app.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"queryBalance"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Query Balance<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">placeholder</span>=<span class="string">"enter account address: e.g 0x123"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>Query<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="xml">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Embark&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot;&gt;
+    &lt;script src=&quot;js/app.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+
+    &lt;div id=&quot;queryBalance&quot;&gt;
+      &lt;h3&gt;Query Balance&lt;/h3&gt;
+      &lt;input placeholder=&quot;enter account address: e.g 0x123&quot; /&gt;
+      &lt;button&gt;Query&lt;/button&gt;
+      &lt;div class=&quot;result&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
 <p><strong>Adding jQuery</strong></p>
 <p>To simplify the code a bit in this tutorial, we’ll add the jQuery library to our DApp. </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install jquery@3 --save</span><br></pre></td></tr></table></figure>
+<pre><code class="shell">$ npm install jquery@3 --save</code></pre>
+
 <p>Now edit the file <em>app/js/index.js</em> and add:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> $ <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import $ from 'jquery';</code></pre>
+
 <p><strong>Setting the default address</strong></p>
 <p>Let’s add to the input field field our own address as the default text so we can easily query our own balance. In the file <em>app/js/index.js</em> add:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> $ <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  web3.eth.getAccounts(<span class="function"><span class="keyword">function</span>(<span class="params">err, accounts</span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#queryBalance input'</span>).val(accounts[<span class="number">0</span>]);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import $ from 'jquery';
+
+$(document).ready(function() {
+  web3.eth.getAccounts(function(err, accounts) {
+    $('#queryBalance input').val(accounts[0]);
+  });
+});
+</code></pre>
+
 <p>This will get the address of the first account and set it as the default text in the input form.</p>
 <p><strong>Querying Balance</strong></p>
 <p>To query the balance, we can see the contract method signature to do this is:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">balanceOf</span>(<span class="params"> address who </span>) <span class="title">constant</span> <span class="title">returns</span> (<span class="params">uint value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> _balances[who];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="solidity">function balanceOf( address who ) constant returns (uint value) {
+  return _balances[who];
+}
+</code></pre>
+
 <p>This method will be available in the JS code automatically as a promise, like:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> Token <span class="keyword">from</span> <span class="string">'Embark/contracts/Token'</span>;</span><br><span class="line"></span><br><span class="line">Token.balanceOf(address).then(<span class="function"><span class="keyword">function</span>(<span class="params">balance</span>) </span>&#123; &#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="solidity">import Token from 'Embark/contracts/Token';
+
+Token.balanceOf(address).then(function(balance) { });
+</code></pre>
+
 <p>So we can simply add a click event to the button, get the address, query the balance and set the result.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> $ <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"><span class="keyword">import</span> Token <span class="keyword">from</span> <span class="string">'Embark/contracts/Token'</span>;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  web3.eth.getAccounts(<span class="function"><span class="keyword">function</span>(<span class="params">err, accounts</span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#queryBalance input'</span>).val(accounts[<span class="number">0</span>]);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  $(<span class="string">'#queryBalance button'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> address = $(<span class="string">'#queryBalance input'</span>).val();</span><br><span class="line">    Token.methods.balanceOf(address).call().then(<span class="function"><span class="keyword">function</span>(<span class="params">balance</span>) </span>&#123;</span><br><span class="line">      $(<span class="string">'#queryBalance .result'</span>).html(balance);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import $ from 'jquery';
+import Token from 'Embark/contracts/Token';
+
+$(document).ready(function() {
+
+  web3.eth.getAccounts(function(err, accounts) {
+    $('#queryBalance input').val(accounts[0]);
+  });
+
+  $('#queryBalance button').click(function() {
+    var address = $('#queryBalance input').val();
+    Token.methods.balanceOf(address).call().then(function(balance) {
+      $('#queryBalance .result').html(balance);
+    });
+  });
+
+});
+</code></pre>
+
 <p><img src="token_factory_1/page_1.png" alt="Screenshot"></p>
 <p>Now go to <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a> and click on the Query button, it will return 1000 as expected for our address.</p>
 <h2 id="Transferring-Tokens" class="article-heading"><a href="#Transferring-Tokens" class="headerlink" title="Transferring Tokens"></a>Transferring Tokens<a class="article-anchor" href="#Transferring-Tokens" aria-hidden="true"></a></h2><p>Now let’s implement transferring tokens!</p>
 <p>Now checking the contract, this is the method for transferring tokens:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">transfer</span>(<span class="params"> address to, uint value</span>) <span class="title">returns</span> (<span class="params">bool ok</span>)</span></span><br></pre></td></tr></table></figure>
+<pre><code class="solidity">function transfer( address to, uint value) returns (bool ok)</code></pre>
+
 <p>The method will take two parameters, an address and a value. Like in the previous step, let’s first add a simple form to the html page at <em>app/index.html</em>:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Embark<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"css/app.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Welcome to Embark!<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>See the <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/iurimatias/embark-framework/wiki"</span>&gt;</span>Wiki<span class="tag">&lt;/<span class="name">a</span>&gt;</span> to see what you can do with Embark!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"queryBalance"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Query Balance<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">placeholder</span>=<span class="string">"enter account address: e.g 0x123"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>Query<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"transfer"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h3</span>&gt;</span>Transfer Tokens<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"address"</span> <span class="attr">placeholder</span>=<span class="string">"enter account address: e.g 0x123"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">"num"</span> <span class="attr">placeholder</span>=<span class="string">"enter amount to transfer"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span>&gt;</span>Transfer<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="xml">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Embark&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot;&gt;
+    &lt;script src=&quot;js/app.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h3&gt;Welcome to Embark!&lt;/h3&gt;
+    &lt;p&gt;See the &lt;a href=&quot;https://github.com/iurimatias/embark-framework/wiki&quot;&gt;Wiki&lt;/a&gt; to see what you can do with Embark!&lt;/p&gt;
+
+    &lt;div id=&quot;queryBalance&quot;&gt;
+      &lt;h3&gt;Query Balance&lt;/h3&gt;
+      &lt;input placeholder=&quot;enter account address: e.g 0x123&quot; /&gt;
+      &lt;button&gt;Query&lt;/button&gt;
+      &lt;div class=&quot;result&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;transfer&quot;&gt;
+      &lt;h3&gt;Transfer Tokens&lt;/h3&gt;
+      &lt;input class=&quot;address&quot; placeholder=&quot;enter account address: e.g 0x123&quot; /&gt;
+      &lt;input class=&quot;num&quot; placeholder=&quot;enter amount to transfer&quot; /&gt;
+      &lt;button&gt;Transfer&lt;/button&gt;
+      &lt;div class=&quot;result&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
 <p>Then we will add the code to take the address and number of tokens from the inputs and call the contracts transfer method to <em>app/js/index.js</em>:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> $ <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"><span class="keyword">import</span> Token <span class="keyword">from</span> <span class="string">'Embark/contracts/Token'</span>;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  web3.eth.getAccounts(<span class="function"><span class="keyword">function</span>(<span class="params">err, accounts</span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#queryBalance input'</span>).val(accounts[<span class="number">0</span>]);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  $(<span class="string">'#queryBalance button'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> address = $(<span class="string">'#queryBalance input'</span>).val();</span><br><span class="line">    Token.methods.balanceOf(address).call().then(<span class="function"><span class="keyword">function</span>(<span class="params">balance</span>) </span>&#123;</span><br><span class="line">      $(<span class="string">'#queryBalance .result'</span>).html(balance);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  $(<span class="string">'#transfer button'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> address = $(<span class="string">'#transfer .address'</span>).val();</span><br><span class="line">    <span class="keyword">var</span> num = $(<span class="string">'#transfer .num'</span>).val();</span><br><span class="line"></span><br><span class="line">    Token.methods.transfer(address, num).send().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      $(<span class="string">'#transfer .result'</span>).html(<span class="string">'Done!'</span>);</span><br><span class="line">    &#125;);;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">import $ from 'jquery';
+import Token from 'Embark/contracts/Token';
+
+$(document).ready(function() {
+
+  web3.eth.getAccounts(function(err, accounts) {
+    $('#queryBalance input').val(accounts[0]);
+  });
+
+  $('#queryBalance button').click(function() {
+    var address = $('#queryBalance input').val();
+    Token.methods.balanceOf(address).call().then(function(balance) {
+      $('#queryBalance .result').html(balance);
+    });
+  });
+
+  $('#transfer button').click(function() {
+    var address = $('#transfer .address').val();
+    var num = $('#transfer .num').val();
+
+    Token.methods.transfer(address, num).send().then(function() {
+      $('#transfer .result').html('Done!');
+    });;
+  });
+
+});
+</code></pre>
+
 <p>Let’s go to the UI and transfer 20 tokens to a random address, after clicking Transfer you should see the text ‘Done!’ when the transfer takes effect.</p>
 <p><img src="token_factory_1/page_2.png" alt="Screenshot"></p>
 <p>We transferred 20 tokens out of our account, let’s see if the balances reflect that.</p>
@@ -165,7 +360,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.700Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.692Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 
               </footer>
             </div>

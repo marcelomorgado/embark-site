@@ -107,7 +107,8 @@
                 <h1 class="article-title" itemprop="name">Embark Commands</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h2 id="new" class="article-heading"><a href="#new" class="headerlink" title="new"></a>new<a class="article-anchor" href="#new" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark new &lt;dappName&gt;</span><br></pre></td></tr></table></figure>
+                <h2 id="new" class="article-heading"><a href="#new" class="headerlink" title="new"></a>new<a class="article-anchor" href="#new" aria-hidden="true"></a></h2><pre><code class="shell">$ embark new dappName</code></pre>
+
 <p>Creates a new empty DApp project. If no <code>dappName</code> is provided, Embark will ask for the dappName.</p>
 <table>
 <thead>
@@ -123,11 +124,14 @@
 </tr>
 </tbody>
 </table>
-<h2 id="demo" class="article-heading"><a href="#demo" class="headerlink" title="demo"></a>demo<a class="article-anchor" href="#demo" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark demo</span><br></pre></td></tr></table></figure>
+<h2 id="demo" class="article-heading"><a href="#demo" class="headerlink" title="demo"></a>demo<a class="article-anchor" href="#demo" aria-hidden="true"></a></h2><pre><code class="shell">$ embark demo</code></pre>
+
 <p>Generates a demo Embark Project with a working contract and examples of working with contracts, IPFS and Whisper.</p>
-<h2 id="build" class="article-heading"><a href="#build" class="headerlink" title="build"></a>build<a class="article-anchor" href="#build" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark build [environment]</span><br></pre></td></tr></table></figure>
+<h2 id="build" class="article-heading"><a href="#build" class="headerlink" title="build"></a>build<a class="article-anchor" href="#build" aria-hidden="true"></a></h2><pre><code class="shell">$ embark build [environment]</code></pre>
+
 <p>Deploys and Builds the DApp at dist/. If no <code>environment</code> is provider embark will use <code>development</code> by default.</p>
-<h2 id="run" class="article-heading"><a href="#run" class="headerlink" title="run"></a>run<a class="article-anchor" href="#run" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark run [environment]</span><br></pre></td></tr></table></figure>
+<h2 id="run" class="article-heading"><a href="#run" class="headerlink" title="run"></a>run<a class="article-anchor" href="#run" aria-hidden="true"></a></h2><pre><code class="shell">$ embark run [environment]</code></pre>
+
 <p>Deploys and Builds the DApp at <code>dist/</code>. By default will launch a dashboard and start a dev server at <code>http://localhost:4000/</code>. If no <code>environment</code> is provider embark will use <code>development</code> by default.  </p>
 <table>
 <thead>
@@ -163,10 +167,12 @@
 </tr>
 </tbody>
 </table>
-<h2 id="blockchain" class="article-heading"><a href="#blockchain" class="headerlink" title="blockchain"></a>blockchain<a class="article-anchor" href="#blockchain" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark blockchain [environment]</span><br></pre></td></tr></table></figure>
+<h2 id="blockchain" class="article-heading"><a href="#blockchain" class="headerlink" title="blockchain"></a>blockchain<a class="article-anchor" href="#blockchain" aria-hidden="true"></a></h2><pre><code class="shell">$ embark blockchain [environment]</code></pre>
+
 <p>Takes the config at <code>config/blockchain.json</code> for the <code>environment</code> specified and starts a blockchain node. If no <code>environment</code> is provider embark will use <code>development</code> by default.</p>
 <p>If you want, you can skip the step of running <code>embark blockchain</code>, as <code>embark run</code>, <code>build</code> and <code>upload</code> now all start a blockchain node in a separate process if there is not one already started using the same configurations.</p>
-<h2 id="simulator" class="article-heading"><a href="#simulator" class="headerlink" title="simulator"></a>simulator<a class="article-anchor" href="#simulator" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark simulator [environment]</span><br></pre></td></tr></table></figure>
+<h2 id="simulator" class="article-heading"><a href="#simulator" class="headerlink" title="simulator"></a>simulator<a class="article-anchor" href="#simulator" aria-hidden="true"></a></h2><pre><code class="shell">$ embark simulator [environment]</code></pre>
+
 <p>Takes the config at <code>config/blockchain.json</code> for the <code>environment</code> specified and starts a blockchain simulator. If no <code>environment</code> is provider embark will use <code>development</code> by default.</p>
 <table>
 <thead>
@@ -198,20 +204,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="test" class="article-heading"><a href="#test" class="headerlink" title="test"></a>test<a class="article-anchor" href="#test" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark <span class="built_in">test</span> [file]</span><br></pre></td></tr></table></figure>
+<h2 id="test" class="article-heading"><a href="#test" class="headerlink" title="test"></a>test<a class="article-anchor" href="#test" aria-hidden="true"></a></h2><pre><code class="shell">$ embark test [file]</code></pre>
+
 <p>Runs Tests. If <code>file</code> is not specified then it will run all the tests inside the <code>test/</code> directory.</p>
-<h2 id="reset" class="article-heading"><a href="#reset" class="headerlink" title="reset"></a>reset<a class="article-anchor" href="#reset" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark reset</span><br></pre></td></tr></table></figure>
+<h2 id="reset" class="article-heading"><a href="#reset" class="headerlink" title="reset"></a>reset<a class="article-anchor" href="#reset" aria-hidden="true"></a></h2><pre><code class="shell">$ embark reset</code></pre>
+
 <p>Resets embarks state on this dapp including clearing cache.</p>
-<h2 id="upload" class="article-heading"><a href="#upload" class="headerlink" title="upload"></a>upload<a class="article-anchor" href="#upload" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark upload [platform] [environment]</span><br></pre></td></tr></table></figure>
+<h2 id="upload" class="article-heading"><a href="#upload" class="headerlink" title="upload"></a>upload<a class="article-anchor" href="#upload" aria-hidden="true"></a></h2><pre><code class="shell">$ embark upload [platform] [environment]</code></pre>
+
 <p>Uploads the DApp to a decentralized storage such as IPFS. <code>platform</code> can be <code>ipfs</code> or <code>swarm</code> or another parameter if supported by a plugin. If no <code>environment</code> is provider embark will use <code>development</code> by default.</p>
-<h2 id="graph" class="article-heading"><a href="#graph" class="headerlink" title="graph"></a>graph<a class="article-anchor" href="#graph" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark graph</span><br></pre></td></tr></table></figure>
+<h2 id="graph" class="article-heading"><a href="#graph" class="headerlink" title="graph"></a>graph<a class="article-anchor" href="#graph" aria-hidden="true"></a></h2><pre><code class="shell">$ embark graph</code></pre>
+
 <p>Generates documentation based on the smart contracts configured</p>
-<h2 id="version" class="article-heading"><a href="#version" class="headerlink" title="version"></a>version<a class="article-anchor" href="#version" aria-hidden="true"></a></h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ embark version</span><br></pre></td></tr></table></figure>
+<h2 id="version" class="article-heading"><a href="#version" class="headerlink" title="version"></a>version<a class="article-anchor" href="#version" aria-hidden="true"></a></h2><pre><code class="shell">$ embark version</code></pre>
+
 <p>Displays version information.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.694Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.682Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="console_commands.html" class="article-footer-prev" title="Console Commands"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="web3js.html" class="article-footer-next" title="Web3.js"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

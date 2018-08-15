@@ -108,24 +108,62 @@
               </header>
               <div class="article-content" itemprop="articleBody">
                 <h3 id="embark-pluginConfig" class="article-heading"><a href="#embark-pluginConfig" class="headerlink" title="embark.pluginConfig"></a>embark.pluginConfig<a class="article-anchor" href="#embark-pluginConfig" aria-hidden="true"></a></h3><p>Object containing the config for the plugin specified in embark.json, for e.g with:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="string">"plugins"</span>: &#123;</span><br><span class="line">  <span class="string">"embark-babel"</span>: &#123; <span class="string">"files"</span>: [<span class="string">"**/*.js"</span>, <span class="string">"!**/jquery.min.js"</span>], <span class="string">"presets"</span>: [<span class="string">"es2015"</span>, <span class="string">"react"</span>] &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="json">"plugins": {
+  "embark-babel": { "files": ["**/*.js", "!**/jquery.min.js"], "presets": ["es2015", "react"] }
+}
+</code></pre>
+
 <p><code>embark.pluginConfig</code> will contain <code>{ &quot;files&quot;: [&quot;**/*.js&quot;, &quot;!**/jquery.min.js&quot;], &quot;presets&quot;: [&quot;es2015&quot;, &quot;react&quot;] }</code></p>
 <h3 id="embark-registerPipeline-matchingFiles-callback-options" class="article-heading"><a href="#embark-registerPipeline-matchingFiles-callback-options" class="headerlink" title="embark.registerPipeline(matchingFiles, callback(options))"></a>embark.registerPipeline(matchingFiles, callback(options))<a class="article-anchor" href="#embark-registerPipeline-matchingFiles-callback-options" aria-hidden="true"></a></h3><p>This call will return the content of the current asset file so the plugin can transform it in some way. Typically this is used to implement pipeline plugins such as Babel, JSX, sass to css, etc..</p>
 <p><code>matchingFiles</code> is an array of matching files the plugin should be called for e.g [<code>**/*.js</code>, <code>!vendor/jquery.js</code>] matches all javascript files except vendor/jquery.js</p>
 <p>options available:</p>
 <ul>
-<li>targetFile - filename to be generated</li>
-<li>source - content of the file</li>
+<li><code>targetFile</code> - filename to be generated</li>
+<li><code>source</code> - content of the file</li>
 </ul>
 <p>expected return: <code>string</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> babel = <span class="built_in">require</span>(<span class="string">"babel-core"</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">"babel-preset-react"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerPipeline([<span class="string">"**/*.js"</span>, <span class="string">"**/*.jsx"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> babel.transform(options.source, &#123;<span class="attr">minified</span>: <span class="literal">true</span>, <span class="attr">presets</span>: [<span class="string">'react'</span>]&#125;).code;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-registerContractConfiguration-contractsConfig" class="article-heading"><a href="#embark-registerContractConfiguration-contractsConfig" class="headerlink" title="embark.registerContractConfiguration(contractsConfig)"></a>embark.registerContractConfiguration(contractsConfig)<a class="article-anchor" href="#embark-registerContractConfiguration-contractsConfig" aria-hidden="true"></a></h3><p>This call is used to specify a configure of one or more contracts in one or<br>several environments. This is useful for specifying the different configurations<br>a contract might have depending on the enviroment. For instance in the code<br>bellow, the <code>DGDToken</code> contract code will redeployed with the arguments<br><code>100</code> in any environment, except for the livenet since it’s already deployed<br>there at a particular address.</p>
+<pre><code class="javascript">var babel = require("babel-core");
+require("babel-preset-react");
+
+module.exports = function(embark) {
+  embark.registerPipeline(["**/*.js", "**/*.jsx"], function(options) {
+    return babel.transform(options.source, {minified: true, presets: ['react']}).code;
+  });
+}
+</code></pre>
+
+<h3 id="embark-registerContractConfiguration-contractsConfig" class="article-heading"><a href="#embark-registerContractConfiguration-contractsConfig" class="headerlink" title="embark.registerContractConfiguration(contractsConfig)"></a>embark.registerContractConfiguration(contractsConfig)<a class="article-anchor" href="#embark-registerContractConfiguration-contractsConfig" aria-hidden="true"></a></h3><p>This call is used to specify a configure of one or more contracts in one or several environments. This is useful for specifying the different configurations a contract might have depending on the enviroment. For instance in the code bellow, the <code>DGDToken</code> contract code will redeployed with the arguments <code>100</code> in any environment, except for the livenet since it’s already deployed there at a particular address.</p>
 <p>Typically this call is used in combination with <code>embark.addContractFile</code></p>
-<p><code>contractsConfig</code> is an object in the same structure as the one found in the<br>contracts configuration at <code>config/contracts.json</code>. The users own<br>configuration will be merged with the one specified in the plugins.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerContractConfiguration(&#123;</span><br><span class="line">      <span class="string">"default"</span>: &#123;</span><br><span class="line">        <span class="string">"contracts"</span>: &#123;</span><br><span class="line">          <span class="string">"DGDToken"</span>: &#123;</span><br><span class="line">            <span class="string">"args"</span>: [</span><br><span class="line">              <span class="number">100</span></span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">"livenet"</span>: &#123;</span><br><span class="line">        <span class="string">"contracts"</span>: &#123;</span><br><span class="line">          <span class="string">"DGDToken"</span>: &#123;</span><br><span class="line">            <span class="string">"address"</span>: <span class="string">"0xe0b7927c4af23765cb51314a0e0521a9645f0e2a"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>contractsConfig</code> is an object in the same structure as the one found in the contracts configuration at <code>config/contracts.json</code>. The users own configuration will be merged with the one specified in the plugins.</p>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerContractConfiguration({
+    "default": {
+      "contracts": {
+        "DGDToken": {
+          "args": [
+            100
+          ]
+        }
+      }
+    },
+    "livenet": {
+      "contracts": {
+        "DGDToken": {
+          "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a"
+        }
+      }
+    }
+  });
+}
+</code></pre>
+
 <h3 id="embark-addContractFile-file" class="article-heading"><a href="#embark-addContractFile-file" class="headerlink" title="embark.addContractFile(file)"></a>embark.addContractFile(file)<a class="article-anchor" href="#embark-addContractFile-file" aria-hidden="true"></a></h3><p>Typically this call is used in combination with <code>embark.registerContractConfiguration</code>. If you want to make the contract available but not automatically deployed without the user specifying so you can use <code>registerContractConfiguration</code> to set the contract config to <code>deploy: false</code>, this is particularly useful for when the user is meant to extend the contract being given (e.g <code>contract MyToken is StandardToken</code>)</p>
 <p><code>file</code> is the contract file to add to embark, the path should relative to the plugin.</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.addContractFile(<span class="string">"./DGDToken.sol"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.addContractFile("./DGDToken.sol");
+}
+</code></pre>
+
 <h3 id="embark-addFileToPipeline-file-options" class="article-heading"><a href="#embark-addFileToPipeline-file-options" class="headerlink" title="embark.addFileToPipeline(file, options)"></a>embark.addFileToPipeline(file, options)<a class="article-anchor" href="#embark-addFileToPipeline-file-options" aria-hidden="true"></a></h3><p>This call is used to add a file to the pipeline so it’s included with the dapp on the client side.</p>
 <p><code>file</code> is the file to add to the pipeline, the path should relative to the plugin.</p>
 <p><code>intendedPath</code> is the intended path outside of the plugin</p>
@@ -133,7 +171,11 @@
 <ul>
 <li>skipPipeline - If true it will not apply transformations to the file. For<br>example if you have a babel plugin to transform es6 code or a minifier plugin, setting this to<br>true will not apply the plugin on this file.</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.addFileToPipeline(<span class="string">"./jquery.js"</span>, &#123;<span class="attr">skipPipeline</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.addFileToPipeline("./jquery.js", {skipPipeline: true});
+}
+</code></pre>
+
 <h3 id="embark-registerBeforeDeploy-callback-options-callback" class="article-heading"><a href="#embark-registerBeforeDeploy-callback-options-callback" class="headerlink" title="embark.registerBeforeDeploy(callback(options), [callback])"></a>embark.registerBeforeDeploy(callback(options), [callback])<a class="article-anchor" href="#embark-registerBeforeDeploy-callback-options-callback" aria-hidden="true"></a></h3><p>This call can be used to add handler to process contract code after it was generated, but immediately before it is going to be deployed.<br>It is useful to replace placeholders with dynamic values.</p>
 <p>options available:</p>
 <ul>
@@ -146,7 +188,15 @@
 <p>You can use the callback argument instead of the callback option if you prefer. It needs the same result object.</p>
 <p>expected return: ignored</p>
 <p>example:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">  embark.registerBeforeDeploy(<span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> code = options.contract.code.replace(<span class="regexp">/deaddeaddeaddeaddeaddeaddeaddeaddeaddead/ig</span>, <span class="string">'c0dec0dec0dec0dec0dec0dec0dec0dec0dec0de'</span>);</span><br><span class="line">    options.callback(&#123; <span class="attr">contractCode</span>: code &#125;);</span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">// ignored</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerBeforeDeploy(function(options) {
+    var code = options.contract.code.replace(/deaddeaddeaddeaddeaddeaddeaddeaddeaddead/ig, 'c0dec0dec0dec0dec0dec0dec0dec0dec0dec0de');
+    options.callback({ contractCode: code });
+    return; // ignored
+  });
+}
+</code></pre>
+
 <h3 id="embark-registerClientWeb3Provider-callback-options" class="article-heading"><a href="#embark-registerClientWeb3Provider-callback-options" class="headerlink" title="embark.registerClientWeb3Provider(callback(options))"></a>embark.registerClientWeb3Provider(callback(options))<a class="article-anchor" href="#embark-registerClientWeb3Provider-callback-options" aria-hidden="true"></a></h3><p>This call can be used to override the default web3 object generation in the dapp. it’s useful if you want to add a plugin to interact with services like <a href="http://infura.io" target="_blank" rel="noopener">http://infura.io</a> or if you want to use your own web3.js library extension.</p>
 <p>options available:</p>
 <ul>
@@ -156,7 +206,14 @@
 </ul>
 <p>expected return: <code>string</code></p>
 <p>example:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerClientWeb3Provider(<span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"web3 = new Web3(new Web3.providers.HttpProvider('http://"</span> + options.rpcHost + <span class="string">":"</span> + options.rpcPort + <span class="string">"'));"</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerClientWeb3Provider(function(options) {
+    return "web3 = new Web3(new Web3.providers.HttpProvider('http://" + options.rpcHost + ":" + options.rpcPort + "'));";
+  });
+}
+</code></pre>
+
+
 <h3 id="embark-registerContractsGeneration-callback-options" class="article-heading"><a href="#embark-registerContractsGeneration-callback-options" class="headerlink" title="embark.registerContractsGeneration(callback(options))"></a>embark.registerContractsGeneration(callback(options))<a class="article-anchor" href="#embark-registerContractsGeneration-callback-options" aria-hidden="true"></a></h3><p>By default Embark will use EmbarkJS to declare contracts in the dapp. You can override and use your own client side library.</p>
 <p>options available:</p>
 <ul>
@@ -170,10 +227,31 @@
 <li>runtimeByteCode</li>
 </ul>
 <p>expected return: <code>string</code></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">embark.registerContractsGeneration(<span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> contractGenerations = [];</span><br><span class="line">    <span class="built_in">Object</span>.keys(options.contracts).map(<span class="function"><span class="params">className</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> contract = options.contracts[className];</span><br><span class="line">      <span class="keyword">const</span> abi = <span class="built_in">JSON</span>.stringify(contract.abiDefinition);</span><br><span class="line"></span><br><span class="line">      contractGenerations.push(<span class="string">`<span class="subst">$&#123;className&#125;</span> = web3.eth.contract('<span class="subst">$&#123;abi&#125;</span>').at('<span class="subst">$&#123;contract.deployedAddress&#125;</span>')`</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> contractGenerations.join(<span class="string">'\n'</span>);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">embark.registerContractsGeneration(function (options) {
+  const contractGenerations = [];
+  Object.keys(options.contracts).map(className => {
+    const contract = options.contracts[className];
+    const abi = JSON.stringify(contract.abiDefinition);
+
+    contractGenerations.push(`${className} = web3.eth.contract('${abi}').at('${contract.deployedAddress}')`);
+  });
+  return contractGenerations.join('\n');
+});
+</code></pre>
+
 <h3 id="embark-registerConsoleCommand-callback-options" class="article-heading"><a href="#embark-registerConsoleCommand-callback-options" class="headerlink" title="embark.registerConsoleCommand(callback(options))"></a>embark.registerConsoleCommand(callback(options))<a class="article-anchor" href="#embark-registerConsoleCommand-callback-options" aria-hidden="true"></a></h3><p>This call is used to extend the console with custom commands.</p>
 <p>expected return: <code>string</code> (output to print in console) or <code>boolean</code> (skip command if false)</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerConsoleCommand(<span class="function"><span class="keyword">function</span>(<span class="params">cmd, options</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (cmd === <span class="string">"hello"</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello there!"</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// continue to embark or next plugin;</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerConsoleCommand(function(cmd, options) {
+    if (cmd === "hello") {
+      return "hello there!";
+    }
+    // continue to embark or next plugin;
+    return false;
+  });
+}
+</code></pre>
+
 <h3 id="embark-registerCompiler-extension-callback-contractFiles-doneCallback" class="article-heading"><a href="#embark-registerCompiler-extension-callback-contractFiles-doneCallback" class="headerlink" title="embark.registerCompiler(extension, callback(contractFiles, doneCallback))"></a>embark.registerCompiler(extension, callback(contractFiles, doneCallback))<a class="article-anchor" href="#embark-registerCompiler-extension-callback-contractFiles-doneCallback" aria-hidden="true"></a></h3><p>Expected doneCallback arguments: <code>err</code> and  <code>hash</code> of compiled contracts</p>
 <ul>
 <li>Hash of objects containing the compiled contracts. (key: contractName, value: contract object)<ul>
@@ -195,69 +273,138 @@
 </li>
 </ul>
 <p>Below a possible implementation of a solcjs plugin:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> solc = <span class="built_in">require</span>(<span class="string">'solc'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerCompiler(<span class="string">".sol"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">contractFiles, cb</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// prepare input for solc</span></span><br><span class="line">      <span class="keyword">var</span> input = &#123;&#125;;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; contractFiles.length; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> filename = contractFiles[i].filename.replace(<span class="string">'app/contracts/'</span>,<span class="string">''</span>);</span><br><span class="line">        input[filename] = contractFiles[i].content.toString();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// compile files</span></span><br><span class="line">      <span class="keyword">var</span> output = solc.compile(&#123;<span class="attr">sources</span>: input&#125;, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// generate the compileObject expected by embark</span></span><br><span class="line">      <span class="keyword">var</span> json = output.contracts;</span><br><span class="line">      <span class="keyword">var</span> compiled_object = &#123;&#125;;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> className <span class="keyword">in</span> json) &#123;</span><br><span class="line">        <span class="keyword">var</span> contract = json[className];</span><br><span class="line"></span><br><span class="line">        compiled_object[className] = &#123;&#125;;</span><br><span class="line">        compiled_object[className].code            = contract.bytecode;</span><br><span class="line">        compiled_object[className].runtimeBytecode = contract.runtimeBytecode;</span><br><span class="line">        compiled_object[className].gasEstimates    = contract.gasEstimates;</span><br><span class="line">        compiled_object[className].functionHashes  = contract.functionHashes;</span><br><span class="line">        compiled_object[className].abiDefinition   = <span class="built_in">JSON</span>.parse(contract.interface);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      cb(<span class="literal">null</span>, compiled_object);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-logger" class="article-heading"><a href="#embark-logger" class="headerlink" title="embark.logger"></a>embark.logger<a class="article-anchor" href="#embark-logger" aria-hidden="true"></a></h3><p>To print messages to the embark log is it better to use <code>embark.logger</code><br>instead of <code>console</code>.</p>
+<pre><code class="javascript">var solc = require('solc');
+
+module.exports = function(embark) {
+  embark.registerCompiler(".sol", function(contractFiles, cb) {
+    // prepare input for solc
+    var input = {};
+    for (var i = 0; i < contractFiles.length; i++) {
+      var filename = contractFiles[i].filename.replace('app/contracts/','');
+      input[filename] = contractFiles[i].content.toString();
+    }
+
+    // compile files
+    var output = solc.compile({sources: input}, 1);
+
+    // generate the compileObject expected by embark
+    var json = output.contracts;
+    var compiled_object = {};
+    for (var className in json) {
+      var contract = json[className];
+
+      compiled_object[className] = {};
+      compiled_object[className].code            = contract.bytecode;
+      compiled_object[className].runtimeBytecode = contract.runtimeBytecode;
+      compiled_object[className].gasEstimates    = contract.gasEstimates;
+      compiled_object[className].functionHashes  = contract.functionHashes;
+      compiled_object[className].abiDefinition   = JSON.parse(contract.interface);
+    }
+
+    cb(null, compiled_object);
+  });
+}
+</code></pre>
+
+<h3 id="embark-logger" class="article-heading"><a href="#embark-logger" class="headerlink" title="embark.logger"></a>embark.logger<a class="article-anchor" href="#embark-logger" aria-hidden="true"></a></h3><p>To print messages to the embark log is it better to use <code>embark.logger</code> instead of <code>console</code>.</p>
 <p>e.g <code>embark.logger.info(&quot;hello&quot;)</code></p>
 <h3 id="embark-events-on-eventName-callback-args" class="article-heading"><a href="#embark-events-on-eventName-callback-args" class="headerlink" title="embark.events.on(eventName, callback(*args))"></a>embark.events.on(eventName, callback(*args))<a class="article-anchor" href="#embark-events-on-eventName-callback-args" aria-hidden="true"></a></h3><p>This call is used to listen and react to events that happen in Embark such as contract deployment</p>
 <ul>
 <li>eventName - name of event to listen to<ul>
 <li>available events:<ul>
-<li>“contractsDeployed” - triggered when contracts have been deployed</li>
-<li>“file-add”, “file-change”, “file-remove”, “file-event” - triggered on a file change, args is (filetype, path)</li>
-<li>“outputDone” - triggered when dapp is (re)generated</li>
-<li>“firstDeploymentDone” - triggered when the dapp is deployed and generated for the first time</li>
-<li>“check:backOnline:serviceName” - triggered when the service with <code>serviceName</code> comes back online</li>
-<li>“check:wentOffline:serviceName” - triggered when the service with <code>serviceName</code> goes offline</li>
-<li>“log” - triggered on a log, args is (logLevel, logMsg)</li>
-<li>“contractsState” - list of contracts, their deployment status, address, etc..</li>
-<li>“servicesState” - list of services and their state</li>
-<li>“exit”: - triggered when embark is terminating</li>
-<li>“deploy:contract:deployed”: - triggered when a contract is deployed, the callback will contain the contract object</li>
-<li>“deploy:contract:undeployed”: - triggered when a contract was not deployed (typically because there is no need), the callback will contain the contract object</li>
-<li>“deploy:contract:error”: - triggered when a contract couldn’t be deployed due to an error, the callback will contain the contract object</li>
-<li>“deploy:contract:receipt”: - triggered on a contract deployment (succefull or not), the callback will contain the resulting receipt</li>
-<li>“contractsState”: - triggered often, whenever there are changes to contracts, the callback will contain an object containing the contract names, address and state, etc..</li>
-<li>“deploy:beforeAll”: - triggered before contract deployment starts</li>
-<li>“contracts:deploy:afterAll”: - triggered after contract deployment starts</li>
+<li><code>contractsDeployed</code> - triggered when contracts have been deployed</li>
+<li><code>file-add</code>, <code>file-change</code>, <code>file-remove</code>, <code>file-event</code> - triggered on a file change, args is (filetype, path)</li>
+<li><code>outputDone</code> - triggered when dapp is (re)generated</li>
+<li><code>firstDeploymentDone</code> - triggered when the dapp is deployed and generated for the first time</li>
+<li><code>check:backOnline:serviceName</code> - triggered when the service with <code>serviceName</code> comes back online</li>
+<li><code>check:wentOffline:serviceName</code> - triggered when the service with <code>serviceName</code> goes offline</li>
+<li><code>log</code> - triggered on a log, args is (logLevel, logMsg)</li>
+<li><code>contractsState</code> - list of contracts, their deployment status, address, etc..</li>
+<li><code>servicesState</code> - list of services and their state</li>
+<li><code>exit</code>: - triggered when embark is terminating</li>
+<li><code>deploy:contract:deployed</code>: - triggered when a contract is deployed, the callback will contain the contract object</li>
+<li><code>deploy:contract:undeployed</code>: - triggered when a contract was not deployed (typically because there is no need), the callback will contain the contract object</li>
+<li><code>deploy:contract:error</code>: - triggered when a contract couldn’t be deployed due to an error, the callback will contain the contract object</li>
+<li><code>deploy:contract:receipt</code>: - triggered on a contract deployment (succefull or not), the callback will contain the resulting receipt</li>
+<li><code>contractsState</code>: - triggered often, whenever there are changes to contracts, the callback will contain an object containing the contract names, address and state, etc..</li>
+<li><code>deploy:beforeAll</code>: - triggered before contract deployment starts</li>
+<li><code>contracts:deploy:afterAll</code>: - triggered after contract deployment starts</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.events.on(<span class="string">"contractsDeployed"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      embark.logger.info(<span class="string">"plugin says: your contracts have been deployed"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    embark.events.on(<span class="string">"file-change"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">filetype, path</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (type === <span class="string">'contract'</span>) &#123;</span><br><span class="line">        embark.logger.info(<span class="string">"plugin says: you just changed the contract at "</span> + path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.events.on("contractsDeployed", function() {
+    embark.logger.info("plugin says: your contracts have been deployed");
+  });
+  embark.events.on("file-change", function(filetype, path) {
+    if (type === 'contract') {
+      embark.logger.info("plugin says: you just changed the contract at " + path);
+    }
+  });
+}
+</code></pre>
+
 <h3 id="embark-events-request-requestName-callback-args" class="article-heading"><a href="#embark-events-request-requestName-callback-args" class="headerlink" title="embark.events.request(requestName, callback(*args))"></a>embark.events.request(requestName, callback(*args))<a class="article-anchor" href="#embark-events-request-requestName-callback-args" aria-hidden="true"></a></h3><p>This call is used to request a certain resource from Embark</p>
 <ul>
 <li>requestName - name of request to listen to<ul>
 <li>available requests:<ul>
-<li>(“deploy:contract”, contractObj) - deploys a particular contract through embark</li>
-<li>(“runcode:eval”, code) - runs js code in the Embark engine.</li>
-<li>(“runcode:register”, cmdName, cmdObj) - ‘registers’ a variable cmdName to correspond to a js object cmdObj (note: this should be done thourgh an emit);</li>
-<li>(“contracts:list”) - returns a list a callback containing (err, contractList) containing a collection of available contracts</li>
-<li>(“compiler:contracts”, contractFiles) - requests embark to compile a list of files, will return a compiled object in the callback</li>
-<li>(“services:register”, serviceName, checkCallback) - requests embark to register a service, it will execute checkCallback every 5 seconds, the callback should return an object containing the service name and status (See embark.registerServiceCheck)</li>
-<li>(“console:command”, cmd) - execute a command in the console</li>
+<li>(<code>deploy:contract</code>, contractObj) - deploys a particular contract through embark</li>
+<li>(<code>runcode:eval</code>, code) - runs js code in the Embark engine.</li>
+<li>(<code>runcode:register</code>, cmdName, cmdObj) - ‘registers’ a variable cmdName to correspond to a js object cmdObj (note: this should be done thourgh an emit);</li>
+<li>(<code>contracts:list</code>) - returns a list a callback containing (err, contractList) containing a collection of available contracts</li>
+<li>(<code>compiler:contracts</code>, contractFiles) - requests embark to compile a list of files, will return a compiled object in the callback</li>
+<li>(<code>services:register</code>, serviceName, checkCallback) - requests embark to register a service, it will execute checkCallback every 5 seconds, the callback should return an object containing the service name and status (See embark.registerServiceCheck)</li>
+<li>(<code>console:command</code>, cmd) - execute a command in the console</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.events.request(<span class="string">"code"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">code</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// Do something with the code</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.events.request("code", function(code) {
+    // Do something with the code
+  });
+}
+</code></pre>
+
 <h3 id="embark-registerServiceCheck-serviceName-callback-name-status-time" class="article-heading"><a href="#embark-registerServiceCheck-serviceName-callback-name-status-time" class="headerlink" title="embark.registerServiceCheck(serviceName, callback({name, status}), time)"></a>embark.registerServiceCheck(serviceName, callback({name, status}), time)<a class="article-anchor" href="#embark-registerServiceCheck-serviceName-callback-name-status-time" aria-hidden="true"></a></h3><p>This call is used to register a service in embark so it’s periodically checked.<br>It will be displayed in the Embark Dashboard, and will also trigger events such as <code>check:backOnline:yourServiceName</code> and <code>check:backOffline:yourServiceName</code></p>
 <ul>
 <li>serviceName - name of service (string)</li>
 <li>callback:<ul>
-<li>“name” - name/text to display (string)</li>
-<li>“status” - status of the service (string, “on” or “off” or “warn”)</li>
+<li><code>name</code> - name/text to display (string)</li>
+<li><code>status</code> - status of the service (string, <code>on</code> or <code>off</code> or <code>warn</code>)</li>
 </ul>
 </li>
 <li>time (optional) - ms interval to call the callback (default: 5000 ms)</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerServiceCheck(<span class="string">"MyServer"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (myServiceOnline()) &#123;</span><br><span class="line">        <span class="keyword">return</span> cb(&#123;<span class="attr">name</span>: <span class="string">"MyServer Online"</span>, <span class="attr">status</span>: <span class="string">"on"</span>&#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> cb(&#123;<span class="attr">name</span>: <span class="string">"MyServer Offline"</span>, <span class="attr">status</span>: <span class="string">"off"</span>&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-registerUploadCommand-cmdName-callback" class="article-heading"><a href="#embark-registerUploadCommand-cmdName-callback" class="headerlink" title="embark.registerUploadCommand(cmdName, callback)"></a>embark.registerUploadCommand(cmdName, callback)<a class="article-anchor" href="#embark-registerUploadCommand-cmdName-callback" aria-hidden="true"></a></h3><p>This call is used to add a new cmd to <code>embark upload</code> to upload the dapp to<br>a new storage service. In the example, <code>run</code> doesn’t exist. You need to import a library that runs shell commands like <a href="https://www.npmjs.com/package/shelljs" target="_blank" rel="noopener">shelljs</a></p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerUploadCommand(<span class="string">"ipfs"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      run(<span class="string">"ipfs add -r dist/"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-addCodeToEmbarkJS-code" class="article-heading"><a href="#embark-addCodeToEmbarkJS-code" class="headerlink" title="embark.addCodeToEmbarkJS(code)"></a>embark.addCodeToEmbarkJS(code)<a class="article-anchor" href="#embark-addCodeToEmbarkJS-code" aria-hidden="true"></a></h3><p>This call is used to add code to the embark.js library. It’s typically used to<br>extend it with new functionality, new storage providers, new communication<br>providers, etc..</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.addCodeToEmbarkJS(<span class="string">"alert('hello world!')"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-addProviderInit-providerType-code-initCondition-config" class="article-heading"><a href="#embark-addProviderInit-providerType-code-initCondition-config" class="headerlink" title="embark.addProviderInit(providerType, code, initCondition(config))"></a>embark.addProviderInit(providerType, code, initCondition(config))<a class="article-anchor" href="#embark-addProviderInit-providerType-code-initCondition-config" aria-hidden="true"></a></h3><p>This call is used to add code to be executed in the initialization under the<br>condition that <code>initCondition</code> returns true. For example this can be used to<br>set the storage provider of EmbarkJS to ipfs if ipfs is enabled as a provider in<br>the config</p>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerServiceCheck("MyServer", function(cb) {
+    if (myServiceOnline()) {
+      return cb({name: "MyServer Online", status: "on"});
+    } else {
+      return cb({name: "MyServer Offline", status: "off"});
+    }
+  });
+}
+</code></pre>
+
+<h3 id="embark-registerUploadCommand-cmdName-callback" class="article-heading"><a href="#embark-registerUploadCommand-cmdName-callback" class="headerlink" title="embark.registerUploadCommand(cmdName, callback)"></a>embark.registerUploadCommand(cmdName, callback)<a class="article-anchor" href="#embark-registerUploadCommand-cmdName-callback" aria-hidden="true"></a></h3><p>This call is used to add a new cmd to <code>embark upload</code> to upload the dapp to a new storage service. In the example, <code>run</code> doesn’t exist. You need to import a library that runs shell commands like <a href="https://www.npmjs.com/package/shelljs" target="_blank" rel="noopener">shelljs</a></p>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.registerUploadCommand("ipfs", function() {
+    run("ipfs add -r dist/");
+  });
+}
+</code></pre>
+
+<h3 id="embark-addCodeToEmbarkJS-code" class="article-heading"><a href="#embark-addCodeToEmbarkJS-code" class="headerlink" title="embark.addCodeToEmbarkJS(code)"></a>embark.addCodeToEmbarkJS(code)<a class="article-anchor" href="#embark-addCodeToEmbarkJS-code" aria-hidden="true"></a></h3><p>This call is used to add code to the embark.js library. It’s typically used to extend it with new functionality, new storage providers, new communication providers, etc..</p>
+<pre><code class="javascript">module.exports = function(embark) {
+  embark.addCodeToEmbarkJS("alert('hello world!')");
+}
+</code></pre>
+
+<h3 id="embark-addProviderInit-providerType-code-initCondition-config" class="article-heading"><a href="#embark-addProviderInit-providerType-code-initCondition-config" class="headerlink" title="embark.addProviderInit(providerType, code, initCondition(config))"></a>embark.addProviderInit(providerType, code, initCondition(config))<a class="article-anchor" href="#embark-addProviderInit-providerType-code-initCondition-config" aria-hidden="true"></a></h3><p>This call is used to add code to be executed in the initialization under the condition that <code>initCondition</code> returns true. For example this can be used to set the storage provider of EmbarkJS to ipfs if ipfs is enabled as a provider in the config</p>
 <ul>
 <li>providerType - type of provider (string, “storage” or “communication”)</li>
 <li>code - code to add (string)</li>
@@ -266,13 +413,26 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> code = <span class="string">"\nEmbarkJS.Storage.setProvider('ipfs')"</span>;</span><br><span class="line">    embark.addProviderInit(<span class="string">'storage'</span>, code, (storageConfig) =&gt; &#123;</span><br><span class="line">      <span class="keyword">return</span> (storageConfig.provider === <span class="string">'ipfs'</span> &amp;&amp; storageConfig.enabled === <span class="literal">true</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-registerImportFile-importName-importLocation" class="article-heading"><a href="#embark-registerImportFile-importName-importLocation" class="headerlink" title="embark.registerImportFile(importName, importLocation)"></a>embark.registerImportFile(importName, importLocation)<a class="article-anchor" href="#embark-registerImportFile-importName-importLocation" aria-hidden="true"></a></h3><p>This call is used so the plugin can make a certain file available as a library<br>to a user</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.registerImportFile(<span class="string">"my-lib"</span>, path.join(__dirname, <span class="string">"my-lib.js"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">module.exports = function(embark) {
+  let code = "\nEmbarkJS.Storage.setProvider('ipfs')";
+  embark.addProviderInit('storage', code, (storageConfig) => {
+    return (storageConfig.provider === 'ipfs' && storageConfig.enabled === true);
+  });
+}
+</code></pre>
+
+<h3 id="embark-registerImportFile-importName-importLocation" class="article-heading"><a href="#embark-registerImportFile-importName-importLocation" class="headerlink" title="embark.registerImportFile(importName, importLocation)"></a>embark.registerImportFile(importName, importLocation)<a class="article-anchor" href="#embark-registerImportFile-importName-importLocation" aria-hidden="true"></a></h3><p>This call is used so the plugin can make a certain file available as a library to a user</p>
+<pre><code class="javascript">var path = require('path')
+
+module.exports = function(embark) {
+  embark.registerImportFile("my-lib", path.join(__dirname, "my-lib.js"));
+}
+</code></pre>
+
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.697Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.683Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="creating_plugins.html" class="article-footer-prev" title="Creating a plugin"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="console_commands.html" class="article-footer-next" title="Console Commands"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>

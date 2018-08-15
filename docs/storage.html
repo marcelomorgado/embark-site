@@ -107,20 +107,91 @@
                 <h1 class="article-title" itemprop="name">Storage</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h3 id="Setup" class="article-heading"><a href="#Setup" class="headerlink" title="Setup"></a>Setup<a class="article-anchor" href="#Setup" aria-hidden="true"></a></h3><p>By default Embark will automatically initialize EmbarkJS with the provider configured at <code>config/storage.json</code>. However if you are using EmbarkJS directly or wish to change the provider configuration on the fly you can do:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'swarm'</span>, options);</span><br></pre></td></tr></table></figure>
-<p>Options are optional and if provided, will override the values in <code>storage.json</code>. </p>
-<p>For example,<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'ipfs'</span>, &#123;<span class="attr">server</span>: <span class="string">'localhost'</span>, <span class="attr">port</span>: <span class="string">'5001'</span>&#125;);</span><br><span class="line"><span class="comment">// OR</span></span><br><span class="line">EmbarkJS.Storage.setProvider(<span class="string">'swarm'</span>, &#123;<span class="attr">server</span>: <span class="string">'swarm-gateways.net'</span>, <span class="attr">port</span>: <span class="string">'80'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
-<h3 id="Save-Text-Data" class="article-heading"><a href="#Save-Text-Data" class="headerlink" title="Save Text/Data"></a>Save Text/Data<a class="article-anchor" href="#Save-Text-Data" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.saveText(<span class="string">"hello world"</span>)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">hash</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS saveText Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Retrieve-Text-Data" class="article-heading"><a href="#Retrieve-Text-Data" class="headerlink" title="Retrieve Text/Data"></a>Retrieve Text/Data<a class="article-anchor" href="#Retrieve-Text-Data" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.get(hash)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS get Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Upload-a-file" class="article-heading"><a href="#Upload-a-file" class="headerlink" title="Upload a file"></a>Upload a file<a class="article-anchor" href="#Upload-a-file" aria-hidden="true"></a></h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> input = $(<span class="string">"input[type=file"</span>]);</span><br><span class="line">EmbarkJS.Storage.uploadFile(input)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">hash</span>) </span>&#123;&#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"IPFS uploadFile Error =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Display-a-file" class="article-heading"><a href="#Display-a-file" class="headerlink" title="Display a file"></a>Display a file<a class="article-anchor" href="#Display-a-file" aria-hidden="true"></a></h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.getUrl(hash);</span><br></pre></td></tr></table></figure>
+                <h3 id="Setup" class="article-heading"><a href="#Setup" class="headerlink" title="Setup"></a>Setup<a class="article-anchor" href="#Setup" aria-hidden="true"></a></h3><p>By default Embark will automatically initialize EmbarkJS with the provider configured at <code>config/storage.js</code>. However if you are using EmbarkJS directly or wish to change the provider configuration on the fly you can do:</p>
+<pre><code class="javascript">EmbarkJS.Storage.setProvider('swarm', options);
+</code></pre>
+
+<p>Options are optional and if provided, will override the values in <code>storage.js</code>. </p>
+<p>For example,</p>
+<pre><code class="javascript">EmbarkJS.Storage.setProvider('ipfs', {server: 'localhost', port: '5001'});
+// OR
+EmbarkJS.Storage.setProvider('swarm', {server: 'swarm-gateways.net', port: '80'});
+</code></pre>
+
+<h3 id="Save-Text-Data" class="article-heading"><a href="#Save-Text-Data" class="headerlink" title="Save Text/Data"></a>Save Text/Data<a class="article-anchor" href="#Save-Text-Data" aria-hidden="true"></a></h3><pre><code class="javascript">EmbarkJS.Storage.saveText("hello world")
+  .then(function(hash) {})
+  .catch(function(err) {
+      if(err){
+        console.log("IPFS saveText Error => " + err.message);
+      }
+  });
+</code></pre>
+
+<h3 id="Retrieve-Text-Data" class="article-heading"><a href="#Retrieve-Text-Data" class="headerlink" title="Retrieve Text/Data"></a>Retrieve Text/Data<a class="article-anchor" href="#Retrieve-Text-Data" aria-hidden="true"></a></h3><pre><code class="javascript">EmbarkJS.Storage.get(hash)
+  .then(function(content) {})
+  .catch(function(err) {
+      if(err){
+        console.log("IPFS get Error => " + err.message);
+      }
+  });
+</code></pre>
+
+<h3 id="Upload-a-file" class="article-heading"><a href="#Upload-a-file" class="headerlink" title="Upload a file"></a>Upload a file<a class="article-anchor" href="#Upload-a-file" aria-hidden="true"></a></h3><pre><code class="xml">&lt;input type=&quot;file&quot;&gt;
+</code></pre>
+<br>
+<pre><code class="javascript">var input = $("input[type=file"]);
+EmbarkJS.Storage.uploadFile(input)
+  .then(function(hash) {})
+  .catch(function(err) {
+      if(err){
+        console.log("IPFS uploadFile Error => " + err.message);
+      }
+  });
+</code></pre>
+
+<h3 id="Display-a-file" class="article-heading"><a href="#Display-a-file" class="headerlink" title="Display a file"></a>Display a file<a class="article-anchor" href="#Display-a-file" aria-hidden="true"></a></h3><pre><code class="javascript">EmbarkJS.Storage.getUrl(hash);
+</code></pre>
+
 <h3 id="Check-for-storage-provider-availability" class="article-heading"><a href="#Check-for-storage-provider-availability" class="headerlink" title="Check for storage provider availability"></a>Check for storage provider availability<a class="article-anchor" href="#Check-for-storage-provider-availability" aria-hidden="true"></a></h3><p>This will return true if the storage provider (IPFS or Swarm) is avaiable and running. </p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">EmbarkJS.Storage.isAvailable()</span><br><span class="line">  .then(<span class="function"><span class="params">isAvailable</span> =&gt;</span> &#123; alert(<span class="string">`The storage provider is: <span class="subst">$&#123;isAvailable ? <span class="string">'available'</span> : <span class="string">'not available'</span>&#125;</span>`</span>) &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Error getting storage provider availability =&gt; "</span> + err.message);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered storage configuration in the file <code>config/storage.json</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
+<pre><code class="javascript">EmbarkJS.Storage.isAvailable()
+  .then(isAvailable => { alert(`The storage provider is: ${isAvailable ? 'available' : 'not available'}`) })
+  .catch(function(err) {
+      if(err){
+        console.log("Error getting storage provider availability => " + err.message);
+      }
+  });
+</code></pre>
+
+<h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered storage configuration in the file <code>config/storage.js</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
 <p>e.g :</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"ipfs_bin"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"ipfs"</span>, <span class="string">"swarm"</span>],</span><br><span class="line">    <span class="string">"upload"</span>:&#123;</span><br><span class="line">      <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">      <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">      <span class="string">"port"</span>: <span class="number">5001</span>,</span><br><span class="line">      <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8080/ipfs"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"dappConnection"</span>:[</span><br><span class="line">      &#123;<span class="string">"provider"</span>: <span class="string">"swarm"</span>, <span class="string">"host"</span>: <span class="string">"localhost"</span>, <span class="string">"port"</span>: <span class="number">8500</span>, <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8500/bzz:/"</span>&#125;,</span><br><span class="line">      &#123;<span class="string">"provider"</span>: <span class="string">"ipfs"</span>, <span class="string">"host"</span>: <span class="string">"localhost"</span>, <span class="string">"port"</span>: <span class="number">5001</span>, <span class="string">"getUrl"</span>: <span class="string">"http://localhost:8080/ipfs/"</span>&#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"versions"</span>: &#123;</span><br><span class="line">      <span class="string">"ipfs-api"</span>: <span class="string">"17.2.4"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"development"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"ipfs"</span>,</span><br><span class="line">    <span class="string">"host"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">    <span class="string">"port"</span>: <span class="number">5001</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript"> module.exports = {
+  "default": {
+    "enabled": true,
+    "ipfs_bin": "ipfs",
+    "available_providers": ["ipfs", "swarm"],
+    "upload":{
+      "provider": "ipfs",
+      "host": "localhost",
+      "port": 5001,
+      "getUrl": "http://localhost:8080/ipfs"
+    },
+    "dappConnection":[
+      {"provider": "swarm", "host": "localhost", "port": 8500, "getUrl": "http://localhost:8500/bzz:/"},
+      {"provider": "ipfs", "host": "localhost", "port": 5001, "getUrl": "http://localhost:8080/ipfs/"}
+    ],
+    "versions": {
+      "ipfs-api": "17.2.4"
+    }
+  },
+  "development": {
+    "enabled": true,
+    "provider": "ipfs",
+    "host": "localhost",
+    "port": 5001
+  }
+}
+</code></pre>
+
 <p>Available options are:</p>
 <table>
 <thead>
@@ -220,18 +291,49 @@
 <p>Letting Embark do it for you let’s you focus on developing faster while starting it yourself gives you more flexibility.</p>
 <p>You still need to have IPFS or Swarm installed locally for it to work, whatever the case.</p>
 <p><strong>Important configurations for swarm</strong>:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"development"</span>: &#123;</span><br><span class="line">    <span class="attr">"provider"</span>: <span class="string">"swarm"</span>,</span><br><span class="line">    <span class="attr">"account"</span>: &#123;</span><br><span class="line">      <span class="attr">"address"</span>: <span class="string">"YOUR_ACCOUNT_ADDRESS"</span>,</span><br><span class="line">      <span class="attr">"password"</span>: <span class="string">"PATH/TO/PASSWORD/FILE"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"swarmPath"</span>: <span class="string">"PATH/TO/SWARM/EXECUTABLE"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Using-a-public-gateway" class="article-heading"><a href="#Using-a-public-gateway" class="headerlink" title="Using a public gateway"></a>Using a public gateway<a class="article-anchor" href="#Using-a-public-gateway" aria-hidden="true"></a></h3><p>To use a public gateway (instead of running a local node) for IPFS or Swarm, use the following <code>config/storage.json</code> options:</p>
-<h4 id="IPFS" class="article-heading"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS<a class="article-anchor" href="#IPFS" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "upload":&#123;</span><br><span class="line">      "provider": "ipfs",</span><br><span class="line">      "host": "ipfs.infura.io",</span><br><span class="line">      "port": 80,</span><br><span class="line">      "protocol": "https",</span><br><span class="line">      "getUrl": "https://ipfs.infura.io/ipfs/"</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Swarm" class="article-heading"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm<a class="article-anchor" href="#Swarm" aria-hidden="true"></a></h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">"development": &#123;</span><br><span class="line">    "enabled": true,</span><br><span class="line">    "upload": &#123;</span><br><span class="line">      "provider": "swarm",</span><br><span class="line">      "host": "localhost",</span><br><span class="line">      "port": 8500</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Troubleshooting" class="article-heading"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting "></a>Troubleshooting <a name="troubleshooting"></a><a class="article-anchor" href="#Troubleshooting" aria-hidden="true"></a></h3><p>If you are running your own processes for IPFS or Swarm, the CORS needs to be set to the domain of your DApp, to the geth domain, and to the domain of the storage used inside the DApp. If you are using the built in webserver, the CORS would need to be set to <code>http://localhost:8000</code>, however if you are using <code>embark upload</code>, the domain of the decentralised storage host should be included in CORS. Depending on your <code>upload</code> settings in <code>storage.json</code>, this could be <code>http://localhost:8080</code> or <code>http://ipfs.infura.io</code> for IPFS or it could be <code>http://localhost:8500</code> or <code>http://swarm-gateways.net</code> for Swarm. Of course, if you are hosting your DApp on a different domain (ie not <code>localhost</code>, then that would need to be included in CORS as well. Examples of how to include multiple domains for each are below:</p>
+<pre><code class="json">{
+  "development": {
+    "provider": "swarm",
+    "account": {
+      "address": "YOUR_ACCOUNT_ADDRESS",
+      "password": "PATH/TO/PASSWORD/FILE"
+    },
+    "swarmPath": "PATH/TO/SWARM/EXECUTABLE"
+  }
+}
+</code></pre>
+
+<h3 id="Using-a-public-gateway" class="article-heading"><a href="#Using-a-public-gateway" class="headerlink" title="Using a public gateway"></a>Using a public gateway<a class="article-anchor" href="#Using-a-public-gateway" aria-hidden="true"></a></h3><p>To use a public gateway (instead of running a local node) for IPFS or Swarm, use the following <code>config/storage.js</code> options:</p>
+<h4 id="IPFS" class="article-heading"><a href="#IPFS" class="headerlink" title="IPFS"></a>IPFS<a class="article-anchor" href="#IPFS" aria-hidden="true"></a></h4><pre><code class="json">"development": {
+  "enabled": true,
+  "upload":{
+    "provider": "ipfs",
+    "host": "ipfs.infura.io",
+    "port": 80,
+    "protocol": "https",
+    "getUrl": "https://ipfs.infura.io/ipfs/"
+  }
+}
+</code></pre>
+
+<h4 id="Swarm" class="article-heading"><a href="#Swarm" class="headerlink" title="Swarm"></a>Swarm<a class="article-anchor" href="#Swarm" aria-hidden="true"></a></h4><pre><code class="json">"development": {
+  "enabled": true,
+  "upload": {
+    "provider": "swarm",
+    "host": "localhost",
+    "port": 8500
+  }
+}
+</code></pre>
+
+<h3 id="Troubleshooting" class="article-heading"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting "></a>Troubleshooting <a name="troubleshooting"></a><a class="article-anchor" href="#Troubleshooting" aria-hidden="true"></a></h3><p>If you are running your own processes for IPFS or Swarm, the CORS needs to be set to the domain of your DApp, to the geth domain, and to the domain of the storage used inside the DApp. If you are using the built in webserver, the CORS would need to be set to <code>http://localhost:8000</code>, however if you are using <code>embark upload</code>, the domain of the decentralised storage host should be included in CORS. Depending on your <code>upload</code> settings in <code>storage.js</code>, this could be <code>http://localhost:8080</code> or <code>http://ipfs.infura.io</code> for IPFS or it could be <code>http://localhost:8500</code> or <code>http://swarm-gateways.net</code> for Swarm. Of course, if you are hosting your DApp on a different domain (ie not <code>localhost</code>, then that would need to be included in CORS as well. Examples of how to include multiple domains for each are below:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Configure local IPFS node that has the local swarm node whitelisted for CORS</span><br><span class="line"># Works in the case where IPFS hosts the DApp, but you are running your storage inside the DApp on Swarm (or IPFS, since it doesn&apos;t need to whitelist itself)</span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &quot;[\&quot;http://localhost:8000\&quot;, \&quot;http://localhost:8500\&quot;, \&quot;http://localhost:8545\&quot;, \&quot;ws://localhost:8546\&quot;]&quot;</span><br></pre></td></tr></table></figure>
 <p>NOTE: <code>http://localhost:8545</code> and <code>ws://localhost:8546</code> are for geth.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Run local Swarm node that has the local IPFS node whitelisted for CORS</span><br><span class="line"># Works in the case where Swarm hosts the DApp, but you are running your storage inside the DApp on IPFS (or Swarm, since it doesn&apos;t need to whitelist itself)</span><br><span class="line">swarm --bzzaccount=fedda09fd9218d1ea4fd41ad44694fa4ccba1878 --datadir=~/.bzz-data/ --password=config/development/password --corsdomain=http://localhost:8000,http://localhost:8080,http://localhost:8545,ws://localhost:8546 --ens-api=&apos;&apos;</span><br></pre></td></tr></table></figure>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.699Z" itemprop="dateModified">Last updated: 2018-08-15</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:23:03.685Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="contracts.html" class="article-footer-prev" title="Smart Contracts"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="messages.html" class="article-footer-next" title="Messages"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
