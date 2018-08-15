@@ -38,7 +38,7 @@
   <!-- Google Analytics -->
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118882552-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -48,10 +48,11 @@
 
       gtag('js', new Date());
 
-      gtag('config', 'UA-118882552-1');
+      gtag('config', 'UA-79146816-4');
     </script>
 
 
+  <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
 <body>
@@ -67,6 +68,7 @@
             <a href="/docs/" class="main-nav-link">Docs</a>
             <a href="/tutorials/" class="main-nav-link">Tutorials</a>
             <a href="/plugins/" class="main-nav-link">Plugins</a>
+            <a href="/templates/" class="main-nav-link">Templates</a>
         </nav>
 
         <div class="secondary-nav">
@@ -206,20 +208,34 @@
 <li>“firstDeploymentDone” - triggered when the dapp is deployed and generated for the first time</li>
 <li>“check:backOnline:serviceName” - triggered when the service with <code>serviceName</code> comes back online</li>
 <li>“check:wentOffline:serviceName” - triggered when the service with <code>serviceName</code> goes offline</li>
+<li>“log” - triggered on a log, args is (logLevel, logMsg)</li>
+<li>“contractsState” - list of contracts, their deployment status, address, etc..</li>
+<li>“servicesState” - list of services and their state</li>
+<li>“exit”: - triggered when embark is terminating</li>
+<li>“deploy:contract:deployed”: - triggered when a contract is deployed, the callback will contain the contract object</li>
+<li>“deploy:contract:undeployed”: - triggered when a contract was not deployed (typically because there is no need), the callback will contain the contract object</li>
+<li>“deploy:contract:error”: - triggered when a contract couldn’t be deployed due to an error, the callback will contain the contract object</li>
+<li>“deploy:contract:receipt”: - triggered on a contract deployment (succefull or not), the callback will contain the resulting receipt</li>
+<li>“contractsState”: - triggered often, whenever there are changes to contracts, the callback will contain an object containing the contract names, address and state, etc..</li>
+<li>“deploy:beforeAll”: - triggered before contract deployment starts</li>
+<li>“contracts:deploy:afterAll”: - triggered after contract deployment starts</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">embark</span>) </span>&#123;</span><br><span class="line">    embark.events.on(<span class="string">"contractsDeployed"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      embark.logger.info(<span class="string">"plugin says: your contracts have been deployed"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    embark.events.on(<span class="string">"file-change"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">filetype, path</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (type === <span class="string">'contract'</span>) &#123;</span><br><span class="line">        embark.logger.info(<span class="string">"plugin says: you just changed the contract at "</span> + path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="embark-events-request-eventName-callback-args" class="article-heading"><a href="#embark-events-request-eventName-callback-args" class="headerlink" title="embark.events.request(eventName, callback(*args))"></a>embark.events.request(eventName, callback(*args))<a class="article-anchor" href="#embark-events-request-eventName-callback-args" aria-hidden="true"></a></h3><p>This call is used to request a certain resource from Embark</p>
+<h3 id="embark-events-request-requestName-callback-args" class="article-heading"><a href="#embark-events-request-requestName-callback-args" class="headerlink" title="embark.events.request(requestName, callback(*args))"></a>embark.events.request(requestName, callback(*args))<a class="article-anchor" href="#embark-events-request-requestName-callback-args" aria-hidden="true"></a></h3><p>This call is used to request a certain resource from Embark</p>
 <ul>
-<li>eventName - name of event to listen to<ul>
-<li>available events:ile change, args is (filetype, path)<ul>
-<li>“code”, “code”, “code” - returns the contracts’ generated JS code<ul>
-<li>Important: This request is only available after contracts have been deployed and the code has been generated</li>
-</ul>
-</li>
+<li>requestName - name of request to listen to<ul>
+<li>available requests:<ul>
+<li>(“deploy:contract”, contractObj) - deploys a particular contract through embark</li>
+<li>(“runcode:eval”, code) - runs js code in the Embark engine.</li>
+<li>(“runcode:register”, cmdName, cmdObj) - ‘registers’ a variable cmdName to correspond to a js object cmdObj (note: this should be done thourgh an emit);</li>
+<li>(“contracts:list”) - returns a list a callback containing (err, contractList) containing a collection of available contracts</li>
+<li>(“compiler:contracts”, contractFiles) - requests embark to compile a list of files, will return a compiled object in the callback</li>
+<li>(“services:register”, serviceName, checkCallback) - requests embark to register a service, it will execute checkCallback every 5 seconds, the callback should return an object containing the service name and status (See embark.registerServiceCheck)</li>
+<li>(“console:command”, cmd) - execute a command in the console</li>
 </ul>
 </li>
 </ul>
@@ -256,7 +272,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.505Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.697Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="creating_plugins.html" class="article-footer-prev" title="Creating a plugin"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="console_commands.html" class="article-footer-next" title="Console Commands"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -264,7 +280,7 @@
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-pluginConfig"><span class="toc-text">embark.pluginConfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerPipeline-matchingFiles-callback-options"><span class="toc-text">embark.registerPipeline(matchingFiles, callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerContractConfiguration-contractsConfig"><span class="toc-text">embark.registerContractConfiguration(contractsConfig)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addContractFile-file"><span class="toc-text">embark.addContractFile(file)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addFileToPipeline-file-options"><span class="toc-text">embark.addFileToPipeline(file, options)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerBeforeDeploy-callback-options-callback"><span class="toc-text">embark.registerBeforeDeploy(callback(options), [callback])</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerClientWeb3Provider-callback-options"><span class="toc-text">embark.registerClientWeb3Provider(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerContractsGeneration-callback-options"><span class="toc-text">embark.registerContractsGeneration(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerConsoleCommand-callback-options"><span class="toc-text">embark.registerConsoleCommand(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerCompiler-extension-callback-contractFiles-doneCallback"><span class="toc-text">embark.registerCompiler(extension, callback(contractFiles, doneCallback))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-logger"><span class="toc-text">embark.logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-events-on-eventName-callback-args"><span class="toc-text">embark.events.on(eventName, callback(*args))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-events-request-eventName-callback-args"><span class="toc-text">embark.events.request(eventName, callback(*args))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerServiceCheck-serviceName-callback-name-status-time"><span class="toc-text">embark.registerServiceCheck(serviceName, callback({name, status}), time)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerUploadCommand-cmdName-callback"><span class="toc-text">embark.registerUploadCommand(cmdName, callback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addCodeToEmbarkJS-code"><span class="toc-text">embark.addCodeToEmbarkJS(code)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addProviderInit-providerType-code-initCondition-config"><span class="toc-text">embark.addProviderInit(providerType, code, initCondition(config))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerImportFile-importName-importLocation"><span class="toc-text">embark.registerImportFile(importName, importLocation)</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-pluginConfig"><span class="toc-text">embark.pluginConfig</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerPipeline-matchingFiles-callback-options"><span class="toc-text">embark.registerPipeline(matchingFiles, callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerContractConfiguration-contractsConfig"><span class="toc-text">embark.registerContractConfiguration(contractsConfig)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addContractFile-file"><span class="toc-text">embark.addContractFile(file)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addFileToPipeline-file-options"><span class="toc-text">embark.addFileToPipeline(file, options)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerBeforeDeploy-callback-options-callback"><span class="toc-text">embark.registerBeforeDeploy(callback(options), [callback])</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerClientWeb3Provider-callback-options"><span class="toc-text">embark.registerClientWeb3Provider(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerContractsGeneration-callback-options"><span class="toc-text">embark.registerContractsGeneration(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerConsoleCommand-callback-options"><span class="toc-text">embark.registerConsoleCommand(callback(options))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerCompiler-extension-callback-contractFiles-doneCallback"><span class="toc-text">embark.registerCompiler(extension, callback(contractFiles, doneCallback))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-logger"><span class="toc-text">embark.logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-events-on-eventName-callback-args"><span class="toc-text">embark.events.on(eventName, callback(*args))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-events-request-requestName-callback-args"><span class="toc-text">embark.events.request(requestName, callback(*args))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerServiceCheck-serviceName-callback-name-status-time"><span class="toc-text">embark.registerServiceCheck(serviceName, callback({name, status}), time)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerUploadCommand-cmdName-callback"><span class="toc-text">embark.registerUploadCommand(cmdName, callback)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addCodeToEmbarkJS-code"><span class="toc-text">embark.addCodeToEmbarkJS(code)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-addProviderInit-providerType-code-initCondition-config"><span class="toc-text">embark.addProviderInit(providerType, code, initCondition(config))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#embark-registerImportFile-importName-importLocation"><span class="toc-text">embark.registerImportFile(importName, importLocation)</span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
@@ -352,6 +368,7 @@
   </div>
 </nav>
   <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/bundle.js?v=0.0.1"></script>
 <!-- build:js build/js/main.js -->
 <script src="/js/lang_select.js"></script>
@@ -360,6 +377,28 @@
 <script src="/js/search.js"></script>
 <!-- endbuild -->
 
+<script async src="/js/highlight.pack.js"></script>
+<script async src="/js/solidity.js"></script>
+<script>
+
+function highlight() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+}
+
+$(document).ready(function() {
+    try {
+      highlight();
+    } catch(err) {
+      console.log("retrying...")
+      setTimeout(function() {
+        highlight();
+      }, 2500)
+    }
+});
+
+</script>
 <!-- Algolia -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>

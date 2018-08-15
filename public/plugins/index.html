@@ -34,7 +34,7 @@
   <!-- Google Analytics -->
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118882552-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -44,10 +44,11 @@
 
       gtag('js', new Date());
 
-      gtag('config', 'UA-118882552-1');
+      gtag('config', 'UA-79146816-4');
     </script>
 
 
+  <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
 <body>
@@ -63,6 +64,7 @@
             <a href="/docs/" class="main-nav-link">Docs</a>
             <a href="/tutorials/" class="main-nav-link">Tutorials</a>
             <a href="/plugins/" class="main-nav-link">Plugins</a>
+            <a href="/templates/" class="main-nav-link">Templates</a>
         </nav>
 
         <div class="secondary-nav">
@@ -99,6 +101,7 @@
       <ul id="plugin-list">
         
           <li class="plugin on">
+  <img src="/plugins/thumbnails/bamboo.png" style="display: block" />
   <a href="https://www.npmjs.com/package/embark-bamboo" class="plugin-name" target="_blank">embark-bamboo</a>
   <p class="plugin-desc">Plugin to add Bamboo support to embark</p>
   <div class="plugin-tag-list">
@@ -109,20 +112,26 @@
     
   </div>
 </li>
+
         
           <li class="plugin on">
-  <a href="https://www.npmjs.com/package/embark-remix" class="plugin-name" target="_blank">embark-remix</a>
-  <p class="plugin-desc">Plugin to start Remix and Remix directly with Embark</p>
+  <img src="/plugins/thumbnails/solidity.png" style="display: block" />
+  <a href="https://www.npmjs.com/package/embark-solc" class="plugin-name" target="_blank">embark-solc</a>
+  <p class="plugin-desc">Uses the command line Solidity Compiler for light-speed compile times</p>
   <div class="plugin-tag-list">
     
-      <a href="#remix" class="plugin-tag">remix</a>
+      <a href="#solidity" class="plugin-tag">solidity</a>
     
-      <a href="#debugger" class="plugin-tag">debugger</a>
+      <a href="#language" class="plugin-tag">language</a>
+    
+      <a href="#smart-contracts" class="plugin-tag">smart-contracts</a>
     
   </div>
 </li>
+
         
           <li class="plugin on">
+  <img src="/plugins/thumbnails/solium.png" style="display: block" />
   <a href="https://www.npmjs.com/package/embark-solium" class="plugin-name" target="_blank">embark-solium</a>
   <p class="plugin-desc">The official Solium Plugin for the Embark Framework</p>
   <div class="plugin-tag-list">
@@ -135,8 +144,10 @@
     
   </div>
 </li>
+
         
           <li class="plugin on">
+  <img src="/plugins/thumbnails/status.png" style="display: block" />
   <a href="https://www.npmjs.com/package/embark-status" class="plugin-name" target="_blank">embark-status</a>
   <p class="plugin-desc">Status plugin to interact with embark</p>
   <div class="plugin-tag-list">
@@ -147,6 +158,63 @@
     
   </div>
 </li>
+
+        
+          <li class="plugin on">
+  <img src="/plugins/thumbnails/remix.png" style="display: block" />
+  <a href="https://www.npmjs.com/package/embark-remix" class="plugin-name" target="_blank">embark-remix</a>
+  <p class="plugin-desc">Plugin to start Remix and Remix directly with Embark</p>
+  <div class="plugin-tag-list">
+    
+      <a href="#remix" class="plugin-tag">remix</a>
+    
+      <a href="#debugger" class="plugin-tag">debugger</a>
+    
+  </div>
+</li>
+
+        
+          <li class="plugin on">
+  <img src="/plugins/thumbnails/fortune.jpg" style="display: block" />
+  <a href="https://www.npmjs.com/package/embark-fortune" class="plugin-name" target="_blank">embark-fortune</a>
+  <p class="plugin-desc">Displays a fortune message after every build</p>
+  <div class="plugin-tag-list">
+    
+      <a href="#fun" class="plugin-tag">fun</a>
+    
+  </div>
+</li>
+
+        
+          <li class="plugin on">
+  <img src="/plugins/thumbnails/pug.png" style="display: block" />
+  <a href="https://www.npmjs.com/package/embark-pug" class="plugin-name" target="_blank">embark-pug</a>
+  <p class="plugin-desc">Embark plugin to support pug / jade templates</p>
+  <div class="plugin-tag-list">
+    
+      <a href="#pug" class="plugin-tag">pug</a>
+    
+      <a href="#jade" class="plugin-tag">jade</a>
+    
+      <a href="#templates" class="plugin-tag">templates</a>
+    
+  </div>
+</li>
+
+        
+          <li class="plugin on">
+  <img src="/plugins/thumbnails/haml.png" style="display: block" />
+  <a href="https://www.npmjs.com/package/embark-haml" class="plugin-name" target="_blank">embark-haml</a>
+  <p class="plugin-desc">Embark plugin to support haml templates</p>
+  <div class="plugin-tag-list">
+    
+      <a href="#haml" class="plugin-tag">haml</a>
+    
+      <a href="#templates" class="plugin-tag">templates</a>
+    
+  </div>
+</li>
+
         
       </ul>
     </div>
@@ -224,6 +292,7 @@
   </div>
 </nav>
   <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/bundle.js?v=0.0.1"></script>
 <!-- build:js build/js/main.js -->
 <script src="/js/lang_select.js"></script>
@@ -240,6 +309,28 @@
 <script src="/js/plugins.js"></script>
 <!-- endbuild -->
 
+<script async src="/js/highlight.pack.js"></script>
+<script async src="/js/solidity.js"></script>
+<script>
+
+function highlight() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+}
+
+$(document).ready(function() {
+    try {
+      highlight();
+    } catch(err) {
+      console.log("retrying...")
+      setTimeout(function() {
+        highlight();
+      }, 2500)
+    }
+});
+
+</script>
 <!-- Algolia -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>

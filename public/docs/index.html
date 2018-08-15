@@ -38,7 +38,7 @@
   <!-- Google Analytics -->
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118882552-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -48,10 +48,11 @@
 
       gtag('js', new Date());
 
-      gtag('config', 'UA-118882552-1');
+      gtag('config', 'UA-79146816-4');
     </script>
 
 
+  <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
 <body>
@@ -67,6 +68,7 @@
             <a href="/docs/" class="main-nav-link">Docs</a>
             <a href="/tutorials/" class="main-nav-link">Tutorials</a>
             <a href="/plugins/" class="main-nav-link">Plugins</a>
+            <a href="/templates/" class="main-nav-link">Templates</a>
         </nav>
 
         <div class="secondary-nav">
@@ -135,10 +137,13 @@
 <h2 id="Installation" class="article-heading"><a href="#Installation" class="headerlink" title="Installation"></a>Installation<a class="article-anchor" href="#Installation" aria-hidden="true"></a></h2><p>It only takes a few minutes to set up Embark. If you encounter a problem and can’t find the solution here, please <a href="https://github.com/embark-framework/embark/issues" target="_blank" rel="noopener">submit a GitHub issue</a> and We’ll try to solve it.</p>
 <h3 id="Requirements" class="article-heading"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements<a class="article-anchor" href="#Requirements" aria-hidden="true"></a></h3><p>Installing Embark is quite easy. However, you do need to have a couple of other things installed first:</p>
 <ul>
-<li><a href="http://nodejs.org/" target="_blank" rel="noopener">Node.js</a> 8.10 or higher</li>
+<li><a href="http://nodejs.org/" target="_blank" rel="noopener">Node.js</a> 8.11.3 LTS or higher</li>
 </ul>
+<p>We recommend installing node using <a href="https://github.com/creationix/nvm/blob/master/README.md" target="_blank" rel="noopener">NVM</a></p>
 <p>After installing nodejs you can install embark with:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install -g embark</span><br></pre></td></tr></table></figure>
+<blockquote class="note warn"><strong class="note-title">Do not use sudo</strong><p>Avoid using <code>sudo</code> to install NodeJS or Embark as it can cause permission errors down the line.</p>
+</blockquote>
 <h3 id="With-Ethereum-Support" class="article-heading"><a href="#With-Ethereum-Support" class="headerlink" title="With Ethereum Support"></a>With Ethereum Support<a class="article-anchor" href="#With-Ethereum-Support" aria-hidden="true"></a></h3><p>If you want to use Embark with Ethereum and want embark to run a node for you (with the <code>embark blockchain</code> command), then you need to install <a href="https://geth.ethereum.org/" target="_blank" rel="noopener">Go-Ethrereum</a> 1.6.7 or higher.</p>
 <p>On macOS:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ brew tap ethereum/ethereum</span><br><span class="line">$ brew install ethereum</span><br></pre></td></tr></table></figure>
@@ -148,7 +153,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm -g install ethereumjs-testrpc</span><br></pre></td></tr></table></figure>
 <h3 id="With-IPFS-Support" class="article-heading"><a href="#With-IPFS-Support" class="headerlink" title="With IPFS Support"></a>With IPFS Support<a class="article-anchor" href="#With-IPFS-Support" aria-hidden="true"></a></h3><p>To use IPFS you need first to install a IPFS node and run it. There two available, go-ipfs and js-ipfs.</p>
 <p><strong>GO-IPFS</strong></p>
-<p>Instalation instructions are available <a href="https://github.com/ipfs/go-ipfs#install" target="_blank" rel="noopener">here</a>.</p>
+<p>Installation instructions are available <a href="https://github.com/ipfs/go-ipfs#install" target="_blank" rel="noopener">here</a>.</p>
 <p>Once installed and setup you will need to make sure the headers are setup<br>properly for your app.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin <span class="string">"[\"http://example.com\"]"</span></span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials <span class="string">"[\"true\"]"</span></span><br><span class="line">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods <span class="string">"[\"PUT\", \"POST\", \"GET\"]"</span></span><br></pre></td></tr></table></figure>
 <p>You would want to launch it with: <code>ipfs daemon --enable-pubsub-experiment</code></p>
@@ -159,7 +164,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.504Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.694Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="setup.html" class="article-footer-next" title="Setup"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -255,6 +260,7 @@
   </div>
 </nav>
   <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/bundle.js?v=0.0.1"></script>
 <!-- build:js build/js/main.js -->
 <script src="/js/lang_select.js"></script>
@@ -263,6 +269,28 @@
 <script src="/js/search.js"></script>
 <!-- endbuild -->
 
+<script async src="/js/highlight.pack.js"></script>
+<script async src="/js/solidity.js"></script>
+<script>
+
+function highlight() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+}
+
+$(document).ready(function() {
+    try {
+      highlight();
+    } catch(err) {
+      console.log("retrying...")
+      setTimeout(function() {
+        highlight();
+      }, 2500)
+    }
+});
+
+</script>
 <!-- Algolia -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>

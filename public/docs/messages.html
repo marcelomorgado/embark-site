@@ -38,7 +38,7 @@
   <!-- Google Analytics -->
   
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118882552-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -48,10 +48,11 @@
 
       gtag('js', new Date());
 
-      gtag('config', 'UA-118882552-1');
+      gtag('config', 'UA-79146816-4');
     </script>
 
 
+  <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
 <body>
@@ -67,6 +68,7 @@
             <a href="/docs/" class="main-nav-link">Docs</a>
             <a href="/tutorials/" class="main-nav-link">Tutorials</a>
             <a href="/plugins/" class="main-nav-link">Plugins</a>
+            <a href="/templates/" class="main-nav-link">Templates</a>
         </nav>
 
         <div class="secondary-nav">
@@ -115,17 +117,17 @@
 <p>note: array of topics are considered an AND. In Whisper you can use another array for OR combinations of several topics e.g <code>[&quot;topic1&quot;, [&quot;topic2&quot;, &quot;topic3&quot;]]</code> =&gt; <code>topic1 AND (topic2 OR topic 3)</code></p>
 <h3 id="Configuration-basics" class="article-heading"><a href="#Configuration-basics" class="headerlink" title="Configuration basics"></a>Configuration basics<a class="article-anchor" href="#Configuration-basics" aria-hidden="true"></a></h3><p>Embark will check your prefered communication configuration in the file <code>config/communication.json</code>. This file will contain the prefered configuration for each environment. With <code>default</code> being the configuration fields that applies to every environment. Each of those can be individually overriden in a per environment basis.</p>
 <p>e.g :</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"whisper"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"whisper"</span>, <span class="string">"orbit"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"default"</span>: &#123;</span><br><span class="line">    <span class="string">"enabled"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">"provider"</span>: <span class="string">"whisper"</span>,</span><br><span class="line">    <span class="string">"available_providers"</span>: [<span class="string">"whisper"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>options available:</p>
 <ul>
 <li><code>enabled</code> (boolean: true/false) to enable or completly disable communication support</li>
 <li><code>provider</code> (string: “wisper” or “orbit”) desired provider to automatically connect to on the dapp. e.g in the example above, seting this to <code>&quot;whisper&quot;</code> will automaticaly add <code>EmbarkJS.setProvider(&#39;whisper&#39;)</code> to the generated code</li>
-<li><code>available_providers</code> (array: [“whisper”, “orbit”]) list of communication platforms to be supported on the dapp. This will affect what’s available with the EmbarkJS library on the dapp so if you don’t need Orbit for e.g, removing it from this will considerably reduce the file size of the generated JS code.</li>
+<li><code>available_providers</code> (array: [“whisper”]) list of communication platforms to be supported on the dapp. This will affect what’s available with the EmbarkJS library on the dapp so if you don’t need Whisper for e.g, removing it from this will considerably reduce the file size of the generated JS code.</li>
 </ul>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-05-08T15:01:40.504Z" itemprop="dateModified">Last updated: 2018-05-08</time>
+                <time class="article-footer-updated" datetime="2018-08-15T20:14:18.696Z" itemprop="dateModified">Last updated: 2018-08-15</time>
                 <a href="storage.html" class="article-footer-prev" title="Storage"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="testing.html" class="article-footer-next" title="Testing"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -221,6 +223,7 @@
   </div>
 </nav>
   <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/bundle.js?v=0.0.1"></script>
 <!-- build:js build/js/main.js -->
 <script src="/js/lang_select.js"></script>
@@ -229,6 +232,28 @@
 <script src="/js/search.js"></script>
 <!-- endbuild -->
 
+<script async src="/js/highlight.pack.js"></script>
+<script async src="/js/solidity.js"></script>
+<script>
+
+function highlight() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+}
+
+$(document).ready(function() {
+    try {
+      highlight();
+    } catch(err) {
+      console.log("retrying...")
+      setTimeout(function() {
+        highlight();
+      }, 2500)
+    }
+});
+
+</script>
 <!-- Algolia -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
