@@ -31,23 +31,6 @@
   <!-- RSS -->
   <link rel="alternate" href="/atom.xml" title="Embark">
   <meta property="og:image" content="/img/share.png?v=0.0.5" />
-  <!-- Google Analytics -->
-  
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      gtag('js', new Date());
-
-      gtag('config', 'UA-79146816-4');
-    </script>
-
-
   <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
@@ -195,7 +178,6 @@ contract Token {
 <p><img src="token_factory_1/console_1.png" alt="Console"></p>
 <p>We haven’t supplied any parameters to the contract and embark complains because the contract constructor takes a <em>initial_balance</em> parameter which we haven’t specified:</p>
 <pre>
-<button class="btn" data-clipboard-target="#code-2"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
 <code id="code-2" class="solidity">constructor(uint initial_balance) public {
     _balances[msg.sender] = initial_balance;
     _supply = initial_balance;
@@ -210,7 +192,8 @@ contract Token {
     // .....
     gas: "auto",
     contracts: {
-      <mark id="code-3" class="highlight-inline">Token: {
+      <mark id="code-3" class="highlight-inline">
+      Token: {
         args: {
           initial_balance: 1000
         }
@@ -221,7 +204,13 @@ contract Token {
 }
 </code></pre>
 
-<p>Embark will detect the change and redeploy the contract with the new parameters, afterwards the token supply is 1000 as expected, type:</p>
+<p>Embark will detect the change and redeploy the contract with the new parameters.</p>
+<p>You can confirm that the token supply is 1000 by typing:</p>
+<pre><button class="btn" data-clipboard-target="#cmd-3-1"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
+<code class="shell">$ <mark id="cmd-3-1">Token.methods._supply().call(console.log)</mark></code>
+</pre>
+
+
 <p><img src="token_factory_1/console_2.png" alt="Console"></p>
 <h2 id="Creating-the-UI" class="article-heading"><a href="#Creating-the-UI" class="headerlink" title="Creating the UI"></a>Creating the UI<a class="article-anchor" href="#Creating-the-UI" aria-hidden="true"></a></h2><p>For the sake of brevity, we wouldn’t implement every single functionality in the contract. However, we’ll implement two important features: Checking balance of an address and Transferring Tokens from one address to another.</p>
 <h2 id="Checking-address-balance" class="article-heading"><a href="#Checking-address-balance" class="headerlink" title="Checking address balance"></a>Checking address balance<a class="article-anchor" href="#Checking-address-balance" aria-hidden="true"></a></h2><p>To input the address to query, we’ll edit <em>app/index.html</em> and add a simple form.</p>
@@ -263,14 +252,24 @@ contract Token {
 <button class="btn" data-clipboard-target="#code-7"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
 <code class="javascript">import $ from 'jquery';
 <mark id="code-7" class="highlight-inline">
+import EmbarkJS from 'Embark/EmbarkJS';
+
 $(document).ready(function() {
-  web3.eth.getAccounts(function(err, accounts) {
-    $('#queryBalance input').val(accounts[0]);
+  EmbarkJS.onReady((error) => {
+    if (error) {
+      console.error('Error while connecting to web3', error);
+      return;
+    }
+    web3.eth.getAccounts(function(err, accounts) {
+      $('#queryBalance input').val(accounts[0]);
+    });
+
   });
 });</mark>
 </code></pre>
 
 <p>This will get the address of the first account and set it as the default text in the input form.</p>
+<p><code>EmbarkJS.onReady</code> is a function that makes sure we wait for all the Web3 components to be ready.</p>
 <p><strong>Querying Balance</strong></p>
 <p>To query the balance, we can see the contract method signature to do this is:</p>
 <pre><code class="solidity">function balanceOf( address who ) constant returns (uint value) {
@@ -283,28 +282,34 @@ $(document).ready(function() {
 <button class="btn" data-clipboard-target="#code-8"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
 <code class="solidity"><mark id="code-8">import Token from 'Embark/contracts/Token';</mark>
 
-Token.balanceOf(address).then(function(balance) { });
+Token.methods.balanceOf(address).call().then(function(balance) { });
 </code></pre>
 
 <p>So we can simply add a click event to the button, get the address, query the balance and set the result.</p>
 <pre>
 <button class="btn" data-clipboard-target="#code-9"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
 <code class="javascript">import $ from 'jquery';
+import EmbarkJS from 'Embark/EmbarkJS';
 import Token from 'Embark/contracts/Token';
 
 $(document).ready(function() {
-
-  web3.eth.getAccounts(function(err, accounts) {
-    $('#queryBalance input').val(accounts[0]);
-  });
-<mark id="code-9" class="highlight-inline">
-  $('#queryBalance button').click(function() {
-    var address = $('#queryBalance input').val();
-    Token.methods.balanceOf(address).call().then(function(balance) {
-      $('#queryBalance .result').html(balance);
+  EmbarkJS.onReady((error) => {
+    if (error) {
+      console.error('Error while connecting to web3', error);
+      return;
+    }
+    web3.eth.getAccounts(function(err, accounts) {
+      $('#queryBalance input').val(accounts[0]);
     });
+    <mark id="code-9" class="highlight-inline">
+    $('#queryBalance button').click(function() {
+      var address = $('#queryBalance input').val();
+      Token.methods.balanceOf(address).call().then(function(balance) {
+        $('#queryBalance .result').html(balance);
+      });
+    });
+    </mark>
   });
-</mark>
 });
 </code></pre>
 
@@ -349,44 +354,52 @@ $(document).ready(function() {
 <p>Then we will add the code to take the address and number of tokens from the inputs and call the contracts transfer method to <em>app/js/index.js</em>:</p>
 <pre>
 <button class="btn" data-clipboard-target="#code-11"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
-<code class="javascript">import $ from 'jquery';
+<code class="javascript">
+import $ from 'jquery';
+import EmbarkJS from 'Embark/EmbarkJS';
 import Token from 'Embark/contracts/Token';
 
 $(document).ready(function() {
-
-  web3.eth.getAccounts(function(err, accounts) {
-    $('#queryBalance input').val(accounts[0]);
-  });
-
-  $('#queryBalance button').click(function() {
-    var address = $('#queryBalance input').val();
-    Token.methods.balanceOf(address).call().then(function(balance) {
-      $('#queryBalance .result').html(balance);
+  EmbarkJS.onReady((error) => {
+    if (error) {
+      console.error('Error while connecting to web3', error);
+      return;
+    }
+    web3.eth.getAccounts(function(err, accounts) {
+      $('#queryBalance input').val(accounts[0]);
     });
-  });
-<mark id="code-11" class="highlight-inline">
-  $('#transfer button').click(function() {
-    var address = $('#transfer .address').val();
-    var num = $('#transfer .num').val();
+    $('#queryBalance button').click(function() {
+      var address = $('#queryBalance input').val();
+      Token.methods.balanceOf(address).call().then(function(balance) {
+        $('#queryBalance .result').html(balance);
+      });
+    });
+    <mark id="code-11" class="highlight-inline">
+    $('#transfer button').click(function() {
+      var address = $('#transfer .address').val();
+      var num = $('#transfer .num').val();
 
-    Token.methods.transfer(address, num).send().then(function() {
-      $('#transfer .result').html('Done!');
-    });;
+      Token.methods.transfer(address, num).send().then(function() {
+        $('#transfer .result').html('Done!');
+      });
+    });
+    </mark>
   });
-</mark>
 });
 </code></pre>
 
-<p>Let’s go to the UI and transfer 20 tokens to a random address, after clicking Transfer you should see the text ‘Done!’ when the transfer takes effect.</p>
+<p>Let’s go to the UI and transfer 20 tokens to a random address (try <code>0x00e13219655759df4f2c15e1fe0b949d43a3c45e</code>).<br>After clicking Transfer you should see the text ‘Done!’ when the transfer takes effect.</p>
 <p><img src="token_factory_1/page_2.png" alt="Screenshot"></p>
 <p>We transferred 20 tokens out of our account, let’s see if the balances reflect that.</p>
 <p><img src="token_factory_1/page_3.png" alt="Screenshot"></p>
 <p><img src="token_factory_1/page_4.png" alt="Screenshot"></p>
+<p>You can even see in the Console a receipt of the transaction:</p>
+<p><img src="token_factory_1/page_5.png" alt="Screenshot"></p>
 <h2 id="On-to-Part-2" class="article-heading"><a href="#On-to-Part-2" class="headerlink" title="On to Part 2"></a>On to Part 2<a class="article-anchor" href="#On-to-Part-2" aria-hidden="true"></a></h2><p>In this tutorial we deployed and interacted with single Token. On <a href="/tutorials/token_factory_2.html">part 2</a> we will adapt this DApp and create a true factory so new tokens can be dynamically deployed on the application side.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-18T02:03:56.641Z" itemprop="dateModified">Last updated: 2018-08-18</time>
+                <time class="article-footer-updated" datetime="2018-09-26T21:18:45.330Z" itemprop="dateModified">Last updated: 2018-09-26</time>
                 
               </footer>
             </div>

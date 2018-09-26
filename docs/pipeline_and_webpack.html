@@ -2,15 +2,15 @@
 <html lang="en">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
-  <title>Solidity Imports | Embark</title>
+  <title>Asset Pipeline & Webpack | Embark</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://embark.status.im/docs/contracts_imports.html">
+  <link rel="canonical" href="https://embark.status.im/docs/pipeline_and_webpack.html">
   <!-- Alternative links -->
   
     
-      <link rel="alternative" hreflang="en" href="https://embark.status.im/docs/contracts_imports.html">
+      <link rel="alternative" hreflang="en" href="https://embark.status.im/docs/pipeline_and_webpack.html">
     
   
   <!-- Icon -->
@@ -87,33 +87,42 @@
           <div class="article">
             <div class="inner">
               <header class="article-header">
-                <h1 class="article-title" itemprop="name">Solidity Imports</h1>
+                <h1 class="article-title" itemprop="name">Asset Pipeline & Webpack</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h3 id="Importing-files-in-contracts" class="article-heading"><a href="#Importing-files-in-contracts" class="headerlink" title="Importing files in contracts"></a>Importing files in contracts<a class="article-anchor" href="#Importing-files-in-contracts" aria-hidden="true"></a></h3><p>If using Solidity it’s also possible to directly import contract files inside the dapp from folders that are not explicity defined in the <code>contracts</code> propery of <code>embark.json</code>.</p>
-<pre><code class="solidity">import "another_folder/another_test.sol";</code></pre>
+                <h3 id="Specifying-a-mode" class="article-heading"><a href="#Specifying-a-mode" class="headerlink" title="Specifying a mode"></a>Specifying a mode<a class="article-anchor" href="#Specifying-a-mode" aria-hidden="true"></a></h3><p>Embark has by default two modes for the building assets:</p>
+<ul>
+<li><code>development</code> - Is faster to build, produces sourcemaps, but also outputs bigger js filesizes. Is the default mode of <code>embark run</code> and <code>embark console</code></li>
+<li><code>production</code> - Is slower to build but also outputs much smaller js filesizes. Is the default mode of <code>embark build</code> and <code>embark upload</code></li>
+</ul>
+<p>You can also specify a particular mode with <code>--pipeline</code>, for e.g</p>
+<pre><code class="shell">$ embark run --pipeline production</code></pre>
 
-<p>You can also import a contract file from an npm package:</p>
-<pre><code class="solidity">import "openzeppelin-solidity/contracts/ownership/Ownable.sol";</code></pre>
+<h3 id="Default-webpack-config" class="article-heading"><a href="#Default-webpack-config" class="headerlink" title="Default webpack config"></a>Default webpack config<a class="article-anchor" href="#Default-webpack-config" aria-hidden="true"></a></h3><p>Embark has a internal default webpack config, this config allows you out of the box to:</p>
+<ul>
+<li>ES6 module <code>import</code> and <code>export</code> syntax</li>
+<li>Importing CSS, SCSS, PNG, SVG &amp; Fonts in JS</li>
+<li>Support for React &amp; JSX</li>
+<li>Automatic support for older browsers via babel’s preset-env. By default, Embark’s uses a Browserlist setting of <code>[&#39;last 1 version&#39;, &#39;not dead&#39;, &#39;&gt; 0.2%&#39;]</code></li>
+<li>Sourcemaps (when in development mode)</li>
+<li>Optmization: minification and tree shaking (when in production mode)</li>
+</ul>
+<h3 id="Ejecting-amp-Customizing-the-Webpack-config" class="article-heading"><a href="#Ejecting-amp-Customizing-the-Webpack-config" class="headerlink" title="Ejecting &amp; Customizing the Webpack config"></a>Ejecting &amp; Customizing the Webpack config<a class="article-anchor" href="#Ejecting-amp-Customizing-the-Webpack-config" aria-hidden="true"></a></h3><p>If you want to override Embark’s default webpack configuration, you can run:</p>
+<pre><code class="shell">$ embark eject-webpack</code></pre>
 
-<p>You can even use files directly from Git, Github or directly from HTTP(S):</p>
-<pre><code class="solidity">import "git://github.com/status/contracts/contracts/identity/ERC725.sol#develop";
-import "github.com/status/contracts/contracts/identity/ERC725.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/ownership/Ownable.sol";
-</code></pre>
-
+<p>This command outputs the webpack file named <code>webpack.config.js</code> to the root directory of your dApp. You can then customize it to suit your specific needs.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-09-26T20:02:42.121Z" itemprop="dateModified">Last updated: 2018-09-26</time>
-                <a href="contracts_javascript.html" class="article-footer-prev" title="Javascript Usage"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="contracts_testing.html" class="article-footer-next" title="Testing"><span>Next</span><i class="fa fa-chevron-right"></i></a>
+                <time class="article-footer-updated" datetime="2018-09-26T21:18:45.322Z" itemprop="dateModified">Last updated: 2018-09-26</time>
+                <a href="configuration.html" class="article-footer-prev" title="Configuration"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="javascript_usage.html" class="article-footer-next" title="Javascript Usage"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
           </div>
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Importing-files-in-contracts"><span class="toc-text">Importing files in contracts</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Specifying-a-mode"><span class="toc-text">Specifying a mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Default-webpack-config"><span class="toc-text">Default webpack config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ejecting-amp-Customizing-the-Webpack-config"><span class="toc-text">Ejecting &amp; Customizing the Webpack config</span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
@@ -121,7 +130,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contra
       </article>
       <aside id="sidebar" role="navigation">
   <div class="inner">
-    <strong class="sidebar-title">Getting Started</strong><a href="index.html" class="sidebar-link">Overview & Installation</a><a href="quick_start.html" class="sidebar-link">Quick Start</a><strong class="sidebar-title">General Usage</strong><a href="create_project.html" class="sidebar-link">Creating a Project</a><a href="structure.html" class="sidebar-link">Structure</a><a href="environments.html" class="sidebar-link">Environments</a><a href="configuration.html" class="sidebar-link">Configuration</a><a href="pipeline_and_webpack.html" class="sidebar-link">Pipeline & Webpack</a><a href="javascript_usage.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Smart Contracts</strong><a href="contracts_configuration.html" class="sidebar-link">Configuration</a><a href="contracts_deployment.html" class="sidebar-link">Accounts & Deployment</a><a href="contracts_javascript.html" class="sidebar-link">Javascript Usage</a><a href="contracts_imports.html" class="sidebar-link current">Solidity Imports</a><a href="contracts_testing.html" class="sidebar-link">Testing</a><strong class="sidebar-title">Decentralized Storage</strong><a href="storage_configuration.html" class="sidebar-link">Configuration</a><a href="storage_javascript.html" class="sidebar-link">Javascript Usage</a><a href="storage_deployment.html" class="sidebar-link">Deploying to IPFS/Swarm</a><strong class="sidebar-title">Decentralized Messages</strong><a href="messages_configuration.html" class="sidebar-link">Configuration</a><a href="messages_javascript.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Naming Systems</strong><a href="naming_configuration.html" class="sidebar-link">Configuration</a><a href="naming_javascript.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Plugins</strong><a href="installing_plugins.html" class="sidebar-link">Installing a plugin</a><a href="creating_plugins.html" class="sidebar-link">Creating a plugin</a><a href="plugin_reference.html" class="sidebar-link">Plugin Reference</a><strong class="sidebar-title">Reference</strong><a href="console_commands.html" class="sidebar-link">Console Commands</a><a href="embark_commands.html" class="sidebar-link">Embark Commands</a><a href="web3js.html" class="sidebar-link">Web3.js</a><a href="solidity.html" class="sidebar-link">Solidity</a><a href="vyper.html" class="sidebar-link">Vyper</a><a href="bamboo.html" class="sidebar-link">Bamboo</a><strong class="sidebar-title">Miscellaneous</strong><a href="troubleshooting.html" class="sidebar-link">Troubleshooting</a><a href="contributing.html" class="sidebar-link">Contributing</a>
+    <strong class="sidebar-title">Getting Started</strong><a href="index.html" class="sidebar-link">Overview & Installation</a><a href="quick_start.html" class="sidebar-link">Quick Start</a><strong class="sidebar-title">General Usage</strong><a href="create_project.html" class="sidebar-link">Creating a Project</a><a href="structure.html" class="sidebar-link">Structure</a><a href="environments.html" class="sidebar-link">Environments</a><a href="configuration.html" class="sidebar-link">Configuration</a><a href="pipeline_and_webpack.html" class="sidebar-link current">Pipeline & Webpack</a><a href="javascript_usage.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Smart Contracts</strong><a href="contracts_configuration.html" class="sidebar-link">Configuration</a><a href="contracts_deployment.html" class="sidebar-link">Accounts & Deployment</a><a href="contracts_javascript.html" class="sidebar-link">Javascript Usage</a><a href="contracts_imports.html" class="sidebar-link">Solidity Imports</a><a href="contracts_testing.html" class="sidebar-link">Testing</a><strong class="sidebar-title">Decentralized Storage</strong><a href="storage_configuration.html" class="sidebar-link">Configuration</a><a href="storage_javascript.html" class="sidebar-link">Javascript Usage</a><a href="storage_deployment.html" class="sidebar-link">Deploying to IPFS/Swarm</a><strong class="sidebar-title">Decentralized Messages</strong><a href="messages_configuration.html" class="sidebar-link">Configuration</a><a href="messages_javascript.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Naming Systems</strong><a href="naming_configuration.html" class="sidebar-link">Configuration</a><a href="naming_javascript.html" class="sidebar-link">Javascript Usage</a><strong class="sidebar-title">Plugins</strong><a href="installing_plugins.html" class="sidebar-link">Installing a plugin</a><a href="creating_plugins.html" class="sidebar-link">Creating a plugin</a><a href="plugin_reference.html" class="sidebar-link">Plugin Reference</a><strong class="sidebar-title">Reference</strong><a href="console_commands.html" class="sidebar-link">Console Commands</a><a href="embark_commands.html" class="sidebar-link">Embark Commands</a><a href="web3js.html" class="sidebar-link">Web3.js</a><a href="solidity.html" class="sidebar-link">Solidity</a><a href="vyper.html" class="sidebar-link">Vyper</a><a href="bamboo.html" class="sidebar-link">Bamboo</a><strong class="sidebar-title">Miscellaneous</strong><a href="troubleshooting.html" class="sidebar-link">Troubleshooting</a><a href="contributing.html" class="sidebar-link">Contributing</a>
   </div>
 </aside>
     </div>
@@ -188,12 +197,12 @@ import "https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contra
       </li>
     </ul>
     
-      <strong class="mobile-nav-title">Getting Started</strong><a href="index.html" class="mobile-nav-link">Overview & Installation</a><a href="quick_start.html" class="mobile-nav-link">Quick Start</a><strong class="mobile-nav-title">General Usage</strong><a href="create_project.html" class="mobile-nav-link">Creating a Project</a><a href="structure.html" class="mobile-nav-link">Structure</a><a href="environments.html" class="mobile-nav-link">Environments</a><a href="configuration.html" class="mobile-nav-link">Configuration</a><a href="pipeline_and_webpack.html" class="mobile-nav-link">Pipeline & Webpack</a><a href="javascript_usage.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Smart Contracts</strong><a href="contracts_configuration.html" class="mobile-nav-link">Configuration</a><a href="contracts_deployment.html" class="mobile-nav-link">Accounts & Deployment</a><a href="contracts_javascript.html" class="mobile-nav-link">Javascript Usage</a><a href="contracts_imports.html" class="mobile-nav-link current">Solidity Imports</a><a href="contracts_testing.html" class="mobile-nav-link">Testing</a><strong class="mobile-nav-title">Decentralized Storage</strong><a href="storage_configuration.html" class="mobile-nav-link">Configuration</a><a href="storage_javascript.html" class="mobile-nav-link">Javascript Usage</a><a href="storage_deployment.html" class="mobile-nav-link">Deploying to IPFS/Swarm</a><strong class="mobile-nav-title">Decentralized Messages</strong><a href="messages_configuration.html" class="mobile-nav-link">Configuration</a><a href="messages_javascript.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Naming Systems</strong><a href="naming_configuration.html" class="mobile-nav-link">Configuration</a><a href="naming_javascript.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Plugins</strong><a href="installing_plugins.html" class="mobile-nav-link">Installing a plugin</a><a href="creating_plugins.html" class="mobile-nav-link">Creating a plugin</a><a href="plugin_reference.html" class="mobile-nav-link">Plugin Reference</a><strong class="mobile-nav-title">Reference</strong><a href="console_commands.html" class="mobile-nav-link">Console Commands</a><a href="embark_commands.html" class="mobile-nav-link">Embark Commands</a><a href="web3js.html" class="mobile-nav-link">Web3.js</a><a href="solidity.html" class="mobile-nav-link">Solidity</a><a href="vyper.html" class="mobile-nav-link">Vyper</a><a href="bamboo.html" class="mobile-nav-link">Bamboo</a><strong class="mobile-nav-title">Miscellaneous</strong><a href="troubleshooting.html" class="mobile-nav-link">Troubleshooting</a><a href="contributing.html" class="mobile-nav-link">Contributing</a>
+      <strong class="mobile-nav-title">Getting Started</strong><a href="index.html" class="mobile-nav-link">Overview & Installation</a><a href="quick_start.html" class="mobile-nav-link">Quick Start</a><strong class="mobile-nav-title">General Usage</strong><a href="create_project.html" class="mobile-nav-link">Creating a Project</a><a href="structure.html" class="mobile-nav-link">Structure</a><a href="environments.html" class="mobile-nav-link">Environments</a><a href="configuration.html" class="mobile-nav-link">Configuration</a><a href="pipeline_and_webpack.html" class="mobile-nav-link current">Pipeline & Webpack</a><a href="javascript_usage.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Smart Contracts</strong><a href="contracts_configuration.html" class="mobile-nav-link">Configuration</a><a href="contracts_deployment.html" class="mobile-nav-link">Accounts & Deployment</a><a href="contracts_javascript.html" class="mobile-nav-link">Javascript Usage</a><a href="contracts_imports.html" class="mobile-nav-link">Solidity Imports</a><a href="contracts_testing.html" class="mobile-nav-link">Testing</a><strong class="mobile-nav-title">Decentralized Storage</strong><a href="storage_configuration.html" class="mobile-nav-link">Configuration</a><a href="storage_javascript.html" class="mobile-nav-link">Javascript Usage</a><a href="storage_deployment.html" class="mobile-nav-link">Deploying to IPFS/Swarm</a><strong class="mobile-nav-title">Decentralized Messages</strong><a href="messages_configuration.html" class="mobile-nav-link">Configuration</a><a href="messages_javascript.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Naming Systems</strong><a href="naming_configuration.html" class="mobile-nav-link">Configuration</a><a href="naming_javascript.html" class="mobile-nav-link">Javascript Usage</a><strong class="mobile-nav-title">Plugins</strong><a href="installing_plugins.html" class="mobile-nav-link">Installing a plugin</a><a href="creating_plugins.html" class="mobile-nav-link">Creating a plugin</a><a href="plugin_reference.html" class="mobile-nav-link">Plugin Reference</a><strong class="mobile-nav-title">Reference</strong><a href="console_commands.html" class="mobile-nav-link">Console Commands</a><a href="embark_commands.html" class="mobile-nav-link">Embark Commands</a><a href="web3js.html" class="mobile-nav-link">Web3.js</a><a href="solidity.html" class="mobile-nav-link">Solidity</a><a href="vyper.html" class="mobile-nav-link">Vyper</a><a href="bamboo.html" class="mobile-nav-link">Bamboo</a><strong class="mobile-nav-title">Miscellaneous</strong><a href="troubleshooting.html" class="mobile-nav-link">Troubleshooting</a><a href="contributing.html" class="mobile-nav-link">Contributing</a>
     
   </div>
   <div id="mobile-lang-select-wrap">
     <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>English</span></span>
-    <select id="mobile-lang-select" data-canonical="docs/contracts_imports.html">
+    <select id="mobile-lang-select" data-canonical="docs/pipeline_and_webpack.html">
       
         <option value="en" selected>English</option>
       
