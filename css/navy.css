@@ -842,7 +842,7 @@ a.article-title:hover {
   font-size: 26px;
 }
 .article-content h2 {
-  font-size: 20px;
+  font-size: 21px;
 }
 .article-content h3 {
   font-size: 18px;
@@ -855,7 +855,7 @@ a.article-title:hover {
 .article-content h6 {
   line-height: 1em;
   font-weight: bold;
-  margin: 1em 0;
+  margin: 1.8em 0 0.8em;
   color: #000;
 }
 .article-content a {
@@ -908,6 +908,9 @@ a.article-title:hover {
 .article-content dl {
   list-style: square;
 }
+.article-content li {
+  margin-top: 0.5em;
+}
 .article-content li p {
   margin: 0;
 }
@@ -937,6 +940,9 @@ a.article-title:hover {
 }
 .article-content blockquote footer cite a {
   color: color-grey;
+}
+.article-content .note {
+  padding: 0 1em 1em;
 }
 .article-content .note.tip {
   border-left-color: #fa0;

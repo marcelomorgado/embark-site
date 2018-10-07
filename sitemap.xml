@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://embark.status.im/docs/running_apps.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.545Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/quick_start.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/installation.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/naming_javascript.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/dashboard.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.543Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/create_project.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.543Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/index.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.543Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/plugin_reference.html</loc>
     
     <lastmod>2018-09-26T21:19:14.421Z</lastmod>
@@ -37,14 +86,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/storage_javascript.html</loc>
+    <loc>https://embark.status.im/docs/storage_deployment.html</loc>
     
     <lastmod>2018-09-26T21:18:45.323Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/storage_deployment.html</loc>
+    <loc>https://embark.status.im/docs/storage_javascript.html</loc>
     
     <lastmod>2018-09-26T21:18:45.323Z</lastmod>
     
@@ -54,13 +103,6 @@
     <loc>https://embark.status.im/docs/pipeline_and_webpack.html</loc>
     
     <lastmod>2018-09-26T21:18:45.322Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/naming_javascript.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.321Z</lastmod>
     
   </url>
   
@@ -89,13 +131,6 @@
     <loc>https://embark.status.im/docs/javascript_usage.html</loc>
     
     <lastmod>2018-09-26T21:18:45.320Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/create_project.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.319Z</lastmod>
     
   </url>
   
@@ -156,13 +191,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/index.html</loc>
-    
-    <lastmod>2018-09-14T19:19:06.527Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/news/2018/05/03/embark-3-0-released/</loc>
     
     <lastmod>2018-09-14T19:19:06.526Z</lastmod>
@@ -180,13 +208,6 @@
     <loc>https://embark.status.im/docs/troubleshooting.html</loc>
     
     <lastmod>2018-09-14T19:19:01.573Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/quick_start.html</loc>
-    
-    <lastmod>2018-09-14T19:19:01.570Z</lastmod>
     
   </url>
   
@@ -219,14 +240,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/tutorials/index.html</loc>
+    <loc>https://embark.status.im/templates/index.html</loc>
     
     <lastmod>2018-08-27T17:40:18.553Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/templates/index.html</loc>
+    <loc>https://embark.status.im/tutorials/index.html</loc>
     
     <lastmod>2018-08-27T17:40:18.553Z</lastmod>
     
@@ -254,14 +275,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/what_dapp.html</loc>
+    <loc>https://embark.status.im/docs/webpack.html</loc>
     
     <lastmod>2018-08-27T17:40:18.545Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/webpack.html</loc>
+    <loc>https://embark.status.im/docs/what_dapp.html</loc>
     
     <lastmod>2018-08-27T17:40:18.545Z</lastmod>
     
