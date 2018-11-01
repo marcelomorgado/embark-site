@@ -2,30 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://embark.status.im/docs/contracts_configuration.html</loc>
+    
+    <lastmod>2018-11-01T15:30:51.074Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/installation.html</loc>
     
-    <lastmod>2018-11-01T14:25:58.928Z</lastmod>
+    <lastmod>2018-11-01T15:26:42.166Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/environments.html</loc>
     
-    <lastmod>2018-11-01T13:57:42.177Z</lastmod>
+    <lastmod>2018-11-01T15:26:42.165Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/contracts_deployment.html</loc>
     
-    <lastmod>2018-11-01T13:57:42.176Z</lastmod>
+    <lastmod>2018-11-01T15:26:42.164Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://embark.status.im/docs/configuration.html</loc>
     
-    <lastmod>2018-11-01T13:57:42.176Z</lastmod>
+    <lastmod>2018-11-01T15:26:42.163Z</lastmod>
     
   </url>
   
@@ -37,13 +44,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/contracts_configuration.html</loc>
-    
-    <lastmod>2018-10-30T22:32:14.521Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/running_apps.html</loc>
     
     <lastmod>2018-10-07T14:13:35.545Z</lastmod>
@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/naming_javascript.html</loc>
+    <loc>https://embark.status.im/docs/quick_start.html</loc>
     
     <lastmod>2018-10-07T14:13:35.544Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/quick_start.html</loc>
+    <loc>https://embark.status.im/docs/naming_javascript.html</loc>
     
     <lastmod>2018-10-07T14:13:35.544Z</lastmod>
     

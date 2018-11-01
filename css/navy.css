@@ -2237,13 +2237,28 @@ select[multiple] {
   color: #000;
   font-size: 21px;
   text-align: center;
+  position: relative;
   font-weight: bold;
   color: #fff;
   background-color: #232323;
 }
+.command.next {
+  height: 40px;
+  font-size: 16px;
+}
+.command-description,
+.command-description a {
+  color: #777f86;
+}
+.command .btn {
+  top: auto;
+  display: none;
+}
+.command:hover .btn {
+  display: block;
+}
 .command-description {
   text-align: center;
-  color: #777f86;
   padding: 8px 0 0 0;
 }
 @media (max-width: 710px) {
