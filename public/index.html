@@ -35,23 +35,6 @@
   <!-- RSS -->
   <link rel="alternate" href="/atom.xml" title="Embark">
   <meta property="og:image" content="/img/share.png?v=0.0.5" />
-  <!-- Google Analytics -->
-  
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      gtag('js', new Date());
-
-      gtag('config', 'UA-79146816-4');
-    </script>
-
-
   <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
@@ -59,7 +42,7 @@
   <div id="container">
     
     <div class="home-cover">
-    <a href="https://github.com/embark-framework/embark"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a><Paste>
+    <a href="https://github.com/embark-framework/embark"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <div class="header">
         <div class="header-left">
             <div class="logo-wrap">
@@ -104,10 +87,18 @@
 
     <div class="command-wrap">
         <div class="command">
-            npm install -g embark
+            <span id="npm-current">npm install -g embark</span>
+            <button class="btn" data-clipboard-target="#npm-current"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
         </div>
         <div class="command-description">
-            Install Embark via NPM
+            Install Embark via <a href="https://github.com/creationix/nvm" target="_blank">NPM</a>
+        </div>
+        <div class="command-description">
+            To get access to Embark 4 alpha:
+        </div>
+        <div class="command next">
+            <span id="npm-next">npm install -g embark@next</span>
+            <button class="btn" data-clipboard-target="#npm-next"><img class="clippy" width="13" src="/img/clippy.svg" alt="Copy to clipboard"></button>
         </div>
     </div>
 
@@ -143,7 +134,7 @@
                         <p>Deploy your DApp to IPFS or Swarm.</p>
                     </div>
                     <div class="features-button-wrap">
-                        <a class="button button--features button--light" href="/docs/storage.html" >Tutorial
+                        <a class="button button--features button--light" href="/docs/storage_configuration.html" title="Decentralized storage tutorial">Tutorial
                             on IPFS</a>
                     </div>
                 </div>
@@ -156,7 +147,7 @@
                         <p>Use Whisper or Orbit to fulfill your communication needs.</p>
                     </div>
                     <div class="features-button-wrap">
-                        <a class="button button--features button--light" href="/docs/messages.html">Tutorial
+                        <a class="button button--features button--light" href="/docs/messages_configuration.html" title="Decentralized messaging tutorial">Tutorial
                             on messaging</a>
                     </div>
                 </div>
@@ -250,8 +241,9 @@
                     <p>Swarm is also supported for deployment, just run a Swarm node and use <strong>embark upload
                             swarm</strong>.</p>
                     <!--p>Tests can readily be configured and use the well-known Mocha framework, though you can easily swap in any testing framework you prefer.</p -->
-                    <a class="section-link" href="/docs/storage.html">Storage</a> <a class="section-link"
-                                                                                                    href="/docs/messages.html"
+                    <a class="section-link" href="/docs/storage_configuration.html" title="Using storages in Embark">Storage</a> <a class="section-link"
+                                                                                                    href="/docs/messages_configuration.html"
+                                                                                                    title="Using message protocols in Embark"
                                                                                                    >Communication</a>
                 </div>
             </div>
@@ -356,7 +348,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -370,7 +361,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

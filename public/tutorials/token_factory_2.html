@@ -31,23 +31,6 @@
   <!-- RSS -->
   <link rel="alternate" href="/atom.xml" title="Embark">
   <meta property="og:image" content="/img/share.png?v=0.0.5" />
-  <!-- Google Analytics -->
-  
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-79146816-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      gtag('js', new Date());
-
-      gtag('config', 'UA-79146816-4');
-    </script>
-
-
   <link rel="stylesheet" href="/js/styles/railscasts.css" />
 </head>
 
@@ -334,7 +317,7 @@ $(document).ready(function() {
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-08-18T01:10:27.559Z" itemprop="dateModified">Last updated: 2018-08-18</time>
+                <time class="article-footer-updated" datetime="2018-09-14T19:19:01.574Z" itemprop="dateModified">Last updated: 2018-09-14</time>
                 
               </footer>
             </div>
@@ -453,7 +436,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -467,7 +449,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

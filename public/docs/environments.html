@@ -90,7 +90,7 @@
                 <h1 class="article-title" itemprop="name">Environments</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <p>Developing on Ethereum require you to #buidl everything locally, then deploy it on various test networks, and only then get to the big show. Setting up connections and deploying contracts easily to all these different environments is a pain. But do not fear, Embark has you covered. We use the concept of <code>environments</code>, which means that every config file has entries for each environment so you can control them all sensibly from one place that can be specified in most embark commands.</p>
+                <p>Developing on Ethereum requires you to #buidl everything locally, then deploy it on various test networks, and only then get to the big show. Setting up connections and deploying contracts easily to all these different environments is a pain. But do not fear, Embark has you covered. We use the concept of <code>environments</code>, which means that every config file has entries for each environment so you can control them all sensibly from one place that can be specified in most embark commands.</p>
 <h3 id="Configuration" class="article-heading"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration<a class="article-anchor" href="#Configuration" aria-hidden="true"></a></h3><p><code>default</code> is a special environment - the values you use here will apply to all environments unless you have set specific values for the environments you want to work in.<br>Every other config block is then merged with <code>default</code>, which means that you can specify the most common options in default and then only override what’s really needed on a per environment basis.</p>
 <p>Example:</p>
 <pre><code class="javascript">module.exports = {
@@ -167,7 +167,7 @@
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-09-26T20:02:42.122Z" itemprop="dateModified">Last updated: 2018-09-26</time>
+                <time class="article-footer-updated" datetime="2018-11-01T15:26:42.165Z" itemprop="dateModified">Last updated: 2018-11-01</time>
                 <a href="dashboard.html" class="article-footer-prev" title="Using the dashboard"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="configuration.html" class="article-footer-next" title="Configuration"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -287,7 +287,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -301,7 +300,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>
