@@ -85,10 +85,10 @@
   <header class="article-header">
     
       <h1>
-        <a href="/news/2018/06/19/embark-3-1-released/" class="article-title" itemprop="name">Embark by Status 3.1</a>
+        <a href="/news/2018/06/20/embark-3-1-released/" class="article-title" itemprop="name">Embark by Status 3.1</a>
       </h1>
     
-    <a href="/news/2018/06/19/embark-3-1-released/" class="article-date"><time datetime="2018-06-20T00:00:00.000Z">2018-06-20</time></a>
+    <a href="/news/2018/06/20/embark-3-1-released/" class="article-date"><time datetime="2018-06-20T00:00:00.000Z">2018-06-20</time></a>
   </header>
   <div class="article-content" itemprop="articleBody">
     <p>More info can be found in the <a href="https://blog.status.im/embark-3-1-planet-express-60493ca0ad79" target="_blank" rel="noopener">medium post</a></p>
@@ -197,7 +197,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -211,7 +210,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

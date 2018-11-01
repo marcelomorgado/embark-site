@@ -93,22 +93,33 @@
                 <h3 id="Basic-Contract-Configuration" class="article-heading"><a href="#Basic-Contract-Configuration" class="headerlink" title="Basic Contract Configuration"></a>Basic Contract Configuration<a class="article-anchor" href="#Basic-Contract-Configuration" aria-hidden="true"></a></h3><p>You can specify for each contract and environment its gas costs (in wei) and arguments:</p>
 <pre><code class="javascript">// config/contracts.js
 module.exports = {
-  "development": {
-    "gas": "auto",
-    "contracts": {
-      "SimpleStorage": {
-        "args": [
-          100
-        ],
-        "gas": 800000,
-        "gasPrice": 5
+  "default": {
+    gas: "auto",
+    contracts: {
+      STT: {
+        instanceOf: "MiniMeToken",
+        args: ["$MiniMeTokenFactory", "Status Gas Relayer Token", 18, "STT", true]
+      },
+      SNTController: {
+        deployIf: "await MultiSign.methods.isUpdateAuthorized()",
+        args: {owner: "$accounts[0]", token: "$STT"},
+        onDeploy: ["SNTController.methods.addOwner($accounts[1])"]
+      },
+      MiniMeTokenFactory: { args: [] },
+      MiniMeToken: {file: "github.com/Giveth/minime/contracts/MiniMeToken.sol"}
+    }
+  }
+  "ropsten": {
+    contracts: {
+      MiniMeTokenFactory: {
+        address: "0xb59E2Dc49a5F03CC25606F24934eA2CEE04f70dE"
       }
     }
   }
 }
 </code></pre>
 
-<p>If you prefer it’s also possible to specify the contract arguments by their variable name instead of a list:</p>
+<p>if you prefer it’s also possible to specify the contract arguments by their variable name instead of a list:</p>
 <pre><code class="javascript">// config/contracts.js
 module.exports = {
   "development": {
@@ -309,7 +320,7 @@ module.exports = {
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-09-26T21:18:45.315Z" itemprop="dateModified">Last updated: 2018-09-26</time>
+                <time class="article-footer-updated" datetime="2018-10-30T22:32:14.521Z" itemprop="dateModified">Last updated: 2018-10-30</time>
                 <a href="javascript_usage.html" class="article-footer-prev" title="Javascript Usage"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="contracts_deployment.html" class="article-footer-next" title="Accounts & Deployment"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -429,7 +440,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -443,7 +453,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

@@ -85,10 +85,10 @@
   <header class="article-header">
     
       <h1>
-        <a href="/news/2018/05/03/embark-3-0-released/" class="article-title" itemprop="name">Embark by Status 3.0</a>
+        <a href="/news/2018/05/04/embark-3-0-released/" class="article-title" itemprop="name">Embark by Status 3.0</a>
       </h1>
     
-    <a href="/news/2018/05/03/embark-3-0-released/" class="article-date"><time datetime="2018-05-04T00:00:00.000Z">2018-05-04</time></a>
+    <a href="/news/2018/05/04/embark-3-0-released/" class="article-date"><time datetime="2018-05-04T00:00:00.000Z">2018-05-04</time></a>
   </header>
   <div class="article-content" itemprop="articleBody">
     <p>Embark is now part of <a href="https://status.im/" target="_blank" rel="noopener">Status</a> and we are happy to announce Embark 3.0 by Status!</p>
@@ -234,7 +234,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -248,7 +247,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

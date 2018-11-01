@@ -2,11 +2,11 @@
 <html lang="en">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
-  <title>Embark 2.5.0 | Embark</title>
+  <title>Embark by Status 3.1 | Embark</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://embark.status.im/news/2017/06/27/embark-2-5-released/index.html">
+  <link rel="canonical" href="https://embark.status.im/news/2018/06/20/embark-3-1-released/index.html">
   <!-- Alternative links -->
   
   <!-- Icon -->
@@ -81,37 +81,12 @@
       <article class="article post" itemscope itemtype="http://schema.org/Article">
   <header class="article-header">
     
-      <h1 class="article-title" itemprop="name">Embark 2.5.0</h1>
+      <h1 class="article-title" itemprop="name">Embark by Status 3.1</h1>
     
-    <a href="/news/2017/06/27/embark-2-5-released/" class="article-date"><time datetime="2017-06-28T00:00:00.000Z">2017-06-28</time></a>
+    <a href="/news/2018/06/20/embark-3-1-released/" class="article-date"><time datetime="2018-06-20T00:00:00.000Z">2018-06-20</time></a>
   </header>
   <div class="article-content" itemprop="articleBody">
-    <h3 id="To-Update-to-2-5-0" class="article-heading"><a href="#To-Update-to-2-5-0" class="headerlink" title="To Update to 2.5.0"></a>To Update to 2.5.0<a class="article-anchor" href="#To-Update-to-2-5-0" aria-hidden="true"></a></h3><p><strong>important</strong></p>
-<p>Embark’s npm package has changed from <code>embark-framework</code> to <code>embark</code>, this sometimes can create conflicts. To update, first uninstall embark-framework 1 to avoid any conflicts with <code>npm uninstall -g embark-framework</code> followed by <code>npm install -g embark</code></p>
-<p>to update from 2.4.2:</p>
-<p><code>npm install -g embark@2.5</code></p>
-<p>afterwards make sure <code>embark version</code> returns <code>2.5.0</code>.</p>
-<h3 id="In-this-release" class="article-heading"><a href="#In-this-release" class="headerlink" title="In this release"></a>In this release<a class="article-anchor" href="#In-this-release" aria-hidden="true"></a></h3><p>This release updates to the lastest dependencies, fixes a few things and has a lot of work under the hood necessary for future releases.</p>
-<h3 id="Updates" class="article-heading"><a href="#Updates" class="headerlink" title="Updates"></a>Updates<a class="article-anchor" href="#Updates" aria-hidden="true"></a></h3><ul>
-<li>support for geth 1.6.5</li>
-<li>updated to use web3.js 0.19.11</li>
-<li>updated to use solc 0.4.11</li>
-</ul>
-<h3 id="Misc-Bugfixes-and-Improvements" class="article-heading"><a href="#Misc-Bugfixes-and-Improvements" class="headerlink" title="Misc Bugfixes and Improvements"></a>Misc Bugfixes and Improvements<a class="article-anchor" href="#Misc-Bugfixes-and-Improvements" aria-hidden="true"></a></h3><ul>
-<li><code>embark new</code> will now prompt for the dapp name if not specified as <code>embark new &lt;yourDappName&gt;</code></li>
-<li>embark.js: <code>ContractName.new()</code> as been added as an alias for <code>ContractName.deploy()</code></li>
-<li>embark.js: a method to easily send ether to a contract has been added: <code>ContractName.send(value, unit, options)</code> e.g <code>ContractName.send(2, &quot;ether&quot;, {from: web3.eth.accounts[1]})</code></li>
-<li>orbit: Fix for orbit to make it work if the blockchain component is disabled</li>
-<li>orbit: Use default config for orbit it none is specified in the config file</li>
-<li>Demo app now has warning message for incompatible whisper versions</li>
-<li>the JSON files of the contracts are now being outputted at dist/contracts/ (experimental)</li>
-<li>whisper: Dashboard now displays the whisper version of the node</li>
-<li>plugin API: extensions can now also be added as directories within the dapp directory</li>
-<li>plugin API: plugins can now register a component to be displayed in the dashboard. e.g:</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">embark.registerServiceCheck(<span class="string">'PluginService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">cb</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (someFunctionThatChecksTheService()) &#123;</span><br><span class="line">     cb(&#123;<span class="attr">name</span>: <span class="string">"MyServiceName"</span>, <span class="attr">status</span>: <span class="string">"on"</span>&#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    cb(&#123;<span class="attr">name</span>: <span class="string">"MyServiceName"</span>, <span class="attr">status</span>: <span class="string">"off"</span>&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="Thank-you" class="article-heading"><a href="#Thank-you" class="headerlink" title="Thank you"></a>Thank you<a class="article-anchor" href="#Thank-you" aria-hidden="true"></a></h3><p>A big thanks to all that contributed to this release including <a href="https://github.com/nathanph" target="_blank" rel="noopener">Nathan Hernandez</a>, <a href="https://github.com/atfornes" target="_blank" rel="noopener">Antonio Tenorio-Fornés</a>, <a href="https://github.com/jonjonsonjr" target="_blank" rel="noopener">Jon Johnson</a>, Andy Nogueira,  <a href="https://github.com/roo2" target="_blank" rel="noopener">roo2</a>, <a href="https://github.com/carlmon" target="_blank" rel="noopener">Carl Mönnig</a>, <a href="https://github.com/michaeljyeates" target="_blank" rel="noopener">Michael Yeates</a>, <a href="https://github.com/toadkicker" target="_blank" rel="noopener">Todd Baur</a>, <a href="https://github.com/imtypist" target="_blank" rel="noopener">黄俊钦</a>, <a href="https://github.com/RamiroMoreira" target="_blank" rel="noopener">Ramiro Moreira</a>, <a href="https://github.com/greggdourgarian" target="_blank" rel="noopener">gregg dourgarian</a></p>
-<h3 id="Chatroom" class="article-heading"><a href="#Chatroom" class="headerlink" title="Chatroom"></a>Chatroom<a class="article-anchor" href="#Chatroom" aria-hidden="true"></a></h3><p>To discuss about Embark or Dapp development, please <a href="https://gitter.im/iurimatias/embark-framework" target="_blank" rel="noopener">join us at the gitter channel</a></p>
+    <p>More info can be found in the <a href="https://blog.status.im/embark-3-1-planet-express-60493ca0ad79" target="_blank" rel="noopener">medium post</a></p>
 
   </div>
   
@@ -120,8 +95,8 @@
 </section>
 <script>
   var disqus_shortname = 'hexojs';
-  var disqus_url = 'https://embark.status.im/news/2017/06/27/embark-2-5-released/index.html';
-  var disqus_title = "Embark 2.5.0";
+  var disqus_url = 'https://embark.status.im/news/2018/06/20/embark-3-1-released/index.html';
+  var disqus_title = "Embark by Status 3.1";
   var disqus_config = function(){
     this.language = 'en';
   };
@@ -232,7 +207,6 @@ $(document).ready(function() {
   try {
     highlight();
   } catch(err) {
-    console.log("retrying...")
     setTimeout(function() {
       highlight();
     }, 2500)
@@ -246,7 +220,7 @@ $(document).ready(function() {
       $(id).toggleClass("flash");
     }, 200);
     e.clearSelection();
-  })
+  });
 });
 
 </script>

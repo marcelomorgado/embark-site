@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://embark.status.im/docs/installation.html</loc>
+    
+    <lastmod>2018-11-01T14:25:58.928Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/environments.html</loc>
+    
+    <lastmod>2018-11-01T13:57:42.177Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/contracts_deployment.html</loc>
+    
+    <lastmod>2018-11-01T13:57:42.176Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/configuration.html</loc>
+    
+    <lastmod>2018-11-01T13:57:42.176Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/naming_configuration.html</loc>
+    
+    <lastmod>2018-10-30T23:20:13.652Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/contracts_configuration.html</loc>
+    
+    <lastmod>2018-10-30T22:32:14.521Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://embark.status.im/docs/running_apps.html</loc>
     
     <lastmod>2018-10-07T14:13:35.545Z</lastmod>
@@ -9,21 +51,14 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/quick_start.html</loc>
-    
-    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/installation.html</loc>
-    
-    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/naming_javascript.html</loc>
+    
+    <lastmod>2018-10-07T14:13:35.544Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://embark.status.im/docs/quick_start.html</loc>
     
     <lastmod>2018-10-07T14:13:35.544Z</lastmod>
     
@@ -107,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/installing_plugins.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.320Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/embark_commands.html</loc>
     
     <lastmod>2018-09-26T21:18:45.320Z</lastmod>
@@ -121,7 +149,7 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/naming_configuration.html</loc>
+    <loc>https://embark.status.im/docs/installing_plugins.html</loc>
     
     <lastmod>2018-09-26T21:18:45.320Z</lastmod>
     
@@ -135,30 +163,9 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/contracts_deployment.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.318Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/console_commands.html</loc>
     
     <lastmod>2018-09-26T21:18:45.315Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/contracts_configuration.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.315Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://embark.status.im/docs/configuration.html</loc>
-    
-    <lastmod>2018-09-26T21:18:45.314Z</lastmod>
     
   </url>
   
@@ -177,13 +184,6 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/docs/environments.html</loc>
-    
-    <lastmod>2018-09-26T20:02:42.122Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://embark.status.im/docs/contracts_imports.html</loc>
     
     <lastmod>2018-09-26T20:02:42.121Z</lastmod>
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/news/2018/05/03/embark-3-0-released/</loc>
+    <loc>https://embark.status.im/news/2018/05/04/embark-3-0-released/</loc>
     
     <lastmod>2018-09-14T19:19:06.526Z</lastmod>
     
@@ -310,21 +310,21 @@
   </url>
   
   <url>
-    <loc>https://embark.status.im/news/2018/06/19/embark-3-1-released/</loc>
+    <loc>https://embark.status.im/news/2018/06/20/embark-3-1-released/</loc>
     
     <lastmod>2018-08-27T17:40:18.527Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/news/2017/10/24/embark-2-6-released/</loc>
+    <loc>https://embark.status.im/news/2017/10/25/embark-2-6-released/</loc>
     
     <lastmod>2018-08-27T17:40:18.525Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://embark.status.im/news/2017/06/27/embark-2-5-released/</loc>
+    <loc>https://embark.status.im/news/2017/06/28/embark-2-5-released/</loc>
     
     <lastmod>2018-08-27T17:40:18.525Z</lastmod>
     
