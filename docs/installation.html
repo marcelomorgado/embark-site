@@ -90,7 +90,7 @@
                 <h1 class="article-title" itemprop="name">Installation</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <h2 id="Prerequisites" class="article-heading"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites<a class="article-anchor" href="#Prerequisites" aria-hidden="true"></a></h2><p>In order to make Embark work in your computer, we need to have some tools installed first. Make sure you have the following ready and in the correct version:</p>
+                <h2 id="Prerequisites" class="article-heading"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites<a class="article-anchor" href="#Prerequisites" aria-hidden="true"></a></h2><p>In order to make Embark work on our computer, we need to have some tools installed first. Make sure you have the following ready and in the correct version:</p>
 <ul>
 <li><a href="#Node">Node</a></li>
 <li><a href="#Ethereum-Client-Optional">Ethereum Client</a></li>
@@ -99,20 +99,20 @@
 <p>Once done, go ahead and <a href="#Installing-Embark">install Embark</a>.</p>
 <h3 id="Node" class="article-heading"><a href="#Node" class="headerlink" title="Node"></a>Node<a class="article-anchor" href="#Node" aria-hidden="true"></a></h3><p>Please install <a href="http://nodejs.org/" target="_blank" rel="noopener">Node.js</a> in version 8.11.3 LTS or higher.</p>
 <blockquote class="note info"><strong class="note-title">Quick tip:</strong><p><strong>We recommend installing Node using the <a href="https://github.com/creationix/nvm/blob/master/README.md" target="_blank" rel="noopener">Node Version Manager</a>.</strong>  This is because it makes it very easy to install different versions of Node in isolated environments that don’t require users to <a href="https://docs.npmjs.com/getting-started/fixing-npm-permissions" target="_blank" rel="noopener">change their permissions</a> when installing packages. Find instructions on how to install NVM <a href="https://github.com/creationix/nvm/blob/master/README.md#install-script" target="_blank" rel="noopener">here</a>.</p>
-<p>Once that is done, you can install and select a specific Node version or use the <code>--lts</code> option to get the latest version with long term support like this:</p>
+<p>Once that is done, we can install and select a specific Node version or use the <code>--lts</code> option to get the latest version with long term support like this:</p>
 <pre><code class="shell">$ nvm install --lts
 $ nvm use --lts
 </code></pre>
 </blockquote>
-<h3 id="IPFS-Optional" class="article-heading"><a href="#IPFS-Optional" class="headerlink" title="IPFS (Optional)"></a>IPFS (Optional)<a class="article-anchor" href="#IPFS-Optional" aria-hidden="true"></a></h3><p>IPFS can be used to distribute your application’s content on the decentralized IPFS nodes. This can be skipped in case this isn’t planned, however we do recommend it. Checkout IPFS’ <a href="https://docs.ipfs.io/introduction/install/" target="_blank" rel="noopener">installation guide</a> to learn how to install IPFS on your local machine.</p>
+<h3 id="IPFS-Optional" class="article-heading"><a href="#IPFS-Optional" class="headerlink" title="IPFS (Optional)"></a>IPFS (Optional)<a class="article-anchor" href="#IPFS-Optional" aria-hidden="true"></a></h3><p>IPFS can be used to distribute our application’s content on the decentralized IPFS nodes. This can be skipped in case this isn’t planned, however we do recommend it. Checkout IPFS’ <a href="https://docs.ipfs.io/introduction/install/" target="_blank" rel="noopener">installation guide</a> to learn how to install IPFS on our local machine.</p>
 <p>To verify that the installation was successful, simply run the following command:</p>
 <pre><code class="shell">$ ipfs --version</code></pre>
 
 <p>This outputs something like</p>
 <pre><code class="shell">ipfs version 0.4.17</code></pre>
 
-<h3 id="Ethereum-Client-Optional" class="article-heading"><a href="#Ethereum-Client-Optional" class="headerlink" title="Ethereum Client (Optional)"></a>Ethereum Client (Optional)<a class="article-anchor" href="#Ethereum-Client-Optional" aria-hidden="true"></a></h3><p>Embark can spin up an Ethereum node for you. To make this happen, an Ethereum client has to be installed on your machine as well. Embark already comes with <a href="https://truffleframework.com/ganache" target="_blank" rel="noopener">Ganache CLI</a>, a blockchain node emulator, which is accessible via <a href="embark_commands.html#simulator">Embark’s simulator</a> command.</p>
-<p>In case you want to run a real node, <a href="https://geth.ethereum.org/" target="_blank" rel="noopener">geth</a> is a pretty good one. Check out the <a href="https://ethereum.github.io/go-ethereum/install/" target="_blank" rel="noopener">installation guide</a> for your platform and verify your installation with:</p>
+<h3 id="Ethereum-Client-Optional" class="article-heading"><a href="#Ethereum-Client-Optional" class="headerlink" title="Ethereum Client (Optional)"></a>Ethereum Client (Optional)<a class="article-anchor" href="#Ethereum-Client-Optional" aria-hidden="true"></a></h3><p>Embark can spin up an Ethereum node for us. To make this happen, an Ethereum client has to be installed on our machine as well. Embark already comes with <a href="https://truffleframework.com/ganache" target="_blank" rel="noopener">Ganache CLI</a>, a blockchain node emulator, which is accessible via <a href="embark_commands.html#simulator">Embark’s simulator</a> command.</p>
+<p>In case we want to run a real node, <a href="https://geth.ethereum.org/" target="_blank" rel="noopener">geth</a> is a pretty good one. Check out the <a href="https://ethereum.github.io/go-ethereum/install/" target="_blank" rel="noopener">installation guide</a> for our platform and verify our installation with:</p>
 <pre><code class="shell">$ geth version</code></pre>
 
 <p>Which should result in an output that looks like this (note that the exact version numbers may be different):</p>
@@ -132,20 +132,25 @@ GOROOT=/Users/travis/.gimme/versions/go1.10.4.darwin.amd64
 <p>We can install Embark using the Node Package Manager (no worries, that one comes with Node), like this:</p>
 <pre><code class="shell">$ npm -g install embark</code></pre>
 
-<p>If you want to have access to Embark 4 alpha, do this instead:</p>
-<pre><code class="shell">$ npm -g install embark@next</code></pre>
-
-<p>After that, <code>embark</code> should be available as a global command in your terminal of choice. Let’s verify this by running the following command:</p>
+<p>After that, <code>embark</code> should be available as a global command in our terminal of choice. Let’s verify this by running the following command:</p>
 <pre><code class="shell">$ embark --version</code></pre>
 
 <p>At the time of writing this guide, the output looked like this:</p>
 <pre><code class="shell">3.2.1</code></pre>
 
+<h2 id="Installing-Embark-next" class="article-heading"><a href="#Installing-Embark-next" class="headerlink" title="Installing Embark @next"></a>Installing Embark @next<a class="article-anchor" href="#Installing-Embark-next" aria-hidden="true"></a></h2><p>While running <code>npm install -g embark</code> will give us the latest and great stable version of Embark, we’re sometimes interested in trying out features that are in active development. The Embark team maintains a <code>next</code> distribution tag on npm that can be used to install versions of Embark that aren’t stable.</p>
+<pre><code class="shell">$ npm -g install embark@next</code></pre>
+
+<h2 id="Installing-Embark’s-latest-GitHub-version" class="article-heading"><a href="#Installing-Embark’s-latest-GitHub-version" class="headerlink" title="Installing Embark’s latest GitHub version"></a>Installing Embark’s latest GitHub version<a class="article-anchor" href="#Installing-Embark’s-latest-GitHub-version" aria-hidden="true"></a></h2><p>If we’re interested in getting whatever has landed last in the code base, we can install directly from Embark’s GitHub repository like this:</p>
+<pre><code class="shell">$ npm -g install embark-framework/embark</code></pre>
+
+<blockquote class="note warn"><strong class="note-title">Warning:</strong><p>Installations with <code>@next</code> or directly from the <code>develop</code> branch on GitHub are considered unstable and may have bugs, so please proceed with caution.</p>
+</blockquote>
 <p>Awesome! We’re all set up. Let’s build our first decentralized application!</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-11-01T15:26:42.166Z" itemprop="dateModified">Last updated: 2018-11-01</time>
+                <time class="article-footer-updated" datetime="2018-11-09T10:41:11.121Z" itemprop="dateModified">Last updated: 2018-11-09</time>
                 <a href="index.html" class="article-footer-prev" title="Overview"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="quick_start.html" class="article-footer-next" title="Quick Start"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -153,7 +158,7 @@ GOROOT=/Users/travis/.gimme/versions/go1.10.4.darwin.amd64
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-text">Prerequisites</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPFS-Optional"><span class="toc-text">IPFS (Optional)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ethereum-Client-Optional"><span class="toc-text">Ethereum Client (Optional)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Embark"><span class="toc-text">Installing Embark</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Prerequisites"><span class="toc-text">Prerequisites</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Node"><span class="toc-text">Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPFS-Optional"><span class="toc-text">IPFS (Optional)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ethereum-Client-Optional"><span class="toc-text">Ethereum Client (Optional)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Embark"><span class="toc-text">Installing Embark</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Embark-next"><span class="toc-text">Installing Embark @next</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Embark’s-latest-GitHub-version"><span class="toc-text">Installing Embark’s latest GitHub version</span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>

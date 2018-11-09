@@ -2,7 +2,7 @@
 <html lang="en">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
-  <title>Environments | Embark</title>
+  <title>Understanding Environments | Embark</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Canonical links -->
@@ -87,87 +87,67 @@
           <div class="article">
             <div class="inner">
               <header class="article-header">
-                <h1 class="article-title" itemprop="name">Environments</h1>
+                <h1 class="article-title" itemprop="name">Understanding Environments</h1>
               </header>
               <div class="article-content" itemprop="articleBody">
-                <p>Developing on Ethereum requires you to #buidl everything locally, then deploy it on various test networks, and only then get to the big show. Setting up connections and deploying contracts easily to all these different environments is a pain. But do not fear, Embark has you covered. We use the concept of <code>environments</code>, which means that every config file has entries for each environment so you can control them all sensibly from one place that can be specified in most embark commands.</p>
-<h3 id="Configuration" class="article-heading"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration<a class="article-anchor" href="#Configuration" aria-hidden="true"></a></h3><p><code>default</code> is a special environment - the values you use here will apply to all environments unless you have set specific values for the environments you want to work in.<br>Every other config block is then merged with <code>default</code>, which means that you can specify the most common options in default and then only override what’s really needed on a per environment basis.</p>
-<p>Example:</p>
+                <p>Embark comes with the concept of “Environments”, which make it easy to switch between different configurations of various parts of our applications that alter how the application is being built and deployed. For example, during development we probably prefer deploying our Smart Contracts on a local blockchain or testnet, until we’re sure the code is ready for prime time and can be deployed in a production environment.</p>
+<p>In this guide we’ll discuss how to take advantage of environments within various configuration files of our Embark application.</p>
+<h2 id="Default-environment" class="article-heading"><a href="#Default-environment" class="headerlink" title="Default environment"></a>Default environment<a class="article-anchor" href="#Default-environment" aria-hidden="true"></a></h2><p>In our guide covering <a href="structure.html">application structures</a> in Embark, we’ve talked about that every component of our decentralized application, such as IPFS as a storage solution and Geth as a blockchain client, can be configured using a dedicated configuration file. We’ll dive more into what each configuration looks like in our guides on <a href="contracts_configuration.html">configuring Smart Contracts</a>, <a href="storage_configuration.html">configuring decentralized storages</a> and <a href="messages_configuration.html">configuring communication channels</a>. For now, we’ll focus on the concept of <strong>default environments</strong>.</p>
+<p>Environments can be defined as part of a configuration file for a dedicated service or component of our application. We can introduce as many environments as we like. It is important to understand that <code>default</code> is a special environment that can be <strong>extended</strong> by other environments.</p>
+<p>Let’s take a look at the <code>config/contracts.js</code> file that we’ve created in the <a href="quick_start.html">Quickstart</a>:</p>
 <pre><code class="javascript">module.exports = {
-  "default": {
-    "gas": "auto",
-    "contracts": {
-      "Foo": {
-        "args": [ 200 ]
-      }
-    }
-  },
-  "development": {
-    "contracts": {
-      "Token": {
-        "args": [ 100 ]
-      }
-    }
-  },
-  "myenvironment": {
-    "contracts": {
-      "Token": {
-        "address": "0x420be61af1dea86646269f9f892a1b2a57fe24f2"
-      }
-    }
-  }
-}
-</code></pre>
-
-<p>If the <code>development</code> environment is specified, then the <code>development</code> config will merge with <code>default</code> and the config used will be:</p>
-<pre><code class="json">{
-  "gas": "auto",
-  "contracts": {
-    "Foo": {
-      "args": [ 200 ]
+  default: {
+    deployment: {
+      host: "localhost",
+      port: 8546,
+      type: "ws"
     },
-    "Token": {
-      "args": [ 100 ]
+    dappConnection: [
+      "$WEB3",
+      "ws://localhost:8546",
+      "http://localhost:8545"
+    ],
+    gas: "auto",
+    contracts: {
+      SimpleStorage: {
+        args: [100]
+      }
     }
   }
-}
-</code></pre>
+}</code></pre>
 
-
-<p>If the <code>myenvironment</code> environment is specified, then the <code>myenvironment</code> config will merge with <code>default</code> and the config used will be:</p>
-<pre><code class="json">{
-  "gas": "auto",
-  "contracts": {
-    "Foo": {
-      "args": [ 200 ]
-    },
-    "Token": {
-      "address": "0x420be61af1dea86646269f9f892a1b2a57fe24f2"
+<p>Don’t get too overwhelmed by all the different options and what they mean. We’ll discuss those in-depth in <a href="contracts_configuration.html">configuring Smart Contracts</a>. The important part here is that <code>contracts.js</code> exports an object that provides a <code>default</code> configuration. This configuration is the default environment and can be overwritten or extended by other environments. </p>
+<p>If we execute <code>$ embark run</code>, Embark will use the <code>default</code> configuration to deploy our application’s Smart Contracts.</p>
+<h2 id="Adding-and-extending-environments" class="article-heading"><a href="#Adding-and-extending-environments" class="headerlink" title="Adding and extending environments"></a>Adding and extending environments<a class="article-anchor" href="#Adding-and-extending-environments" aria-hidden="true"></a></h2><p>As mentioned earlier, the <code>default</code> environment can be easily extended and overwritten by other configurations. Let’s say we had a <code>custom</code> environment as well, which should come with the same configuration as <code>default</code>, but deploy <code>SimpleStorage</code> with a different constructor parameter value. We can do that by simply introducing a configuration for <code>custom</code> and specify the options as we need:</p>
+<pre><code class="javascript">module.exports = {
+  ...
+  custom: {
+    contracts: {
+      SimpleStorage: {
+        args: [200]
+      }
     }
   }
-}
+}</code></pre>
+
+<p>Now, when running Embark with the <code>custom</code> environment as discussed in our guide on <a href="running_apps.html#Switching-environments">Running applications</a>, Embark will merge the <code>custom</code> configuration with <code>default</code> and use the resulting configuration object accordingly:</p>
+<pre><code class="shell">$ embark run custom
 </code></pre>
 
-<h3 id="Specifying-an-environment" class="article-heading"><a href="#Specifying-an-environment" class="headerlink" title="Specifying an environment"></a>Specifying an environment<a class="article-anchor" href="#Specifying-an-environment" aria-hidden="true"></a></h3><pre><code class="shell">$ embark &lt;cmd_name&gt; &lt;environment&gt;
-</code></pre>
 
-<p>For example, if you want to specify the ‘testnet’ environment in the <code>embark run</code> command you would do:</p>
-<pre><code class="shell">$ embark run testnet
-</code></pre>
-
-<p>If no environment is specified, Embark assumes <code>development</code> to be the intended environment, so </p>
+<blockquote class="note info"><strong class="note-title">Quick tip:</strong><p>Notice that Embark usually already provides an additional <code>development</code> configuration. As a matter of fact, when no environment is specified in <code>embark run</code>, Embark will use the <code>development</code> configuration. </p>
+<p>This means that</p>
 <pre><code class="shell">$ embark run
 </code></pre>
-
 <p>is the same as</p>
 <pre><code class="shell">$ embark run development
 </code></pre>
-
-
+</blockquote>
+<p>In the next chapter, we’ll take a closer look at how our application can be configured using the <code>embark.json</code> configuration file.</p>
 
               </div>
               <footer class="article-footer">
-                <time class="article-footer-updated" datetime="2018-11-01T15:26:42.165Z" itemprop="dateModified">Last updated: 2018-11-01</time>
+                <time class="article-footer-updated" datetime="2018-11-09T10:41:11.120Z" itemprop="dateModified">Last updated: 2018-11-09</time>
                 <a href="dashboard.html" class="article-footer-prev" title="Using the dashboard"><i class="fa fa-chevron-left"></i><span>Prev</span></a><a href="configuration.html" class="article-footer-next" title="Configuration"><span>Next</span><i class="fa fa-chevron-right"></i></a>
               </footer>
             </div>
@@ -175,7 +155,7 @@
           <aside id="article-toc" role="navigation">
             <div id="article-toc-inner">
               <strong class="sidebar-title">Contents</strong>
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration"><span class="toc-text">Configuration</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Specifying-an-environment"><span class="toc-text">Specifying an environment</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Default-environment"><span class="toc-text">Default environment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-and-extending-environments"><span class="toc-text">Adding and extending environments</span></a></li></ol>
               <a href="#" id="article-toc-top">Back to Top</a>
             </div>
           </aside>
